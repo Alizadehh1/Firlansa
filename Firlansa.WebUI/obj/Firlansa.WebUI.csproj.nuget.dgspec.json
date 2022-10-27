@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alide\\source\\repos\\Firlansa Solution\\Firlansa.WebUI\\Firlansa.WebUI.csproj": {}
+    "C:\\Users\\alide\\OneDrive\\Desktop\\Firlansa\\Firlansa.WebUI\\Firlansa.WebUI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alide\\source\\repos\\Firlansa Solution\\Firlansa.WebUI\\Firlansa.WebUI.csproj": {
+    "C:\\Users\\alide\\OneDrive\\Desktop\\Firlansa\\Firlansa.WebUI\\Firlansa.WebUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alide\\source\\repos\\Firlansa Solution\\Firlansa.WebUI\\Firlansa.WebUI.csproj",
+        "projectUniqueName": "C:\\Users\\alide\\OneDrive\\Desktop\\Firlansa\\Firlansa.WebUI\\Firlansa.WebUI.csproj",
         "projectName": "Firlansa.WebUI",
-        "projectPath": "C:\\Users\\alide\\source\\repos\\Firlansa Solution\\Firlansa.WebUI\\Firlansa.WebUI.csproj",
+        "projectPath": "C:\\Users\\alide\\OneDrive\\Desktop\\Firlansa\\Firlansa.WebUI\\Firlansa.WebUI.csproj",
         "packagesPath": "C:\\Users\\alide\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alide\\source\\repos\\Firlansa Solution\\Firlansa.WebUI\\obj\\",
+        "outputPath": "C:\\Users\\alide\\OneDrive\\Desktop\\Firlansa\\Firlansa.WebUI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alide\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -59,6 +59,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[5.0.17, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             }
           },
           "imports": [

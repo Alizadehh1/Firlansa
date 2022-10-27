@@ -1,0 +1,67 @@
+﻿@model Category
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Kateqoriya</h4>
+                    @*<span>
+                            lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit
+                        </span>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a href="#!">Kateqoriya</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card p-3">
+        <div class="card-block">
+            <div>
+                <div class="form-group row">
+                    <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">@Model.Name</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Parent" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        @if (Model.Parent != null)
+                        {
+                            <p class="form-control">@Model.Parent.Name</p>
+                        }
+                        else
+                        {
+                            <p class="form-control">(Ana Kateqoriyadır)</p>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2"></label>
+                    <div class="col-sm-10">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-icon"><i class="icofont-pencil-alt-5"></i></a> |
+                        <a asp-action="Index" class="btn btn-info btn-icon"><i class="icofont-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

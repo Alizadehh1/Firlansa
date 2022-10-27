@@ -1,0 +1,163 @@
+﻿@model List<Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Kateqoriyalar</h4>
+                    <span>
+                        Kateqoriya əlavə et, düzəliş et, ətraflı bax və ya sil.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a>Kateqoriyalar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card">
+        <div class="card-header">
+            <h5>Kateqoriyalar</h5>
+        </div>
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-hover tree">
+                    <thead>
+                        <tr>
+                            <th>
+                                Ad
+                            </th>
+                            <th>
+                                Üst Kateqoriyası
+                            </th>
+                            <th class="actionBtns">
+                                @*@if (User.HasAccess("admin.categories.create"))
+                                {*@
+
+                                    <a asp-action="Create" class="btn btn-success btn-icon"><i class="icofont-plus"></i></a>
+                                @*}*@
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Where(c => c.ParentId == null))
+                        {
+                            <tr data-entity-id="@item.Id" class="treegrid-@item.Id">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Parent.Name)
+                                </td>
+                                <td class="actionBtns">
+                                    @*@if (User.HasAccess("admin.categories.edit"))
+                                    {*@
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-icon"><i class="icofont-pencil-alt-5"></i></a>
+                                        @*}*@
+                                    @*@if (User.HasAccess("admin.categories.details"))
+                                    {*@
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-icon"><i class="icofont icofont-eye-alt"></i></a>
+                                    @*}*@
+                                    
+                                    @*@if (User.HasAccess("admin.categories.delete"))
+                                    {*@
+                                        <a onclick="removeEntity(event,@item.Id,'@item.Name')" class="btn btn-danger btn-icon">
+                                            <i class="icofont-trash"></i>
+                                        </a>
+                                    @*}*@
+                                </td>
+                            </tr>
+
+                            @foreach (var child in item.GetAllChildren())
+                            {
+                                <tr data-entity-id="@child.Id" class="treegrid-@child.Id treegrid-parent-@child.ParentId">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => child.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => child.Parent.Name)
+                                    </td>
+                                    <td class="actionBtns">
+                                        @*@if (User.HasAccess("admin.categories.edit"))
+        {*@
+                                        <a asp-action="Edit" asp-route-id="@child.Id" class="btn btn-warning btn-icon"><i class="icofont-pencil-alt-5"></i></a>
+                                        @*}*@
+                                        @*@if (User.HasAccess("admin.categories.details"))
+        {*@
+                                        <a asp-action="Details" asp-route-id="@child.Id" class="btn btn-info btn-icon"><i class="icofont icofont-eye-alt"></i></a>
+                                        @*}*@
+
+                                        @*@if (User.HasAccess("admin.categories.delete"))
+        {*@
+                                        <a onclick="removeEntity(event,@child.Id,'@child.Name')" class="btn btn-danger btn-icon">
+                                            <i class="icofont-trash"></i>
+                                        </a>
+                                        @*}*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link href="~/libs/jquery-treegrid/css/jquery.treegrid.css" rel="stylesheet" />
+    <link href="~/assets/css/pagination.css" rel="stylesheet" />
+}
+@section js{
+    <script src="~/libs/jquery-treegrid/js/jquery.treegrid.js"></script>
+
+    <script type="text/javascript">
+        $('.tree').treegrid();
+    </script>
+
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script>
+        function removeEntity(ev, entityId, name) {
+            swal({
+                title: "Silməyə Əminsən?",
+                text: `"${name}" silinəcək, Əminsən?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: `@Url.Action("Delete")/${entityId}`,
+                            type: 'post',
+                            success: function (response) {
+                                if (response.error==true) {
+                                    toastr.error(response.message, "Error!");
+                                    return;
+                                }
+                                toastr.success("Uğurlu silinmə", response.message)
+                                $(`tr[data-entity-id=${entityId}]`).remove();
+                            },
+                            error: function (response) {
+                                toastr["error"]("Unsuccessfully", "Silinmə baş vermədi, yenidən yoxlayın!")
+                            }
+                        })
+                    }
+                });
+        }
+    </script>
+}
