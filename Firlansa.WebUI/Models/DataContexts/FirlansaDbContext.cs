@@ -17,5 +17,7 @@ namespace Firlansa.WebUI.Models.DataContexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Faq> Faqs { get; set; }
     }
 }

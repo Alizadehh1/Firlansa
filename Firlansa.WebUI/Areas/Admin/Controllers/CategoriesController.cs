@@ -166,7 +166,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
                 return Json(new
                 {
                     error = true,
-                    message = "Movcud deyil"
+                    message = "Mövcud deyil"
                 });
             }
             if (entity.ParentId == null && entity.Children.Count>0)
@@ -185,7 +185,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             return Json(new
             {
                 error = false,
-                message = "Ugurla silindi"
+                message = "Uğurla silindi"
             });
         }
 

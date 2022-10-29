@@ -5,7 +5,7 @@
 <nav class="breadcrumb-nav">
     <div class="container">
         <ul class="breadcrumb">
-            <li><a asp-controller="home"><i class="d-icon-home"></i></a></li>
+            <li><a asp-controller="home" asp-action="index"><i class="d-icon-home"></i></a></li>
             <li>Shop</li>
         </ul>
     </div>
@@ -39,35 +39,25 @@
                                             Filter
                                         </button>
                                     </div>
-                                </form><!-- End Filter Price Form -->
+                                </form>
                             </div>
                         </div>
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Size</h3>
+                            <h3 class="widget-title">Ölçü</h3>
                             <ul class="widget-body filter-items">
-                                <li><a href="#">Extra Large</a></li>
-                                <li><a href="#">Large</a></li>
-                                <li><a href="#">Medium</a></li>
-                                <li><a href="#">Small</a></li>
+                                @foreach (var size in Model.Sizes)
+                                {
+                                    <li><a href="#">@size.Name</a></li>
+                                }
                             </ul>
                         </div>
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Color</h3>
+                            <h3 class="widget-title">Rəng</h3>
                             <ul class="widget-body filter-items">
-                                <li><a href="#">Black</a></li>
-                                <li><a href="#">Blue</a></li>
-                                <li><a href="#">Green</a></li>
-                                <li><a href="#">White</a></li>
-                            </ul>
-                        </div>
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Brands</h3>
-                            <ul class="widget-body filter-items">
-                                <li><a href="#">Cinderella</a></li>
-                                <li><a href="#">Comedy</a></li>
-                                <li><a href="#">Rightcheck</a></li>
-                                <li><a href="#">SkillStar</a></li>
-                                <li><a href="#">SLS</a></li>
+                                @foreach (var color in Model.Colors)
+                                {
+                                    <li><a href="#">@color.Name</a></li>
+                                }
                             </ul>
                         </div>
                     </div>

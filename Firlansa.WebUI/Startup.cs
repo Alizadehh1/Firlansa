@@ -1,4 +1,5 @@
 using Firlansa.WebUI.Models.DataContexts;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -34,9 +35,9 @@ namespace Firlansa.WebUI
 
 
 
+            services.AddMediatR(this.GetType().Assembly);
 
-
-            //services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
+            services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

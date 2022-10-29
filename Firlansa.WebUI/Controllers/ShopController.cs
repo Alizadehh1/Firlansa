@@ -17,14 +17,19 @@ namespace Firlansa.WebUI.Controllers
         {
             this.db = db;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var model = new ShopViewModel();
-            model.Categories = db.Categories
+            model.Categories = await db.Categories
                 .Where(c => c.DeletedById == null)
                 .Include(c => c.Children.Where(c => c.DeletedById == null))
-                .ToList();
-                
+                .ToListAsync();
+            model.Colors = await db.Colors
+                .Where(c => c.DeletedById == null)
+                .ToListAsync();
+            model.Sizes = await db.Sizes
+                .Where(s => s.DeletedById == null)
+                .ToListAsync();
             return View(model);
         }
     }

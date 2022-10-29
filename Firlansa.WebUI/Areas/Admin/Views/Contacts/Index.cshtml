@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Əlaqələr</h4>
+                    <span>
+                        Əlaqəyə ətraflı bax və ya cavablandır.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a href="#!">Əlaqələr</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card">
+        <div class="card-header">
+            <h5>Əlaqələr</h5>
+        </div>
+        <div class="card-block">
+            <div class="dt-responsive table-responsive">
+                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                    <thead>
+                        <tr>
+                            <th>Komment</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr data-entity-id="@item.Id">
+                                <td>
+                                    @item.Comment
+                                </td>
+                                <td>
+                                    @if (item.AnsweredById == null)
+                                    {
+                                        <span class="badge badge-warning text-white">
+                                            Cavab Gozleyir
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">
+                                            Cavablandirilib (@item.AnswerDate?.ToString("dd.MM.yyyy HH:mm:ss"))
+                                        </span>
+                                    }
+                                </td>
+                                <td class="actionBtns">
+                                    @if (item.AnsweredById == null)
+                                    {
+                                        <a asp-action="Answer" asp-route-id="@item.Id" class="btn btn-warning btn-icon">
+                                            <i class="icofont-envelope-open"></i>
+                                        </a>
+                                    }
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-icon">
+                                        <i class="icofont icofont-eye-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section js{
+    <script src="~/admin/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/data-table-custom.js"></script>
+    <script>$('#simpletable').dataTable();</script>
+}

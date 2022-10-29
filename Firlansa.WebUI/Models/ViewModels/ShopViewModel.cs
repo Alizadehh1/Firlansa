@@ -9,5 +9,7 @@ namespace Firlansa.WebUI.Models.ViewModels
     public class ShopViewModel
     {
         public List<Category> Categories { get; set; }
+        public List<Color> Colors { get; set; }
+        public List<Size> Sizes { get; set; }
     }
 }

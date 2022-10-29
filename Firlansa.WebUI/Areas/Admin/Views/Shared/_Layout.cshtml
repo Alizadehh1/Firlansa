@@ -408,6 +408,44 @@
                                         </a>
                                     </li>
                                    @*}*@
+                                @*@if (User.HasAccess("admin.colors.index"))
+                                {*@
+                                    <li class="">
+                                        <a asp-controller="colors" asp-action="index">
+                                            <span class="pcoded-micon"><i class="fa-solid fa-palette"></i></span>
+                                            <span class="pcoded-mtext">Rənglər</span>
+                                        </a>
+                                    </li>
+                                   @*}*@
+                                @*@if (User.HasAccess("admin.sizes.index"))
+                                {*@
+                                    <li class="">
+                                        <a asp-controller="sizes" asp-action="index">
+                                            <span class="pcoded-micon"><i class="fa-solid fa-s"></i></span>
+                                            <span class="pcoded-mtext">Ölçülər</span>
+                                        </a>
+                                    </li>
+                                   @*}*@
+                                @*@if (User.HasAccess("admin.contacts.index"))
+                                {*@
+                                    <li class="">
+                                        <a asp-controller="contacts" asp-action="index">
+                                            <span class="pcoded-micon"><i class="icofont-headphone-alt-2"></i></span>
+                                            <span class="pcoded-mtext">Əlaqələr</span>
+                                        </a>
+                                    </li>
+                                   @*}*@
+                                @*@if (User.HasAccess("admin.faqs.index"))
+                                {*@
+                                    <li class="">
+                                        <a asp-controller="faqs" asp-action="index">
+                                            <span class="pcoded-micon"><i class="icofont-question"></i></span>
+                                            <span class="pcoded-mtext">Ən çox verilmiş suallar</span>
+                                        </a>
+                                    </li>
+                                   @*}*@
+
+
                                 @*@if (User.HasAccess("admin.brands.index"))
                                     {
                                         <li class="">
