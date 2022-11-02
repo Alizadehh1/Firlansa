@@ -47,8 +47,15 @@ using Firlansa.WebUI.Models.Entities;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 7 "C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\Views\_ViewImports.cshtml"
+using Firlansa.WebUI.Models.FormModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f02c4722d384c6151a0d9e92917e8a7c5b724564", @"/Views/Shop/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"4c8ca356771b2251f171fca12b8c786dcbd8de7c", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"09d3743615352b0f04d0f140fb7ec118dd40d209", @"/Views/_ViewImports.cshtml")]
     public class Views_Shop_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ShopViewModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "home", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -120,7 +127,7 @@ using Firlansa.WebUI.Models.Entities;
 #line hidden
 #nullable disable
             WriteLiteral("<nav class=\"breadcrumb-nav\">\r\n    <div class=\"container\">\r\n        <ul class=\"breadcrumb\">\r\n            <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456415308", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456415511", async() => {
                 WriteLiteral("<i class=\"d-icon-home\"></i>");
             }
             );
@@ -167,7 +174,7 @@ using Firlansa.WebUI.Models.Entities;
                             <h3 class=""widget-title"">Filter by Price</h3>
                             <div class=""widget-body mt-3"">
                                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456418043", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456418246", async() => {
                 WriteLiteral(@"
                                     <div class=""filter-price-slider""></div>
 
@@ -283,7 +290,7 @@ using Firlansa.WebUI.Models.Entities;
                             <label>Sort By :</label>
                             <select name=""orderby"" class=""form-control"">
                                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456423779", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456423982", async() => {
                 WriteLiteral("Default");
             }
             );
@@ -299,7 +306,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456424972", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456425175", async() => {
                 WriteLiteral("Most Popular");
             }
             );
@@ -316,7 +323,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456426253", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456426456", async() => {
                 WriteLiteral("Average rating");
             }
             );
@@ -332,7 +339,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456427453", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456427656", async() => {
                 WriteLiteral("Latest");
             }
             );
@@ -348,7 +355,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456428645", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456428848", async() => {
                 WriteLiteral("Sort forward price low");
             }
             );
@@ -364,7 +371,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456429853", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456430056", async() => {
                 WriteLiteral("Sort forward price high");
             }
             );
@@ -380,7 +387,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456431062", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456431265", async() => {
                 WriteLiteral("Clear custom sort");
             }
             );
@@ -404,7 +411,7 @@ using Firlansa.WebUI.Models.Entities;
                             <label>Show :</label>
                             <select name=""count"" class=""form-control"">
                                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456432631", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456432834", async() => {
                 WriteLiteral("12");
             }
             );
@@ -420,7 +427,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456433821", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456434024", async() => {
                 WriteLiteral("24");
             }
             );
@@ -436,7 +443,7 @@ using Firlansa.WebUI.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456435011", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f02c4722d384c6151a0d9e92917e8a7c5b72456435214", async() => {
                 WriteLiteral("36");
             }
             );
@@ -466,7 +473,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456436918", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456437121", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -530,7 +537,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456441118", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456441321", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -593,7 +600,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456445231", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456445434", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -654,7 +661,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456449095", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456449298", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -714,7 +721,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456452957", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456453160", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -774,7 +781,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456456810", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456457013", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -837,7 +844,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456460913", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456461116", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -900,7 +907,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456464969", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456465172", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -960,7 +967,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456468825", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456469028", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -1020,7 +1027,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456472681", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456472884", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -1083,7 +1090,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456476744", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456476947", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -1143,7 +1150,7 @@ using Firlansa.WebUI.Models.Entities;
                             <figure class=""product-media"">
                                 <a href=""product.html"">
                                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456480596", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456480799", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -1232,7 +1239,7 @@ using Firlansa.WebUI.Models.Entities;
 ");
             DefineSection("css", async() => {
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456486014", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "f02c4722d384c6151a0d9e92917e8a7c5b72456486217", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

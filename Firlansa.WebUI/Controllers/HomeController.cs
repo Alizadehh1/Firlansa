@@ -1,6 +1,7 @@
 ﻿using Firlansa.WebUI.Models;
 using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Firlansa.WebUI.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly FirlansaDbContext db;

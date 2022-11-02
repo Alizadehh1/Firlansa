@@ -56,13 +56,22 @@
                             </ul>
                         </div>
                         <span class="divider"></span>
-                        <a href="contact-us.html" class="contact d-lg-show"><i class="d-icon-map"></i>Contact</a>
-                        <a href="#" class="help d-lg-show"><i class="d-icon-info"></i> Need Help</a>
-                        <a class="login-link" href="ajax/login.html" data-toggle="login-modal">
-                            <i class="d-icon-user"></i>Sign in
-                        </a>
-                        <span class="delimiter">/</span>
-                        <a class="register-link ml-0" href="~/assets/ajax/login.html" data-toggle="login-modal">Register</a>
+                        <a asp-action="contact" asp-controller="home" class="contact d-lg-show"><i class="d-icon-map"></i>Əlaqə</a>
+                        <a asp-action="faq" asp-controller="home" class="help d-lg-show"><i class="d-icon-info"></i> Kömək lazımdır?</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="Profile" asp-controller="account">
+                                <i style="margin-right: 3px;" class="d-icon-user"></i>@User.GetPrincipalName()
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="SignIn" asp-controller="account">
+                                <i style="margin-right: 3px;" class="d-icon-user"></i>Giriş
+                            </a>
+                            <span class="delimiter" style="display:flex!important">/</span>
+                            <a class="ml-0" asp-action="Register" asp-controller="account">Qeydiyyat</a>
+                        }
                     </div>
                 </div>
             </div>
@@ -308,12 +317,17 @@
     <partial name="_MobileMenu" />
 
     <script src="~/assets/vendor/jquery/jquery.min.js"></script>
-    <script src="~/assets/vendor/parallax/parallax.min.js"></script>
-    <script src="~/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="~/assets/vendor/elevatezoom/jquery.elevatezoom.min.js"></script>
     <script src="~/assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
     <script src="~/assets/vendor/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/assets/vendor/isotope/isotope.pkgd.min.js"></script>
+    <script src="~/assets/vendor/jquery.plugin/jquery.plugin.min.js"></script>
+    <script src="~/assets/vendor/jquery.countdown/jquery.countdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/assets/js/main.min.js"></script>
-    @RenderSection("js", required: false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer"
+          @RenderSection("js", required: false)
 </body>
 </html>

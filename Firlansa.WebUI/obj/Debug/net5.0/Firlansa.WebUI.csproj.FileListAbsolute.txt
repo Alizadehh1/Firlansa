@@ -249,3 +249,12 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\A
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Faqs\Details.cshtml.g.cs
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Faqs\Edit.cshtml.g.cs
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Faqs\Index.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Account\AccessDenied.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Account\SignIn.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Account\Profile.cshtml.g.cs

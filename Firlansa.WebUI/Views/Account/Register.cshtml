@@ -1,0 +1,81 @@
+﻿@model RegisterFormModel
+@{
+    ViewData["Title"] = "Qeydiyyatdan Keç";
+}
+
+<main class="main">
+    <div class="page-content mt-6 pb-2 mb-10">
+        <div class="container">
+            <div class="login-popup">
+                <div class="form-box">
+                    <div class="tab tab-nav-simple tab-nav-boxed form-tab">
+                        <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
+                            <li class="nav-item">
+                                <a class="navbar-account border-no lh-1 ls-normal" asp-controller="account" asp-action="SignIn">Giriş</a>
+                            </li>
+                            <li class="delimiter">və ya</li>
+                            <li class="nav-item">
+                                <a class="nav-link active border-no lh-1 ls-normal">Qeydiyyat</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="register">
+                                <form method="post" asp-action="Register">
+                                    @if (!Html.ViewData.ModelState.IsValid)
+                                    {
+                                        <div class="form-group mb-3">
+                                            <div asp-validation-summary="All" class="alert alert-danger text-white">
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(ViewBag.Message))
+                                    {
+                                        if (!Html.ViewData.ModelState.IsValid)
+                                        {
+                                            <div class="form-group mb-3">
+                                                <div class="alert alert-danger text-white">
+                                                    @ViewBag.Message
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="form-group mb-3">
+                                            <div class="alert alert-success text-white">
+                                                @ViewBag.Message
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="form-group mb-3">
+                                        <input class="form-control" asp-for="Email" placeholder="Elektron Poçt *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" asp-for="Password" placeholder="Şifrə *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" asp-for="ConfirmPassword" placeholder="Şifrənin Təkrarını daxil edin *" />
+                                    </div>
+                                    <button class="btn btn-dark btn-block btn-rounded" type="submit">Qeydiyyatdan Keç</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+@section css{ 
+<style>
+    .navbar-account {
+        padding: 0 0 1px;
+        color: #999;
+        font-size: 1.8rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 2.43;
+        transition: font-size 0.3s, color 0.3s;
+    }
+    .navbar-account:hover{
+        color:#222;
+    }
+</style>
+}
