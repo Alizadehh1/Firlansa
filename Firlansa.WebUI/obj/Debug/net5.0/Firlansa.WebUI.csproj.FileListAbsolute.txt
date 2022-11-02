@@ -232,7 +232,6 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\ref\Fir
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Firlansa.WebUI.pdb
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Firlansa.WebUI.Views.pdb
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Shared\_MobileMenu.cshtml.g.cs
-C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.csproj.AssemblyReference.cache
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Shared\_FooterNavbar.cshtml.g.cs
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.csproj.GenerateResource.cache
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.Navbar.resources

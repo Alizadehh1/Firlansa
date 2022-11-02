@@ -43,35 +43,35 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Name" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
+                    <label asp-for="Name" class="col-sm-2 col-form-label">Ad</label>
+                    <div class="col-sm-5">
                         <p class="form-control">@Model.Name</p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Category" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
+                    <label asp-for="Category" class="col-sm-2 col-form-label">Kateqoriya</label>
+                    <div class="col-sm-5">
                         <p class="form-control">@Model.Category.Name</p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="ShortDescription" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
+                    <label asp-for="ShortDescription" class="col-sm-2 col-form-label">Qısa detallı</label>
+                    <div class="col-sm-5">
                         <p class="form-control">@Model.ShortDescription</p>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Price" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <p class="form-control">@Model.Price</p>
+                    <label asp-for="Price" class="col-sm-2 col-form-label">Qiymət</label>
+                    <div class="col-sm-5">
+                        <p class="form-control">@Model.Price&#8380;</p>
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Rəng - Ölçü</label>
                     @foreach (var item in Model.Specifications)
                     {
-                        <label class="col-sm-2 col-form-label">Color-Size</label>
-                        <div class="col-sm-10">
-                            <p class="form-control">@item.Color.Name - @item.Size.Name</p>
+                        <div class="col-sm-3">
+                            <p class="form-control"><span style="background-color:@item.Color.HexCode;padding:7px;">@item.Color.Name</span> - @item.Size.Name</p>
                         </div>
                     }
                 </div>
@@ -92,7 +92,7 @@
 @section js{
     <script src="~/libs/multiple-imager-js/js/imager.js"></script>
     <script>
-            
+
         $(document).ready(function () {
 
             $('#viewer1').imgadd({

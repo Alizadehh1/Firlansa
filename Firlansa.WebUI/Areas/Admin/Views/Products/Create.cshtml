@@ -9,9 +9,9 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Brands</h4>
+                    <h4>Məhsul</h4>
                     <span>
-                        Butun brandlar
+                        Yenisini yaratmaq
                     </span>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                         <a asp-controller="dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
-                        <a href="#!">Brendler</a>
+                        <a href="#">Məhsul</a>
                     </li>
                 </ul>
             </div>
@@ -44,25 +44,28 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
+                                <label asp-for="Name" class="control-label">Ad</label>
                                 <input asp-for="Name" class="form-control" />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label asp-for="CategoryId" class="control-label"></label>
-                                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                                <label asp-for="CategoryId" class="control-label">Kateqoriya</label>
+                                <select asp-for="CategoryId" class="form-control select2" asp-items="ViewBag.CategoryId"></select>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label asp-for="ShortDescription" class="control-label"></label>
+                                <label asp-for="ShortDescription" class="control-label">Qısa detallı</label>
                                 <input asp-for="ShortDescription" class="form-control" />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="Price" class="control-label"></label>
+                            <label asp-for="Price" class="control-label">Qiymət</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">&#8380;</span>
+                                </div>
                                 <input asp-for="Price" class="form-control" />
                             </div>
                         </div>
@@ -70,15 +73,15 @@
                 </div>
                 <div class="col-12">
                     <div class="tab-control" role="tabcontrol">
-                        <div class="tab-page" id="specification" aria-title="Qiymetlendirme" selected>
+                        <div class="tab-page" id="specification" aria-title="Rəng - Ölçü" selected>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Reng</th>
-                                        <th>Olcu</th>
+                                        <th style="text-align:center;">Rəng</th>
+                                        <th style="text-align:center;">Ölçü</th>
                                         <th class="table-operations">
                                             <button class="btn btn-info" onclick="createPricing(event)">
-                                                Add row
+                                                Əlavə et
                                             </button>
                                         </th>
                                     </tr>
@@ -91,8 +94,8 @@
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-success" />
-                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                        <input type="submit" value="Yarat" class="btn btn-success" />
+                        <a asp-action="Index" class="btn btn-primary">Geriyə qayıt</a>
                     </div>
                 </div>
             </form>
