@@ -51,10 +51,7 @@ namespace Firlansa.WebUI.AppCode.Modules.ContactModule
                 {
                     ctx.AddModelError("AnswerMessage", "Already Answered");
                 }
-                post.AnsweredById = 1;
-                post.AnswerDate = DateTime.UtcNow.AddHours(4);
                 post.AnswerMessage = request.AnswerMessage;
-                await db.SaveChangesAsync(cancellationToken);
                 return post;
             }
         }

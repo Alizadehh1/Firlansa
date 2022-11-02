@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
 using System;
+using Firlansa.WebUI.Models.Entities.Membership;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Firlansa.WebUI.Areas.Admin.Controllers
 {
@@ -13,17 +16,19 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
     public class FaqsController : Controller
     {
         private readonly FirlansaDbContext db;
+        private readonly UserManager<FirlansaUser> userManager;
 
-        public FaqsController(FirlansaDbContext db)
+        public FaqsController(FirlansaDbContext db, UserManager<FirlansaUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
-
+        [Authorize(Policy = "admin.faqs.index")]
         public async Task<IActionResult> Index()
         {
             return View(await db.Faqs.Where(f=>f.DeletedById==null).ToListAsync());
         }
-
+        [Authorize(Policy = "admin.faqs.details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,7 +45,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
             return View(faq);
         }
-
+        [Authorize(Policy = "admin.faqs.create")]
         public IActionResult Create()
         {
             return View();
@@ -48,6 +53,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
         
         [HttpPost]
+        [Authorize(Policy = "admin.faqs.create")]
         public async Task<IActionResult> Create([Bind("Id,Question,Answer")] Faq faq)
         {
             if (ModelState.IsValid)
@@ -58,7 +64,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             }
             return View(faq);
         }
-
+        [Authorize(Policy = "admin.faqs.edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,6 +82,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.faqs.edit")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Question,Answer")] Faq faq)
         {
             if (id != faq.Id)
@@ -108,7 +115,8 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public IActionResult Delete([FromRoute] int id)
+        [Authorize(Policy = "admin.faqs.delete")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var entity = db.Faqs.FirstOrDefault(f => f.Id == id && f.DeletedById==null);
             if (entity == null)
@@ -119,9 +127,8 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
                     message = "Mövcud deyil"
                 });
             }
-            //var user = await userManager.GetUserAsync(User);
-            //entity.DeletedById = user.Id;
-            entity.DeletedById = 1;
+            var user = await userManager.GetUserAsync(User);
+            entity.DeletedById = user.Id;
             entity.DeletedDate = DateTime.UtcNow.AddHours(4);
             db.SaveChanges();
             return Json(new

@@ -1,6 +1,8 @@
 ﻿using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
+using Firlansa.WebUI.Models.Entities.Membership;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,15 +16,15 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
     public class CategoriesController : Controller
     {
         private readonly FirlansaDbContext db;
-        //private readonly UserManager<FirlansaUser> userManager;
+        private readonly UserManager<FirlansaUser> userManager;
 
-        public CategoriesController(FirlansaDbContext db/*, UserManager<FirlansaUser> userManager*/)
+        public CategoriesController(FirlansaDbContext db, UserManager<FirlansaUser> userManager)
         {
             this.db = db;
-            //this.userManager = userManager;
+            this.userManager = userManager;
         }
 
-        //[Authorize(Policy ="admin.categories.index")]
+        [Authorize(Policy = "admin.categories.index")]
         public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 10)
         {
             var query = await db.Categories
@@ -31,7 +33,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             return View(query);
         }
 
-        //[Authorize(Policy = "admin.categories.details")]
+        [Authorize(Policy = "admin.categories.details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,7 +52,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             return View(category);
         }
 
-        //[Authorize(Policy = "admin.categories.create")]
+        [Authorize(Policy = "admin.categories.create")]
         public IActionResult Create()
         {
             var data = db.Categories
@@ -67,7 +69,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Policy = "admin.categories.create")]
+        [Authorize(Policy = "admin.categories.create")]
         public async Task<IActionResult> Create([Bind("Name,BrandId,ParentId,Id,CreatedById,CreatedDate,DeletedById,DeletedDate")] Category category)
         {
             if (ModelState.IsValid)
@@ -87,7 +89,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             ViewData["ParentId"] = new SelectList(data, "Id", "Name", category.ParentId);
             return View(category);
         }
-        //[Authorize(Policy = "admin.categories.edit")]
+        [Authorize(Policy = "admin.categories.edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -115,7 +117,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Policy = "admin.categories.edit")]
+        [Authorize(Policy = "admin.categories.edit")]
         public async Task<IActionResult> Edit(int id, [Bind("Name,BrandId,ParentId,Id,CreatedById,CreatedDate,DeletedById,DeletedDate")] Category category)
         {
             if (id != category.Id || category.DeletedById != null)
@@ -157,7 +159,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Policy = "admin.categories.delete")]
+        [Authorize(Policy = "admin.categories.delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var entity = await db.Categories.Include(c=>c.Children.Where(c=>c.DeletedById==null)).FirstOrDefaultAsync(b => b.Id == id && b.DeletedById==null);
@@ -177,9 +179,8 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
                     message = "Ana Kateqoriyanı Silmək Olmaz!"
                 });
             }
-            //var user = await userManager.GetUserAsync(User);
-            //entity.DeletedById = user.Id;
-            entity.DeletedById = 1;
+            var user = await userManager.GetUserAsync(User);
+            entity.DeletedById = user.Id;
             entity.DeletedDate = DateTime.UtcNow.AddHours(4);
             await db.SaveChangesAsync();
             return Json(new

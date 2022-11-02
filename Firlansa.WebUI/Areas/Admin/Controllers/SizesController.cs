@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Firlansa.WebUI.Models.DataContexts;
+using Firlansa.WebUI.Models.Entities;
+using Firlansa.WebUI.Models.Entities.Membership;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Firlansa.WebUI.Models.DataContexts;
-using Firlansa.WebUI.Models.Entities;
 
 namespace Firlansa.WebUI.Areas.Admin.Controllers
 {
@@ -14,17 +15,19 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
     public class SizesController : Controller
     {
         private readonly FirlansaDbContext db;
+        private readonly UserManager<FirlansaUser> userManager;
 
-        public SizesController(FirlansaDbContext db)
+        public SizesController(FirlansaDbContext db, UserManager<FirlansaUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
-
+        [Authorize(Policy = "admin.sizes.index")]
         public async Task<IActionResult> Index()
         {
             return View(await db.Sizes.Where(s=>s.DeletedById==null).ToListAsync());
         }
-
+        [Authorize(Policy = "admin.sizes.details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,7 +44,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
             return View(size);
         }
-
+        [Authorize(Policy = "admin.sizes.create")]
         public IActionResult Create()
         {
             return View();
@@ -50,6 +53,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.sizes.create")]
         public async Task<IActionResult> Create(Size size)
         {
             if (ModelState.IsValid)
@@ -60,7 +64,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             }
             return View(size);
         }
-
+        [Authorize(Policy = "admin.sizes.edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,6 +84,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.sizes.edit")]
         public async Task<IActionResult> Edit(int id, Size size)
         {
             if (id != size.Id)
@@ -110,7 +115,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             return View(size);
         }
 
-        // GET: Admin/Sizes/Delete/5
+        [Authorize(Policy = "admin.sizes.delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var size = await db.Sizes
@@ -124,9 +129,8 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
                     message = "Mövcud deyil"
                 });
             }
-            //var user = await userManager.GetUserAsync(User);
-            //entity.DeletedById = user.Id;
-            size.DeletedById = 1;
+            var user = await userManager.GetUserAsync(User);
+            size.DeletedById = user.Id;
             size.DeletedDate = DateTime.UtcNow.AddHours(4);
             await db.SaveChangesAsync();
             return Json(new

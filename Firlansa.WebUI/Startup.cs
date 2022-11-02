@@ -30,7 +30,7 @@ namespace Firlansa.WebUI
         {
             services.AddControllersWithViews(cfg =>
             {
-                //cfg.ModelBinderProviders.Insert(0,new BooleanBinderProvider())
+                cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
 
                 var policy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()

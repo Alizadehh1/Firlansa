@@ -1,0 +1,109 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Məhsul</h4>
+                    <span>
+                        Ətraflı baxış
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a href="#">Məhsul</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card p-3">
+        <div class="card-block">
+            <div>
+                <div class="form-group">
+                    <div style="width: 100%" class="imager-container" id="viewer1" name="Images">
+                        @foreach (var item in Model.Images)
+                        {
+                            <label thumb-url='/uploads/images/@item.ImagePath' image-id="@item.Id" @(item.IsMain ? " checked" : "")></label>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">@Model.Name</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Category" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">@Model.Category.Name</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="ShortDescription" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">@Model.ShortDescription</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Price" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <p class="form-control">@Model.Price</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @foreach (var item in Model.Specifications)
+                    {
+                        <label class="col-sm-2 col-form-label">Color-Size</label>
+                        <div class="col-sm-10">
+                            <p class="form-control">@item.Color.Name - @item.Size.Name</p>
+                        </div>
+                    }
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2"></label>
+                    <div class="col-sm-10">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-icon"><i class="icofont-pencil-alt-5"></i></a> |
+                        <a asp-action="Index" class="btn btn-info btn-icon"><i class="icofont-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/libs/multiple-imager-js/css/imager.css">
+}
+@section js{
+    <script src="~/libs/multiple-imager-js/js/imager.js"></script>
+    <script>
+            
+        $(document).ready(function () {
+
+            $('#viewer1').imgadd({
+                tnWidth: '120px',
+                tnHeight: '120px',
+                fontSize: '55px',
+                plusInnerHtml: '',
+                plusBtnClass: undefined
+            });
+            $('button.img-plus').remove();
+            $('span.remove-thumb').remove();
+        });
+    </script>
+}

@@ -258,3 +258,7 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\V
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Account\SignIn.cshtml.g.cs
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Account\Profile.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Create.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Details.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Edit.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Index.cshtml.g.cs

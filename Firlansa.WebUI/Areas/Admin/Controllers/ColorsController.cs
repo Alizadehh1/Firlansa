@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
+using Microsoft.AspNetCore.Identity;
+using Firlansa.WebUI.Models.Entities.Membership;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Firlansa.WebUI.Areas.Admin.Controllers
 {
@@ -14,17 +17,19 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
     public class ColorsController : Controller
     {
         private readonly FirlansaDbContext db;
+        private readonly UserManager<FirlansaUser> userManager;
 
-        public ColorsController(FirlansaDbContext db)
+        public ColorsController(FirlansaDbContext db, UserManager<FirlansaUser> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
-
+        [Authorize(Policy = "admin.colors.index")]
         public async Task<IActionResult> Index()
         {
             return View(await db.Colors.Where(c=>c.DeletedById==null).ToListAsync());
         }
-
+        [Authorize(Policy = "admin.colors.details")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,7 +46,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
             return View(color);
         }
-
+        [Authorize(Policy = "admin.colors.create")]
         public IActionResult Create()
         {
             return View();
@@ -49,6 +54,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.colors.create")]
         public async Task<IActionResult> Create(Color color)
         {
             if (ModelState.IsValid)
@@ -59,7 +65,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             }
             return View(color);
         }
-
+        [Authorize(Policy = "admin.colors.edit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,6 +83,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.colors.edit")]
         public async Task<IActionResult> Edit(int id, Color color)
         {
             if (id != color.Id)
@@ -106,7 +113,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             }
             return View(color);
         }
-
+        [Authorize(Policy = "admin.colors.delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var color = await db.Colors
@@ -119,9 +126,8 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
                     message = "Mövcud deyil"
                 });
             }
-            //var user = await userManager.GetUserAsync(User);
-            //entity.DeletedById = user.Id;
-            color.DeletedById = 1;
+            var user = await userManager.GetUserAsync(User);
+            color.DeletedById = user.Id;
             color.DeletedDate = DateTime.UtcNow.AddHours(4);
             await db.SaveChangesAsync();
             return Json(new
