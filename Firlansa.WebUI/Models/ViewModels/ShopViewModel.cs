@@ -11,5 +11,8 @@ namespace Firlansa.WebUI.Models.ViewModels
         public List<Category> Categories { get; set; }
         public List<Color> Colors { get; set; }
         public List<Size> Sizes { get; set; }
+        public List<Product> Products { get; set; }
+        public List<ProductSpecification> ProductSpecifications { get; set; }
+        public Product Product { get; set; }
     }
 }

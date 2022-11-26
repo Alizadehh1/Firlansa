@@ -399,60 +399,60 @@
                                         <span class="pcoded-mtext">Ana Səhifə</span>
                                     </a>
                                 </li>
-                                @*@if (User.HasAccess("admin.categories.index"))
-                                    {*@
+                                @if (User.HasAccess("admin.categories.index"))
+                                    {
                                 <li class="">
                                     <a asp-controller="categories" asp-action="index">
                                         <span class="pcoded-micon"><i class="icofont-navigation-menu"></i></span>
                                         <span class="pcoded-mtext">Kateqoriyalar</span>
                                     </a>
                                 </li>
-                                @*}*@
-                                @*@if (User.HasAccess("admin.colors.index"))
-                                    {*@
+                                }
+                                @if (User.HasAccess("admin.colors.index"))
+                                    {
                                 <li class="">
                                     <a asp-controller="colors" asp-action="index">
                                         <span class="pcoded-micon"><i class="fa-solid fa-palette"></i></span>
                                         <span class="pcoded-mtext">Rənglər</span>
                                     </a>
                                 </li>
-                                @*}*@
-                                @*@if (User.HasAccess("admin.sizes.index"))
-                                    {*@
+                                }
+                                @if (User.HasAccess("admin.sizes.index"))
+                                    {
                                 <li class="">
                                     <a asp-controller="sizes" asp-action="index">
                                         <span class="pcoded-micon"><i class="fa-solid fa-s"></i></span>
                                         <span class="pcoded-mtext">Ölçülər</span>
                                     </a>
                                 </li>
-                                @*}*@
-                                @*@if (User.HasAccess("admin.contacts.index"))
-                                    {*@
+                                }
+                                @if (User.HasAccess("admin.contacts.index"))
+                                    {
                                 <li class="">
                                     <a asp-controller="contacts" asp-action="index">
                                         <span class="pcoded-micon"><i class="icofont-headphone-alt-2"></i></span>
                                         <span class="pcoded-mtext">Əlaqələr</span>
                                     </a>
                                 </li>
-                                @*}*@
-                                @*@if (User.HasAccess("admin.faqs.index"))
-                                    {*@
+                                }
+                                @if (User.HasAccess("admin.faqs.index"))
+                                    {
                                 <li class="">
                                     <a asp-controller="faqs" asp-action="index">
                                         <span class="pcoded-micon"><i class="icofont-question"></i></span>
                                         <span class="pcoded-mtext">Ən çox verilmiş suallar</span>
                                     </a>
                                 </li>
-                                @*}*@
-                                @*@if (User.HasAccess("admin.products.index"))
-                                {*@
+                                }
+                                @if (User.HasAccess("admin.products.index"))
+                                {
                                     <li class="">
                                         <a asp-controller="products" asp-action="index">
-                                            <span class="pcoded-micon"><i class="icofont-settings-alt"></i></span>
+                                            <span class="pcoded-micon"><i class="fa-solid fa-shirt"></i></span>
                                             <span class="pcoded-mtext">Məhsullar</span>
                                         </a>
                                     </li>
-                                @*}*@
+                                }
 
                                 @*@if (User.HasAccess("admin.brands.index"))
                                     {

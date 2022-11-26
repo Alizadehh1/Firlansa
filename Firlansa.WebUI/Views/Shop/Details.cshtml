@@ -1,0 +1,691 @@
+﻿@model ShopViewModel
+@{
+    ViewData["Title"] = "Details";
+    int count = 1;
+}
+<div class="page-content mb-10 pb-6">
+    <div class="container">
+        <div class="product product-single row">
+            <div class="col-md-6">
+                <div class="product-gallery product-gallery-sticky">
+                    <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
+                        <figure class="product-image">
+                            <img src="~/uploads/images/@Model.Product.Images.FirstOrDefault(i => i.IsMain == true).ImagePath"
+                                 alt="@Model.Product.Name" width="800" height="900">
+                        </figure>
+                        @foreach (var image in Model.Product.Images.Where(i => i.IsMain == false))
+                        {
+                            <figure class="product-image">
+                                <img src="~/uploads/images/@image.ImagePath"
+                                     alt="@Model.Product.Name" width="800" height="900">
+                            </figure>
+                        }
+                    </div>
+                    <div class="product-thumbs-wrap">
+                        <div class="product-thumbs ">
+                            <div class="product-thumb active">
+                                <img src="~/uploads/images/@Model.Product.Images.FirstOrDefault(i => i.IsMain == true).ImagePath" alt="@Model.Product.Name"
+                                     width="109" height="122">
+                            </div>
+                            @foreach (var image in Model.Product.Images.Where(i => i.IsMain == false))
+                            {
+                                <div class="product-thumb">
+                                    <img src="~/uploads/images/@image.ImagePath" alt="@Model.Product.Name"
+                                         width="109" height="122">
+                                </div>
+                            }
+                        </div>
+                        <button class="thumb-up disabled"><i class="fas fa-chevron-left"></i></button>
+                        <button class="thumb-down disabled"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-details">
+                    <div class="product-navigation">
+                        <ul class="breadcrumb breadcrumb-lg">
+                            <li><a asp-controller="Home" asp-action="index"><i class="d-icon-home"></i></a></li>
+                            <li><a asp-controller="Shop" asp-action="index" class="active">Məhsullar</a></li>
+                            <li>@Model.Product.Name</li>
+                        </ul>
+
+                        <ul class="product-nav">
+                            <li class="product-nav-prev">
+                                <a href="#">
+                                    <i class="d-icon-arrow-left"></i> Prev
+                                    <span class="product-nav-popup">
+                                        <img src="~/assets/images/product/product-thumb-prev.jpg"
+                                             alt="product thumbnail" width="110" height="123">
+                                        <span class="product-name">Sed egtas Dnte Comfort</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="product-nav-next">
+                                <a href="#">
+                                    Next <i class="d-icon-arrow-right"></i>
+                                    <span class="product-nav-popup">
+                                        <img src="~/assets/images/product/product-thumb-next.jpg"
+                                             alt="product thumbnail" width="110" height="123">
+                                        <span class="product-name">Sed egtas Dnte Comfort</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h1 class="product-name">@Model.Product.Name</h1>
+                    <div class="product-meta">
+                        SKU: <span class="product-sku">12345670</span>
+                        Kateqoriya: <span class="product-brand">@Model.Product.Category.Name</span>
+                    </div>
+                    <div class="product-price">@Model.Product.Price&#8380;</div>
+                    <div class="ratings-container">
+                        <div class="ratings-full">
+                            <span class="ratings" style="width:80%"></span>
+                            <span class="tooltiptext tooltip-top"></span>
+                        </div>
+                        <a href="#product-tab-reviews" class="link-to-tab rating-reviews">( 6 reviews )</a>
+                    </div>
+                    <p class="product-short-desc">
+                        @Model.Product.ShortDescription
+                    </p>
+                    <div class="product-form product-color">
+                        <label>Rəng:</label>
+                        <div class="product-variations">
+                            @foreach (var color in Model.Colors)
+                            {
+
+                                <a class="color" data-color-id="@color.Id" data-src="~/assets/images/demos/demo7/products/big1.jpg" href="#"
+                                   style="background-color: @color.HexCode">@(color.Name == "Ağ" || color.Name == "Ag" || color.Name == "White" ? color.Name : "") </a>
+                            }
+                        </div>
+                    </div>
+                    @foreach (var color in Model.Colors)
+                    {
+                        <div data-entity-id="@color.Id" style="display:none;" class="product-form product-size">
+                            <label>Size:</label>
+                            <div class="product-form-group">
+
+                                <div class="product-variations">
+                                    @foreach (var size in Model.ProductSpecifications.Where(ps => ps.ColorId == color.Id))
+                                    {
+                                        <a class="size" data-size-id="@size.SizeId" href="#">@size.Size.Name</a>
+                                    }
+                                </div>
+
+                                <a href="#" class="size-guide">
+                                    <i class="d-icon-th-list"></i>Size
+                                    Guide
+                                </a>
+                            </div>
+                        </div>
+                    }
+                        <hr class="product-divider">
+
+                        <div class="product-form product-qty">
+                            <div class="product-form-group">
+                                <div class="input-group mr-2">
+                                    <button class="quantity-minus d-icon-minus"></button>
+                                    <input class="quantity form-control" id="qty" type="number" min="1" max="1000000">
+                                    <button class="quantity-plus d-icon-plus"></button>
+                                </div>
+                                <button id="btnCart" data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                                    <i class="d-icon-bag"></i>Add to
+                                    Cart
+                                </button>
+                            </div>
+                        </div>
+
+                        <hr class="product-divider mb-3">
+
+                        <div class="product-footer">
+                            <div class="social-links mr-4">
+                                <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
+                                <a href="#" class="social-link social-instagram fab fa-instagram"></a>
+                                <a href="#" class="social-link social-tiktok fab fa-tiktok"></a>
+                            </div>
+                            <span class="divider d-lg-show"></span>
+                            <div class="product-action">
+                                <a href="#" class="btn-product btn-wishlist mr-6">
+                                    <i class="d-icon-heart"></i>Add to
+                                    wishlist
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="accordion accordion-simple mb-4">
+                            <div class="card border-no card-description">
+                                <div class="card-header">
+                                    <a href="#collapse1-1" class="collapse">Description</a>
+                                </div>
+                                <div id="collapse1-1" class="card-body expanded">
+                                    <div class="row">
+                                        <div class="col-12 mb-8">
+                                            <p class="mb-6">
+                                                Praesent id enim sit amet.Tdio vulputate eleifend in in tortor.
+                                                ellus massa. siti iMassa ristique sit amet condim vel, facilisis
+                                                quimequistiqutiqu amet condim Dilisis Facilisis quis sapien.
+                                                Praesent id enim sit amet.
+                                            </p>
+                                            <ul class="mb-6">
+                                                <li>Praesent id enim sit amet.Tdio vulputate</li>
+                                                <li>Eleifend in in tortor. ellus massa.Dristique sitii</li>
+                                                <li>Massa ristique sit amet condim vel</li>
+                                                <li>
+                                                    Dilisis Facilisis quis sapien. Praesent id enim sit amet
+                                                </li>
+                                            </ul>
+                                            <p class="mb-0">
+                                                Praesent id enim sit amet odio vulputate eleifend in in tortor.
+                                                Sellus massa, tristique sitiismonec tellus massa, tristique sit
+                                                amet condim vel,
+                                                facilisis quimequistiqutiqu amet condim vel, facilisis Facilisis
+                                                quis sapien.
+                                                Praesent id enim sit amet odio vulputate odio vulputate eleifend
+                                                in in tortor.
+                                                Sellus massa, tristique sitiismonec tellus massa, tristique sit
+                                                ametcdimel,facilisis
+                                                quimequistiqutiqu amet condim vel, facilisis Facilisis quis
+                                                sapien. Praesent id enim
+                                                sit amet odio vulputate
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-additional">
+                                <div class="card-header">
+                                    <a href="#collapse1-2" class="expand">Additional information</a>
+                                </div>
+                                <div class="card-body collapsed" id="collapse1-2">
+                                    <ul class="list-none">
+                                        <li>
+                                            <label>Kateqoriya:</label>
+                                            <p>@Model.Product.Category.Name</p>
+                                        </li>
+                                        <li>
+                                            <label>Rəng:</label>
+                                            <p></p>
+                                        </li>
+                                        <li>
+                                            <label>Size:</label>
+                                            <p>Large, Medium, Small</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card card-sizeguide">
+                                <div class="card-header">
+                                    <a href="#collapse1-3" class="expand">Size Guide</a>
+                                </div>
+                                <div class="card-body collapsed" id="collapse1-3">
+                                    <figure class="size-image mt-4 mb-4">
+                                        <img src="~/assets/images/product/size_guide.png" alt="Size Guide Image"
+                                             width="217" height="398">
+                                    </figure>
+                                    <figure class="size-table mt-4 mb-4">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>SIZE</th>
+                                                    <th>CHEST(IN.)</th>
+                                                    <th>WEIST(IN.)</th>
+                                                    <th>HIPS(IN.)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>XS</th>
+                                                    <td>34-36</td>
+                                                    <td>27-29</td>
+                                                    <td>34.5-36.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>S</th>
+                                                    <td>36-38</td>
+                                                    <td>29-31</td>
+                                                    <td>36.5-38.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>M</th>
+                                                    <td>38-40</td>
+                                                    <td>31-33</td>
+                                                    <td>38.5-40.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>L</th>
+                                                    <td>40-42</td>
+                                                    <td>33-36</td>
+                                                    <td>40.5-43.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>XL</th>
+                                                    <td>42-45</td>
+                                                    <td>36-40</td>
+                                                    <td>43.5-47.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>XXL</th>
+                                                    <td>45-48</td>
+                                                    <td>40-44</td>
+                                                    <td>47.5-51.5</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="card card-reviews">
+                                <div class="card-header">
+                                    <a href="#collapse1-4" class="expand">Reviews (2)</a>
+                                </div>
+                                <div class="card-body collapsed" id="collapse1-4">
+                                    <div class="comments mb-8 pt-2 pb-2 border-no">
+                                        <ul>
+                                            <li>
+                                                <div class="comment">
+                                                    <figure class="comment-media">
+                                                        <a href="#">
+                                                            <img src="~/assets/images/blog/comments/1.jpg" alt="avatar">
+                                                        </a>
+                                                    </figure>
+                                                    <div class="comment-body">
+                                                        <div class="comment-rating ratings-container mb-0">
+                                                            <div class="ratings-full">
+                                                                <span class="ratings" style="width:80%"></span>
+                                                                <span class="tooltiptext tooltip-top">4.00</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-user">
+                                                            <span class="comment-date text-body">
+                                                                September 22,
+                                                                2020 at 9:42 pm
+                                                            </span>
+                                                            <h4><a href="#">John Doe</a></h4>
+                                                        </div>
+
+                                                        <div class="comment-content">
+                                                            <p>
+                                                                Sed pretium, ligula sollicitudin laoreet viverra,
+                                                                tortor libero sodales leo,
+                                                                eget blandit nunc tortor eu nibh. Nullam mollis.
+                                                                Ut justo. Suspendisse potenti.
+                                                                Sed egestas, ante et vulputate volutpat, eros
+                                                                pede semper est, vitae luctus metus libero eu
+                                                                augue.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="comment">
+                                                    <figure class="comment-media">
+                                                        <a href="#">
+                                                            <img src="~/assets/images/blog/comments/2.jpg" alt="avatar">
+                                                        </a>
+                                                    </figure>
+
+                                                    <div class="comment-body">
+                                                        <div class="comment-rating ratings-container mb-0">
+                                                            <div class="ratings-full">
+                                                                <span class="ratings" style="width:80%"></span>
+                                                                <span class="tooltiptext tooltip-top">4.00</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-user">
+                                                            <span class="comment-date text-body">
+                                                                September 22,
+                                                                2020 at 9:42 pm
+                                                            </span>
+                                                            <h4><a href="#">John Doe</a></h4>
+                                                        </div>
+
+                                                        <div class="comment-content">
+                                                            <p>
+                                                                Sed pretium, ligula sollicitudin laoreet viverra,
+                                                                tortor
+                                                                libero sodales leo, eget blandit nunc tortor eu
+                                                                nibh. Nullam mollis.
+                                                                Ut justo. Suspendisse potenti. Sed egestas, ante
+                                                                et vulputate volutpat,
+                                                                eros pede semper est, vitae luctus metus libero
+                                                                eu augue. Morbi purus libero,
+                                                                faucibus adipiscing, commodo quis, avida id,
+                                                                est. Sed lectus. Praesent elementum
+                                                                hendrerit tortor. Sed semper lorem at felis.
+                                                                Vestibulum volutpat.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- End Comments -->
+                                    <div class="reply">
+                                        <div class="title-wrapper text-left">
+                                            <h3 class="title title-simple text-left text-normal">
+                                                Add a Review
+                                            </h3>
+                                            <p>
+                                                Your email address will not be published. Required fields are
+                                                marked *
+                                            </p>
+                                        </div>
+                                        <div class="rating-form">
+                                            <label for="rating" class="text-dark">Your rating * </label>
+                                            <span class="rating-stars selected">
+                                                <a class="star-1" href="#">1</a>
+                                                <a class="star-2" href="#">2</a>
+                                                <a class="star-3" href="#">3</a>
+                                                <a class="star-4 active" href="#">4</a>
+                                                <a class="star-5" href="#">5</a>
+                                            </span>
+
+                                            <select name="rating" id="rating" required=""
+                                                    style="display: none;">
+                                                <option value="">Rate…</option>
+                                                <option value="5">Perfect</option>
+                                                <option value="4">Good</option>
+                                                <option value="3">Average</option>
+                                                <option value="2">Not that bad</option>
+                                                <option value="1">Very poor</option>
+                                            </select>
+                                        </div>
+                                        <form action="#">
+                                            <textarea id="reply-message" cols="30" rows="6"
+                                                      class="form-control mb-4" placeholder="Comment *"
+                                                      required></textarea>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-5">
+                                                    <input type="text" class="form-control" id="reply-name"
+                                                           name="reply-name" placeholder="Name *" required />
+                                                </div>
+                                                <div class="col-md-6 mb-5">
+                                                    <input type="email" class="form-control" id="reply-email"
+                                                           name="reply-email" placeholder="Email *" required />
+                                                </div>
+                                            </div>
+                                            <div class="form-checkbox mb-4">
+                                                <input type="checkbox" class="custom-checkbox"
+                                                       id="signin-remember" name="signin-remember" />
+                                                <label class="form-control-label" for="signin-remember">
+                                                    Save my name, email, and website in this browser for the
+                                                    next time I comment.
+                                                </label>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-rounded">
+                                                Submit<i class="d-icon-arrow-right"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <section class="pt-3 mt-2">
+            @foreach (var products in Model.Products)
+            {
+                if (Model.Product.CategoryId != products.CategoryId && Model.Product.Id != products.Id)
+                {
+                    count++;
+                }
+            }
+            <h2 class="title justify-content-center">@(count != Model.Products.Count ? "Oxşar məhsullar" : "Oxşar məhsul yoxdur")</h2>
+
+            <div class="owl-carousel owl-theme owl-nav-full row cols-2 cols-md-3 cols-lg-4"
+                 data-owl-options="{
+							'items': 5,
+							'nav': false,
+							'loop': false,
+							'dots': true,
+							'margin': 20,
+							'responsive': {
+								'0': {
+									'items': 2
+								},
+								'768': {
+									'items': 3
+								},
+								'992': {
+									'items': 4,
+									'dots': false,
+									'nav': true
+								}
+							}
+						}">
+                @foreach (var products in Model.Products)
+                {
+                    if (Model.Product.CategoryId == products.CategoryId && Model.Product.Id != products.Id)
+                    {
+                        <div class="product shadow-media">
+                            <figure class="product-media">
+                                <a asp-route-id="@products.Id">
+                                    <img src="~/uploads/images/@products.Images.FirstOrDefault().ImagePath" alt="@products.Name" width="280" height="315">
+                                </a>
+                                <div class="product-action-vertical">
+                                    <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
+                                       data-target="#addCartModal" title="Add to cart">
+                                        <i class="d-icon-bag"></i>
+                                    </a>
+                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist">
+                                        <i class="d-icon-heart"></i>
+                                    </a>
+                                </div>
+                                <div class="product-action">
+                                    <a href="#" class="btn-product btn-quickview" title="Quick View">Quick View</a>
+                                </div>
+                            </figure>
+                            <div class="product-details">
+                                <div class="product-cat">
+                                    <a asp-route-id="@products.Id">@products.Category.Name</a>
+                                </div>
+                                <h3 class="product-name">
+                                    <a asp-route-id="@products.Id">@products.Name</a>
+                                </h3>
+                                <div class="product-price">
+                                    <span class="price">@products.Price</span>
+                                </div>
+                                <div class="ratings-container">
+                                    <div class="ratings-full">
+                                        <span class="ratings" style="width:100%"></span>
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <a href="#" class="rating-reviews">
+                                        ( <span class="review-count">12</span>
+                                        reviews
+                                        )
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </section>
+    </div>
+</div>
+@section js{
+    <script>
+        $(document).ready(function () {
+            let color = $('.product-color .product-variations a.color');
+            color.click(function (item) {
+                $('.product-size').css('display', 'none');
+                $('.product-size .product-variations a.active').removeClass('active');
+                if (!$(item.currentTarget).hasClass('active')) {
+                    let colorId = $(item.currentTarget).data("color-id");
+                    $('.product-size').each(function (index, item) {
+                        if ($(item).data('entity-id') == colorId)
+                            $(item).css('display', 'flex');
+                        let size = $('.product-size .product-variations a.size');
+                        size.click(function (item) {
+                            if ($(item.currentTarget).hasClass('active')) {
+                                $('#btnCart').removeAttr('disabled');
+                            }
+                        })
+                    });
+                }
+                else {
+                    $('.product-size').css('display', 'none');
+                }
+            })
+        });
+        function addToCart(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            let data = $(ev.currentTarget).data();
+            let qty = $(ev.currentTarget).prev().find('#qty').val();
+            let colors = document.querySelectorAll('.color');
+            let color;
+            let size;
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].getAttribute('class') == 'color active') {
+                    color = $(colors[i]).data();
+                }
+            }
+            let sizes = document.querySelectorAll('.size');
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].getAttribute('class') == 'size active') {
+                    size = $(sizes[i]).data();
+                }
+            }
+            let activeSpecs = $('.product-variations a.active');
+            if (qty <= 0) {
+                toastr.warning("Miqdarı düzgün qeyd edin!", "Uğursuz");
+                return;
+            }
+            else if (color == undefined) {
+                toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (size == undefined) {
+                toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (activeSpecs.length != 2) {
+                toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            console.log(data.itemId);
+            console.log(qty);
+            console.log(color.colorId);
+            console.log(size.sizeId);
+            addToBasket(data.itemId, color.colorId, size.sizeId, qty, ev);
+        }
+        function addToBasket(cardId, cardColor, cardSize, cardQty, ev) {
+            let colorAndSize = `${cardId}-${cardColor}-${cardSize}`;
+            console.log(colorAndSize);
+            let items = readFromBasket();
+            let colors = readFromBasketColor();
+            let sizes = readFromBasketSize();
+            let qtys = readFromBasketQty();
+            let colorsAndSizes = readFromBasketColorAndSize();
+            let length = colorsAndSizes.filter(item => item == colorAndSize).length;
+
+            if (length > 0) {
+                toastr.warning("Bu məhsulu artıq əlavə etmisiniz!", "Uğursuz");
+                return;
+            }
+            items.push(cardId);
+            colors.push(cardColor);
+            sizes.push(cardSize);
+            qtys.push(cardQty);
+            colorsAndSizes.push(colorAndSize);
+            $.cookie('cards', items.toString(), { expires: 7, path: '/' });
+            $.cookie('colors', colors.toString(), { expires: 7, path: '/' });
+            $.cookie('sizes', sizes.toString(), { expires: 7, path: '/' });
+            $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
+            $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
+            ev.preventDefault();
+            var t = $(ev.currentTarget).closest(".product");
+            let name = t.find("figure.product-image img").attr("alt");
+            let link = `/shop/details/${cardId}`;
+            let imageSrc = t.find("figure.product-image img").attr("src");
+
+            let price = $("div.product-details div.product-price").html();
+            let count = $("div.product-details").find(".quantity").length > 0 ? $("div.product-details").find(".quantity").val() : 1;
+            console.log(price);
+            console.log(count);
+            let miniBasket = $('#basketProducts');
+            let cartActionContainer = $('div.cart-action');
+            let cartTotalContainer = $('div.cart-total');
+
+
+            let totalPrice = 0;
+            let subTotalPrice = $('div.cart-total span.price');
+            if (subTotalPrice.length == 0) {
+                let productsCart = $('div#basketProducts div.product-cart');
+                if (productsCart.length == 0) {
+                    totalPrice = parseInt(price) * count;
+                }
+            }
+            else {
+                let previousTotalPrice = subTotalPrice.text();
+                totalPrice = parseInt(previousTotalPrice) + (parseInt(price) * count);
+                subTotalPrice.text(totalPrice);
+            }
+            console.log(totalPrice);
+
+
+            //let prices = $('div.cart-total span.price');
+            //let subTotalPriceExistThisProduct = 0;
+            //for (var i = 0; i < prices.length; i++) {
+            //    subTotalPriceExistThisProduct += prices[i];
+            //}
+            //let subTotalPrice = subTotalPriceExistThisProduct + price * count;
+
+            /**/
+            let productContainer = `<div data-specification="${cardId}-${cardColor}-${cardSize}" class="product product-cart">
+                            <figure class="product-media1">
+                                <a href="${link}">
+                                            <img src="${imageSrc}" alt="${name}" width="80"
+                                                 height="88" />
+                                </a>
+                                <button onclick="removeEntity1(${cardId},${cardColor},${cardSize},${cardQty},event)" class="btn btn-link btn-close">
+                                    <i class="fas fa-times"></i><span class="sr-only">Bağla</span>
+                                </button>
+                            </figure>
+                            <div class="product-detail">
+                                <a href="${link}" class="product-name">${name}</a>
+                                <div class="price-box">
+                                        <span class="product-quantity">${count}</span>
+                                        <span class="product-price">${price}</span>
+                                </div>
+                            </div>
+                        </div>
+`
+
+            let cartTotal = `<label>Cəmi:</label>
+                <span class="price">${totalPrice}</span><span>&#8380;</span>`
+            let cartAction = `<a asp-action="basket" asp-controller="shop" class="btn btn-dark btn-link">Səbətə bax</a>
+                <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>`
+
+            $.ajax({
+
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    if (readFromBasket().length == 2) {
+                        cartActionContainer.append(cartAction);
+                        cartTotalContainer.append(cartTotal);
+                        $("div.dropdown-box div.d-flex").remove();
+                    }
+                    toastr.success("Səbətə uğurla əlavə edildi", response.message)
+                    showCardCount();
+                    miniBasket.append(productContainer);
+
+
+                },
+                error: function (response) {
+                    toastr["error"]("Uğursuz", "Əlavə edilmədi")
+                }
+            })
+        }
+    </script>
+}

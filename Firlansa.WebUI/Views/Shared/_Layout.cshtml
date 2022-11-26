@@ -23,7 +23,10 @@
     <link rel="stylesheet" type="text/css" href="~/assets/vendor/animate/animate.min.css">
     <link rel="stylesheet" type="text/css" href="~/assets/vendor/magnific-popup/magnific-popup.min.css">
     <link rel="stylesheet" type="text/css" href="~/assets/vendor/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/assets/css/demo1.min.css" rel="stylesheet" />
+    <link href="~/libs/toastr.js/toastr.css" rel="stylesheet" />
+    <link href="~/admin/files/assets/css/customize.css" rel="stylesheet" />
     @RenderSection("css", required: false)
     <link href="~/assets/css/style.min.css" rel="stylesheet" />
 </head>
@@ -118,71 +121,7 @@
                                 <i class="d-icon-bag"><span class="cart-count">2</span></i>
                             </a>
                             <div class="cart-overlay"></div>
-                            <!-- End Cart Toggle -->
-                            <div class="dropdown-box">
-                                <div class="cart-header">
-                                    <h4 class="cart-title">Shopping Cart</h4>
-                                    <a href="#" class="btn btn-dark btn-link btn-icon-right btn-close">
-                                        close<i class="d-icon-arrow-right"></i><span class="sr-only">Cart</span>
-                                    </a>
-                                </div>
-                                <div class="products scrollable">
-                                    <div class="product product-cart">
-                                        <figure class="product-media">
-                                            <a href="product.html">
-                                                <img src="~/assets/images/cart/product-1.jpg" alt="product" width="80"
-                                                     height="88" />
-                                            </a>
-                                            <button class="btn btn-link btn-close">
-                                                <i class="fas fa-times"></i><span class="sr-only">Close</span>
-                                            </button>
-                                        </figure>
-                                        <div class="product-detail">
-                                            <a href="product.html" class="product-name">Firlansa White Trends</a>
-                                            <div class="price-box">
-                                                <span class="product-quantity">1</span>
-                                                <span class="product-price">$21.00</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!-- End of Cart Product -->
-                                    <div class="product product-cart">
-                                        <figure class="product-media">
-                                            <a href="product.html">
-                                                <img src="~/assets/images/cart/product-2.jpg" alt="product" width="80"
-                                                     height="88" />
-                                            </a>
-                                            <button class="btn btn-link btn-close">
-                                                <i class="fas fa-times"></i><span class="sr-only">Close</span>
-                                            </button>
-                                        </figure>
-                                        <div class="product-detail">
-                                            <a href="product.html" class="product-name">
-                                                Dark Blue Women’s
-                                                Leomora Hat
-                                            </a>
-                                            <div class="price-box">
-                                                <span class="product-quantity">1</span>
-                                                <span class="product-price">$118.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End of Cart Product -->
-                                </div>
-                                <!-- End of Products  -->
-                                <div class="cart-total">
-                                    <label>Subtotal:</label>
-                                    <span class="price">$139.00</span>
-                                </div>
-                                <!-- End of Cart Total -->
-                                <div class="cart-action">
-                                    <a href="cart.html" class="btn btn-dark btn-link">View Cart</a>
-                                    <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>
-                                </div>
-                                <!-- End of Cart Action -->
-                            </div>
-                            <!-- End Dropdown Box -->
+                            @await Component.InvokeAsync("Basket")
                         </div>
                     </div>
                 </div>
@@ -319,7 +258,7 @@
     <script src="~/assets/vendor/jquery/jquery.min.js"></script>
     <script src="~/assets/vendor/elevatezoom/jquery.elevatezoom.min.js"></script>
     <script src="~/assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
     <script src="~/assets/vendor/owl-carousel/owl.carousel.min.js"></script>
     <script src="~/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="~/assets/vendor/isotope/isotope.pkgd.min.js"></script>
@@ -327,7 +266,96 @@
     <script src="~/assets/vendor/jquery.countdown/jquery.countdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/assets/js/main.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer"
-          @RenderSection("js", required: false)
+    <script src="~/admin/files/assets/js/customize.js"></script>
+    <script>
+        function readFromBasket() {
+            return ($.cookie('cards') || '').split(',');
+        }
+        function readFromBasketColor() {
+            return ($.cookie('colors') || '').split(',');
+        }
+        function readFromBasketSize() {
+            return ($.cookie('sizes') || '').split(',');
+        }
+        function readFromBasketColorAndSize() {
+            return ($.cookie('colorAndSizes') || '').split(',');
+        }
+        function readFromBasketQty() {
+            return ($.cookie('qtys') || '').split(',');
+        }
+        function removeEntity1(entityId, entityColor, entitySize, entityQty, ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            console.log(ev.currentTarget)
+            let items = readFromBasket();
+            let colors = readFromBasketColor();
+            let sizes = readFromBasketSize();
+            let colorsAndSizes = readFromBasketColorAndSize();
+            let qtys = readFromBasketQty();
+            let id = entityId.toString();
+            let button = ev.currentTarget;
+            let priceBox = $(button).parent().next().find("div");
+            let deletingPrice = parseFloat($(priceBox).find("span.product-price").html());
+            let deletinCount = parseFloat($(priceBox).find("span.product-quantity").html());
+            const index = items.indexOf(id);
+            if (index > -1) {
+                items.splice(index, 1);
+                colors.splice(index, 1);
+                sizes.splice(index, 1);
+                colorsAndSizes.splice(index, 1);
+                qtys.splice(index, 1);
+            }
+            $.cookie('cards', items.toString(), { expires: 7, path: '/' });
+            $.cookie('colors', colors.toString(), { expires: 7, path: '/' });
+            $.cookie('sizes', sizes.toString(), { expires: 7, path: '/' });
+            $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
+            $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
+            if (items.length > 1) {
+                let deletingSubtotal = deletingPrice * deletinCount;
+                let previousSubtotal = parseFloat($("div.cart-total span.price").html());
+                $("div.cart-total span.price").html(previousSubtotal - deletingSubtotal);
+                console.log(previousSubtotal);
+                console.log($("div.cart-total span.price").html(previousSubtotal - deletingSubtotal));
+            }
+            $.ajax({
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    toastr.success("Successfully Deleted", response.message)
+                    $(`div[data-specification=${entityId}-${entityColor}-${entitySize}]`).remove();
+                    if (window.location.pathname == "/shop/basket") {
+                        $(`tr[data-specification=${entityId}-${entityColor}-${entitySize}]`).remove();
+                    }
+                    showCardCount();
+                    checkCartEmpty();
+                },
+                error: function (response) {
+                    toastr["error"]("Unsuccessfully", "Data has not been deleted")
+                }
+            })
+        }
+        function checkCartEmpty() {
+            let items = readFromBasket();
+            var divContainer = $('<div>', {
+                class: 'd-flex justify-content-center align-items-center'
+            });
+            var h2Tag = $('<h2>').text("Səbət Boşdur").css("margin-top", "20px");
+            let divTag = $('div.dropdown-box');
+
+            /* $('div.step-by').remove();*/
+            if (items.length <= 1) {
+                $('div.cart-total').html("").css("margin", "0px").css("padding", "0px");
+                $('div.cart-action').html("");
+                h2Tag.appendTo(divContainer);
+                divContainer.appendTo(divTag);
+                //$('div.emptyBasketContainer').parent().removeClass("col-lg-8");
+                //$('div.emptyBasketContainer').parent().addClass("col-lg-12");
+            }
+        }
+    </script>
+    @RenderSection("js", required: false)
+
 </body>
 </html>

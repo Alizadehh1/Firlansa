@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Product>
+
+@foreach (var product in Model)
+{
+    string imagePath = product.Images.FirstOrDefault().ImagePath;
+    <div class="product">
+        <figure class="product-media">
+            <a asp-action="details" asp-route-id="@product.Id">
+                <img src="~/uploads/images/@imagePath" alt="@product.Name" width="280" height="315">
+            </a>
+            <div class="product-action-vertical">
+                <a href="#" class="btn-product-icon btn-cart" title="Add to cart">
+                    <i class="d-icon-bag"></i>
+                    <label>Add to cart</label>
+                </a>
+                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist">
+                    <i class="d-icon-heart"></i>
+                </a>
+            </div>
+            <div style="top:unset;" class="product-action">
+                <a asp-action="quickview" asp-route-id="@product.Id" data-toggle="login-modal" class="btn-quickview" title="Quick View">
+                    <i class="d-icon-search"></i>
+                    <label>Quick View</label>
+                </a>
+            </div>
+        </figure>
+        <div class="product-details">
+            <div class="product-cat">
+                <a href="shop-grid-3col.html">@product.Category.Name</a>
+            </div>
+            <h3 class="product-name">
+                <a asp-action="details" asp-route-id="@product.Id">@product.Name</a>
+            </h3>
+            <div class="product-price">
+                <span class="price">@product.Price&#8380;</span>
+            </div>
+            <div class="ratings-container">
+                <div class="ratings-full">
+                    <span class="ratings" style="width:60%"></span>
+                    <span class="tooltiptext tooltip-top"></span>
+                </div>
+                <a asp-action="details" asp-route-id="@product.Id" class="rating-reviews">( 16 reviews )</a>
+            </div>
+
+        </div>
+    </div>
+}

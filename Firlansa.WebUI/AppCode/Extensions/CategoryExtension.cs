@@ -11,7 +11,7 @@ namespace Firlansa.WebUI.AppCode.Extensions
         public static HtmlString GetCategoriesRaw(this List<Category> categories)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("<ul class=\"widget-body filter-items search-ul\">");
+            sb.Append("<ul id=\"categoryFilter\" class=\"widget-body filter-items\">");
             foreach (var category in categories.Where(c => c.ParentId == null))
             {
                 if (category.Children != null)
@@ -31,7 +31,7 @@ namespace Firlansa.WebUI.AppCode.Extensions
             }
             bool hasChild = category.Children.Any();
             sb.Append($"<li {(hasChild ? "class=with-ul" : "")}>" +
-                $"<a href=\"/shop/categories/{category.Id}\">{category.Name}");
+                $"<a data-entity-id=\"{category.Id}\" >{category.Name}");
             if (hasChild)
                 sb.Append("<i class=\"fas fa-chevron-down\"></i>");
             sb.Append("</a>");

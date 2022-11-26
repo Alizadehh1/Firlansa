@@ -261,3 +261,12 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\A
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Details.cshtml.g.cs
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Edit.cshtml.g.cs
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Index.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.csproj.AssemblyReference.cache
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Shop\Details.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Shop\Basket.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Shared\Components\Basket\Default.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Shop\Quickview.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Views\Shop\_ProductContainer.cshtml.g.cs

@@ -1,0 +1,97 @@
+﻿@model ShopViewModel
+@{
+    Layout = null;
+}
+<div class="product product-single row product-popup">
+    <div class="col-md-6">
+        <div class="product-gallery">
+            <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
+                <figure class="product-image main">
+                    <img src="~/uploads/images/@Model.Product.Images.FirstOrDefault(i=>i.IsMain==true).ImagePath"
+                         alt="@Model.Product.Name" width="580" height="580">
+                </figure>
+                @foreach (var image in Model.Product.Images.Where(i => i.IsMain == false))
+                {
+                    <figure class="product-image">
+                        <img src="~/uploads/images/@image.ImagePath" alt="@Model.Product.Name"
+                             width="580" height="580">
+                    </figure>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="product-details scrollable pr-0 pr-md-3">
+            <h1 class="product-name mt-0">@Model.Product.Name</h1>
+            <div class="product-meta">
+                SKU: <span class="product-sku">12345670</span>
+                Kateqoriya: <span class="product-brand">@Model.Product.Category.Name</span>
+            </div>
+            <div class="product-price">@Model.Product.Price&#8380;</div>
+            <div class="ratings-container">
+                <div class="ratings-full">
+                    <span class="ratings" style="width:80%"></span>
+                    <span class="tooltiptext tooltip-top"></span>
+                </div>
+                <a href="#product-tab-reviews" class="link-to-tab rating-reviews">( 11 reviews )</a>
+            </div>
+            <p class="product-short-desc">
+                @Model.Product.ShortDescription
+            </p>
+
+            <div class="product-form product-color">
+                <label>Rəng:</label>
+                <div class="product-variations">
+                    @foreach (var color in Model.Colors)
+                    {
+
+                        <a class="color" data-color-id="@color.Id" data-src="~/assets/images/demos/demo7/products/big1.jpg" href="#"
+                           style="background-color: @color.HexCode"></a>
+                    }
+                </div>
+            </div>
+            @foreach (var color in Model.Colors)
+            {
+                <div data-entity-id="@color.Id" style="display:none;" class="product-form product-size">
+                    <label>Size:</label>
+                    <div class="product-form-group">
+                        <div class="product-variations">
+                            @foreach (var size in Model.ProductSpecifications.Where(ps => ps.ColorId == color.Id))
+                            {
+                                <a class="size" data-size-id="@size.SizeId" href="#">@size.Size.Name</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <hr class="product-divider">
+
+            <div class="product-form product-qty">
+                <div class="product-form-group">
+                    <div class="input-group mr-2">
+                        <button class="quantity-minus d-icon-minus"></button>
+                        <input class="quantity form-control" id="qty" type="number" min="1" max="1000000">
+                        <button class="quantity-plus d-icon-plus"></button>
+                    </div>
+                    <button data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                        <i class="d-icon-bag"></i>Add to
+                        Cart
+                    </button>
+                </div>
+            </div>
+
+            <hr class="product-divider mb-3">
+            <div class="product-footer">
+                <div class="social-links mr-4">
+                    <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
+                    <a href="#" class="social-link social-instagram fab fa-instagram"></a>
+                    <a href="#" class="social-link social-tiktok fab fa-tiktok"></a>
+                </div>
+                <a href="#" class="btn-product btn-wishlist mr-4"><i class="d-icon-heart"></i>Add to wishlist</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

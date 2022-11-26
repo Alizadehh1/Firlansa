@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 
 namespace Firlansa.WebUI
@@ -37,9 +38,8 @@ namespace Firlansa.WebUI
                 .Build();
 
                 cfg.Filters.Add(new AuthorizeFilter(policy));
-
-
-            });
+            })
+                .AddNewtonsoftJson(cfg =>cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddRouting(cfg =>
             {
@@ -114,7 +114,7 @@ namespace Firlansa.WebUI
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-            
+
             app.UseRouting();
 
             app.UseAuthentication();

@@ -1,0 +1,341 @@
+﻿@model Tuple<List<Product>, int[], int[], int[]>
+@{
+    ViewData["Title"] = "Basket";
+}
+
+<div class="page-content pt-7 pb-10">
+    @if (Model.Item2 != null)
+    {
+        if (Model.Item2.Length != 0)
+        {
+            <div class="step-by pr-4 pl-4">
+                <h3 class="title title-simple title-step active"><a href="cart.html">1. Shopping Cart</a></h3>
+                <h3 class="title title-simple title-step"><a href="checkout.html">2. Checkout</a></h3>
+                <h3 class="title title-simple title-step"><a href="order.html">3. Order Complete</a></h3>
+            </div>
+        }
+    }
+    <div class="container mt-7 mb-2">
+        <div class="row">
+            <div class="col-lg-@(Model.Item2?.Length == 0 || Model.Item2 == null ? "12" : "8") col-md-12 pr-lg-4">
+                <div class="emptyBasketContainer">
+                    @if (Model.Item2?.Length == 0 || Model.Item2 == null)
+                    {
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <i class="emptyBasket fa-solid fa-cart-shopping"></i>
+                            <h1 class="emptyBasketText">Səbətiniz Boşdur</h1>
+                        </div>
+                    }
+                </div>
+                @if (Model.Item2 != null)
+                {
+                    if (Model.Item2.Length != 0)
+                    {
+                        //int index = 0;
+                        <table class="shop-table cart-table shipping">
+                            <thead>
+                                <tr>
+                                    <th><span>Məhsul</span></th>
+                                    <th>Ad</th>
+                                    <th>Rəng</th>
+                                    <th>Ölçü</th>
+                                    <th>Qiymət</th>
+                                    <th style="text-align:center;">Ədəd</th>
+                                    <th>Yekun</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Item1.Count; i++)
+                                {
+                                    <tr id="entityTr" data-id="@Model.Item1[i].Id" data-specification="@Model.Item1[i].Id-@Model.Item2[i]-@Model.Item3[i]" data-entity-id="@Model.Item1[i].Id" data-price="@Model.Item1[i].Price" data-quantity="@Model.Item4[i]">
+                                        <td class="product-thumbnail">
+                                            <figure>
+                                                <a href="product-simple.html">
+                                                    <img src="~/uploads/images/@Model.Item1[i].Images.FirstOrDefault().ImagePath" width="100" height="100"
+                                                         alt="@Model.Item1[i].Name">
+                                                </a>
+                                            </figure>
+                                        </td>
+                                        <td class="product-name">
+                                            <div class="product-name-section">
+                                                <a asp-action="details" asp-controller="shop" asp-route-id="@Model.Item1[i].Id">
+                                                    @Model.Item1[i].Name
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="product-name">
+                                            <div class="product-name-section">
+                                                <span>@Model.Item1[i].Specifications.FirstOrDefault(s => s.ColorId == Model.Item2[i]).Color.Name</span>
+                                            </div>
+                                        </td>
+
+                                        <td class="product-name">
+                                            <div class="product-name-section">
+                                                <span>@Model.Item1[i].Specifications.FirstOrDefault(s => s.SizeId == Model.Item3[i]).Size.Name</span>
+                                            </div>
+                                        </td>
+
+                                        <td class="product-subtotal">
+                                            <span class="amount">@Model.Item1[i].Price₼</span>
+                                        <td class="product-quantity">
+                                            <div class="input-group">
+                                                <button class="quantity-minus d-icon-minus" onclick="minusQuantity(event)"></button>
+                                                <input type="number" value="@Model.Item4[i]" class="quantity1 form-control d-flex justify-content-center align-items-center" />
+                                                <button class=" quantity-plus d-icon-plus" onclick="plusQuantity(event)"></button>
+                                            </div>
+                                        </td>
+                                        <td class="product-price">
+                                            <span class="amount">@(Model.Item1[i].Price * Model.Item4[i])₼</span>
+                                        </td>
+                                        <td class="product-close">
+                                            <a onclick="removeEntity(@Model.Item1[i].Id,@Model.Item2[i],@Model.Item3[i],@Model.Item4[i])" class="product-remove" title="Məhsulu silin">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+                <div class="cart-actions mb-6 pt-4">
+                    <a asp-action="index" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4"><i class="d-icon-arrow-left"></i>Alış-Verİşə davam et</a>
+                    <button type="submit" class="btn btn-outline btn-dark btn-md btn-rounded btn-disabled">Update Cart</button>
+                </div>
+            </div>
+            @if (Model.Item2 != null)
+            {
+                if (Model.Item2.Length != 0)
+                {
+                    <aside id="placingOrder" class="col-lg-4 sticky-sidebar-wrapper">
+                        <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
+                            <div class="summary mb-4">
+                                <h3 class="summary-title text-left">Cart Totals</h3>
+                                <table class="shipping">
+                                    <tr class="summary-subtotal">
+                                        <td>
+                                            <h4 class="summary-subtitle">Subtotal</h4>
+                                        </td>
+                                        <td>
+                                            <p class="summary-subtotal-price">$426.99</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="sumnary-shipping shipping-row-last">
+                                        <td colspan="2">
+                                            <h4 class="summary-subtitle">Calculate Shipping</h4>
+                                            <ul>
+                                                <li>
+                                                    <div class="custom-radio">
+                                                        <input type="radio" id="flat_rate" name="shipping" class="custom-control-input" checked>
+                                                        <label class="custom-control-label" for="flat_rate">Flat rate</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="custom-radio">
+                                                        <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
+                                                        <label class="custom-control-label" for="free-shipping">
+                                                            Free
+                                                            shipping
+                                                        </label>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="custom-radio">
+                                                        <input type="radio" id="local_pickup" name="shipping" class="custom-control-input">
+                                                        <label class="custom-control-label" for="local_pickup">Local pickup</label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="shipping-address">
+                                    <label>Shipping to <strong>CA.</strong></label>
+                                    <div class="select-box">
+                                        <select name="country" class="form-control">
+                                            <option value="us" selected>United States (US)</option>
+                                            <option value="uk"> United Kingdom</option>
+                                            <option value="fr">France</option>
+                                            <option value="aus">Austria</option>
+                                        </select>
+                                    </div>
+                                    <div class="select-box">
+                                        <select name="country" class="form-control">
+                                            <option value="us" selected>California</option>
+                                            <option value="uk">Alaska</option>
+                                            <option value="fr">Delaware</option>
+                                            <option value="aus">Hawaii</option>
+                                        </select>
+                                    </div>
+                                    <input type="text" class="form-control" name="code" placeholder="Town / City" />
+                                    <input type="text" class="form-control" name="code" placeholder="ZIP" />
+                                    <a href="#" class="btn btn-md btn-dark btn-rounded btn-outline">Update totals</a>
+                                </div>
+                                <table class="total">
+                                    <tr class="summary-subtotal">
+                                        <td>
+                                            <h4 class="summary-subtitle">Total</h4>
+                                        </td>
+                                        <td>
+                                            <p class="summary-total-price ls-s">$426.99</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <a href="checkout.html" class="btn btn-dark btn-rounded btn-checkout">Proceed to checkout</a>
+                            </div>
+                        </div>
+                    </aside>
+                }
+            }
+        </div>
+    </div>
+</div>
+@section js{
+    <script>
+        function showCardCount() {
+            let items = readFromBasket();
+            $('span.cart-count').html(items.length - 1);
+        }
+        function checkCart() {
+            let items = readFromBasket();
+            var divContainer = $('<div>', {
+                class: 'd-flex flex-column justify-content-center align-items-center'
+            });
+            var iTag = $('<i>', {
+                class: 'emptyBasket fa-solid fa-cart-shopping'
+            });
+            var h1Tag = $('<h1>').text("Səbətiniz Boşdur").addClass("emptyBasketText");
+            let divTag = $('div.emptyBasketContainer');
+
+            $('div.step-by').remove();
+            if (items.length <= 1) {
+                $('table.shipping').remove();
+                $('aside#placingOrder').remove();
+                iTag.appendTo(divContainer);
+                h1Tag.appendTo(divContainer);
+                divContainer.appendTo(divTag);
+                $('div.emptyBasketContainer').parent().removeClass("col-lg-8");
+                $('div.emptyBasketContainer').parent().addClass("col-lg-12");
+            }
+        }
+        function setTotalPrice() {
+            let items = document.querySelectorAll('td.product-price span.amount');
+            let totalPrice = 0;
+            for (var i = 0; i < items.length; i++) {
+                totalPrice = totalPrice + parseInt(items[i].textContent);
+            }
+            $('p.summary-subtotal-price').html(`${totalPrice}₼`);
+        }
+        setTotalPrice();
+        function removeEntity(entityId, entityColor, entitySize ,entityQty) {
+            let items = readFromBasket();
+            let colors = readFromBasketColor();
+            let sizes = readFromBasketSize();
+            let colorsAndSizes = readFromBasketColorAndSize();
+            let qtys = readFromBasketQty();
+            let id = entityId.toString();
+            const index = items.indexOf(id);
+            if (index > -1) {
+                items.splice(index, 1);
+                colors.splice(index, 1);
+                sizes.splice(index, 1);
+                colorsAndSizes.splice(index, 1);
+                qtys.splice(index, 1);
+
+            }
+            $.cookie('cards', items.toString(), { expires: 7, path: '/' });
+            $.cookie('colors', colors.toString(), { expires: 7, path: '/' });
+            $.cookie('sizes', sizes.toString(), { expires: 7, path: '/' });
+            $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
+            $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
+            $.ajax({
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    toastr.success("Successfully Deleted", response.message)
+                    $(`tr[data-specification=${entityId}-${entityColor}-${entitySize}]`).remove();
+                    $(`div[data-specification=${entityId}-${entityColor}-${entitySize}]`).remove();
+                    showCardCount();
+                    setTotalPrice();
+                    checkCart();
+                },
+                error: function (response) {
+                    toastr["error"]("Unsuccessfully", "Data has not been deleted")
+                }
+            })
+        }
+        function plusQuantity(e) {
+            e.preventDefault();
+            let row = $(e.currentTarget).closest('tr')
+            let data = $(row).data();
+            let quantity = $(row).find('input.quantity1').val();
+            if (!isNaN(quantity)) {
+                quantity++;
+                $(row).data('quantity', quantity);
+            }
+            $(row).find('input.quantity1').val(quantity);
+            $(row).find('td.product-price .amount').html(`${(data.price * quantity)}₼`);
+            setTotalPrice();
+        }
+        function minusQuantity(e) {
+            e.preventDefault();
+            let row = $(e.currentTarget).closest('tr')
+            let data = $(row).data();
+            let quantity = $(row).find('input.quantity1').val();
+            if (quantity == 1) {
+                return
+            }
+            if (!isNaN(quantity)) {
+                quantity--
+                $(row).data('quantity', quantity);
+
+            }
+            $(row).find('input.quantity1').val(quantity);
+            $(row).find('td.product-price .amount').html(`${(data.price * quantity)}₼`);
+            setTotalPrice();
+        }
+        @*function placeOrder() {
+            let btn = document.getElementById('placeOrderBtn');
+            btn.disabled = true;
+            let items = document.querySelectorAll('#entityTr');
+            let productIds = [];
+            let quantity = [];
+            let price = [];
+            for (var i = 0; i < items.length; i++) {
+                let data = $(items[i]).data();
+                productIds.push(data.id);
+                quantity.push(data.quantity);
+                price.push(data.price);
+            }
+            let totalAmount = $('p.summary-subtotal-price').html();
+            let itemsIds = readFromBasket();
+            let itemsPrice = readFromBasketPrices();
+            itemsIds.splice(0, itemsIds.length);
+            itemsPrice.splice(0, itemsPrice.length);
+            $.cookie('cards', itemsIds.toString(), { expires: 7, path: '/' });
+            $.cookie('prices', itemsPrice.toString(), { expires: 7, path: '/' });
+            $.ajax({
+                url: "@Url.Action("PlaceOrder")",
+                data: {
+                    productIds: productIds.toString(),
+                    quantities: quantity.toString(),
+                    totalAmount: totalAmount,
+                    prices: price.toString()
+                },
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, 'Error!');
+                        btn.disabled = false;
+                        return;
+                    }
+                    btn.disabled = false;
+                    toastr.success(response.message, 'Success!');
+                    location.href = `@Url.Action("Index")`;
+                }
+            });
+        }*@
+    </script>
+}
