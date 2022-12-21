@@ -74,6 +74,7 @@ namespace Firlansa.WebUI
             {
                 cfg.LoginPath = "/signin.html";
                 cfg.AccessDeniedPath = "/accessdenied.html";
+                cfg.LogoutPath = "/logout.html";
 
                 cfg.ExpireTimeSpan = new TimeSpan(60, 0, 5, 0);
                 cfg.Cookie.Name = "Firlansa";

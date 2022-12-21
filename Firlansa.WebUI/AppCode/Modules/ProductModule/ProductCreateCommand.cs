@@ -16,8 +16,10 @@ namespace Firlansa.WebUI.AppCode.Modules.ProductModule
     {
         public string Name { get; set; }
         public string ShortDescription { get; set; }
+        public string Description { get; set; }
         public int CategoryId { get; set; }
         public double Price { get; set; }
+        public double? OldPrice { get; set; }
         public string ForSearch { get; set; }
         public ProductSpecification[] Specification { get; set; }
         public ImageItem[] Images { get; set; }
@@ -45,8 +47,10 @@ namespace Firlansa.WebUI.AppCode.Modules.ProductModule
 
                 product.Name = request.Name;
                 product.CategoryId = request.CategoryId;
+                product.Description = request.Description;
                 product.ShortDescription = request.ShortDescription;
                 product.Price = request.Price;
+                product.OldPrice = request.OldPrice;
                 product.ForSearch = request.Name;
 
 

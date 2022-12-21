@@ -45,7 +45,7 @@
                     @foreach (var color in Model.Colors)
                     {
 
-                        <a class="color" data-color-id="@color.Id" data-src="~/assets/images/demos/demo7/products/big1.jpg" href="#"
+                        <a onclick="specificationsDetermine(event)" class="color" data-color-id="@color.Id" data-src="~/assets/images/demos/demo7/products/big1.jpg" href="#"
                            style="background-color: @color.HexCode"></a>
                     }
                 </div>
@@ -74,7 +74,7 @@
                         <input class="quantity form-control" id="qty" type="number" min="1" max="1000000">
                         <button class="quantity-plus d-icon-plus"></button>
                     </div>
-                    <button data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                    <button id="btnCart" data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
                         <i class="d-icon-bag"></i>Add to
                         Cart
                     </button>

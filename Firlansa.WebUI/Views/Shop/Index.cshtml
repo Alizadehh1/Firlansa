@@ -6,7 +6,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a asp-controller="home" asp-action="index"><i class="d-icon-home"></i></a></li>
-            <li>Shop</li>
+            <li>Məhsullar</li>
         </ul>
     </div>
 </nav>
@@ -169,43 +169,38 @@
                         });
                         console.log(verticalActionDiv);
                         $('figure.product-media .product-action').css("display", "flex");
-                        //$('.product-details .product-action .btn-quickview').remove();
-
                         $(item).find('figure.product-media').append(verticalActionDiv);
-                        //let btnQuickview = $('.product-action .btn-quickview');
-                        
-                        //verticalAction.append(btnQuickview);
                     }
                 })
 
             })
             
         })
-        //$(document).ready(function () {
-        //    let color = $('.product-color .product-variations a.color');
-        //    color.click(function (item) {
-        //        console.log("salam")
-        //        $('.product-size').css('display', 'none');
-        //        $('.product-size .product-variations a.active').removeClass('active');
-        //        if (!$(item.currentTarget).hasClass('active')) {
-                    
-        //            let colorId = $(item.currentTarget).data("color-id");
-        //            $('.product-size').each(function (index, item) {
-        //                if ($(item).data('entity-id') == colorId)
-        //                    $(item).css('display', 'flex');
-        //                let size = $('.product-size .product-variations a.size');
-        //                size.click(function (item) {
-        //                    if ($(item.currentTarget).hasClass('active')) {
-        //                        $('#btnCart').removeAttr('disabled');
-        //                    }
-        //                })
-        //            });
-        //        }
-        //        else {
-        //            $('.product-size').css('display', 'none');
-        //        }
-        //    })
-        //});
+
+        function specificationsDetermine(e) {
+            console.log("salam")
+            $('.product-size').css('display', 'none');
+            $('.product-size .product-variations a.active').removeClass('active');
+            if (!$(e.currentTarget).hasClass('active')) {
+
+                let colorId = $(e.currentTarget).data("color-id");
+                $('.product-size').each(function (index, item) {
+                    if ($(item).data('entity-id') == colorId)
+                        $(item).css('display', 'flex');
+                    let size = $('.product-size .product-variations a.size');
+                    console.log('sakanaaaa')
+                    console.log(size)
+                    size.click(function (item) {
+                        if ($(item.currentTarget).hasClass('active')) {
+                            $('#btnCart').removeAttr('disabled');
+                        }
+                    })
+                });
+            }
+            else {
+                $('.product-size').css('display', 'none');
+            }
+        }
 
         function addToCart(ev) {
             ev.preventDefault();

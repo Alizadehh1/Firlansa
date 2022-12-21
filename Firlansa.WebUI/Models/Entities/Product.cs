@@ -15,6 +15,9 @@ namespace Firlansa.WebUI.Models.Entities
         public string ShortDescription { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public double Price { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public double? OldPrice { get; set; }
+        public string Description { get; set; }
         public string ForSearch { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
         public virtual ICollection<ProductSpecification> Specifications { get; set; }

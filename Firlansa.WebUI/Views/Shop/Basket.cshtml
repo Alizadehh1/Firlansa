@@ -88,7 +88,7 @@
                                             <span class="amount">@(Model.Item1[i].Price * Model.Item4[i])₼</span>
                                         </td>
                                         <td class="product-close">
-                                            <a onclick="removeEntity(@Model.Item1[i].Id,@Model.Item2[i],@Model.Item3[i],@Model.Item4[i])" class="product-remove" title="Məhsulu silin">
+                                            <a onclick="removeEntity(@Model.Item1[i].Id,@Model.Item2[i],@Model.Item3[i],@Model.Item4[i])" class="product-remove" style="cursor:pointer;" title="Məhsulu silin">
                                                 <i class="fas fa-times"></i>
                                             </a>
                                         </td>
@@ -110,19 +110,19 @@
                     <aside id="placingOrder" class="col-lg-4 sticky-sidebar-wrapper">
                         <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
                             <div class="summary mb-4">
-                                <h3 class="summary-title text-left">Cart Totals</h3>
+                                <h3 class="summary-title text-left">Səbət Ümumi</h3>
                                 <table class="shipping">
                                     <tr class="summary-subtotal">
                                         <td>
-                                            <h4 class="summary-subtitle">Subtotal</h4>
+                                            <h4 class="summary-subtitle">Ümumi qiymət</h4>
                                         </td>
                                         <td>
-                                            <p class="summary-subtotal-price">$426.99</p>
+                                            <p class="summary-subtotal-price">0₼</p>
                                         </td>
                                     </tr>
                                     <tr class="sumnary-shipping shipping-row-last">
                                         <td colspan="2">
-                                            <h4 class="summary-subtitle">Calculate Shipping</h4>
+                                            <h4 class="summary-subtitle">Çatdırılma hesablanması</h4>
                                             <ul>
                                                 <li>
                                                     <div class="custom-radio">

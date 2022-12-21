@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label asp-for="Name" class="control-label">Ad</label>
                                 <input asp-for="Name" class="form-control" />
@@ -54,7 +54,7 @@
                                 <select asp-for="CategoryId" class="form-control select2" asp-items="ViewBag.CategoryId"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12">
                             <div class="form-group">
                                 <label asp-for="ShortDescription" class="control-label">Qısa detallı</label>
                                 <input asp-for="ShortDescription" class="form-control" />
@@ -67,6 +67,22 @@
                                     <span class="input-group-text" id="basic-addon1">&#8380;</span>
                                 </div>
                                 <input asp-for="Price" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="OldPrice" class="control-label">Köhnə Qiymət(Məhsul endirimdədirsə)</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">&#8380;</span>
+                                </div>
+                                <input asp-for="OldPrice" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label">Detallı</label>
+                                <textarea asp-for="Description" class="form-control editor"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -115,8 +131,19 @@
 @section js{
     <script src="~/libs/multiple-imager-js/js/imager.js"></script>
     <script src="~/libs/tab-control/tab-control.js"></script>
+    <script src="~/libs/ckeditor5/ckeditor.min.js"></script>
     <script>
+        document.querySelectorAll('.editor').forEach(function (item, index) {
+            ClassicEditor
+                .create(item)
+                .then(editor => {
+                    console.log(editor);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
 
+        });
         const selectColors = `@Html.DropDownList("ColorId",@ViewBag.Colors,null,htmlAttributes:new {
                 @class="form-control select2",
                 id="#s1#"

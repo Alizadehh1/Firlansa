@@ -32,29 +32,22 @@
 </head>
 <body class="home">
     <div class="page-wrapper">
-        <h1 class="d-none">Firlansa - Responsive eCommerce HTML Template</h1>
+        <h1 class="d-none">Firlansa - onlayn geyim mağazası</h1>
         <header class="header">
             <div class="header-top">
                 <div class="container">
                     <div class="header-left">
-                        <p class="welcome-msg">Welcome to Firlansa store message or remove it!</p>
+                        <p class="welcome-msg">Firlansa onlayn geyim mağazasına xoş gəlmisiniz</p>
                     </div>
                     <div class="header-right">
-                        <div class="dropdown">
-                            <a href="#currency">USD</a>
-                            <ul class="dropdown-box">
-                                <li><a href="#USD">USD</a></li>
-                                <li><a href="#EUR">EUR</a></li>
-                            </ul>
-                        </div>
                         <div class="dropdown ml-5">
-                            <a href="#language">ENG</a>
+                            <a href="#language">AZ</a>
                             <ul class="dropdown-box">
                                 <li>
-                                    <a href="#USD">ENG</a>
+                                    <a href="#RU">RU</a>
                                 </li>
                                 <li>
-                                    <a href="#EUR">FRH</a>
+                                    <a href="#ENG">ENG</a>
                                 </li>
                             </ul>
                         </div>
@@ -98,27 +91,26 @@
                         </div>
                     </div>
                     <div class="header-right">
-                        <a href="tel:#" class="icon-box icon-box-side">
+                        <a href="tel:+994513614581" class="icon-box icon-box-side">
                             <div class="icon-box-icon mr-0 mr-lg-2">
                                 <i class="d-icon-phone"></i>
                             </div>
                             <div class="icon-box-content d-lg-show">
-                                <h4 class="icon-box-title">Call Us Now:</h4>
-                                <p>0(800) 123-456</p>
+                                <h4 class="icon-box-title">Elə indi əlaqə saxla:</h4>
+                                <p>+994513614581</p>
                             </div>
                         </a>
                         <span class="divider"></span>
                         <a href="wishlist.html" class="wishlist">
                             <i class="d-icon-heart"></i>
                         </a>
-                        <span class="divider"></span>
+                        <span style="margin-left:1rem;" class="divider"></span>
                         <div class="dropdown cart-dropdown type2 cart-offcanvas mr-0 mr-lg-2">
                             <a href="#" class="cart-toggle label-block link">
-                                <div class="cart-label d-lg-show">
-                                    <span class="cart-name">Shopping Cart:</span>
-                                    <span class="cart-price">$0.00</span>
-                                </div>
-                                <i class="d-icon-bag"><span class="cart-count">2</span></i>
+                                @*<div class="cart-label d-lg-show">
+                                    <span class="cart-name">Səbət</span>
+                                </div>*@
+                                <i class="d-icon-bag"><span class="cart-count">0</span></i>
                             </a>
                             <div class="cart-overlay"></div>
                             @await Component.InvokeAsync("Basket")

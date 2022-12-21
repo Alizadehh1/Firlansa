@@ -32,16 +32,8 @@
                 <a asp-action="details" asp-route-id="@product.Id">@product.Name</a>
             </h3>
             <div class="product-price">
-                <span class="price">@product.Price&#8380;</span>
+                <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>
             </div>
-            <div class="ratings-container">
-                <div class="ratings-full">
-                    <span class="ratings" style="width:60%"></span>
-                    <span class="tooltiptext tooltip-top"></span>
-                </div>
-                <a asp-action="details" asp-route-id="@product.Id" class="rating-reviews">( 16 reviews )</a>
-            </div>
-
         </div>
     </div>
 }

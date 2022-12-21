@@ -1,6 +1,7 @@
 ﻿using Firlansa.WebUI.Models;
 using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
+using Firlansa.WebUI.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +24,19 @@ namespace Firlansa.WebUI.Controllers
             this.db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = new HomeViewModel();
+            model.LastestProducts = (from data in db.Products
+                                     orderby data.CreatedDated descending
+                                     select data).Take(3).Include(p => p.Images.Where(i => i.IsMain == true)).Include(p=>p.Category).ToList();
+            model.SaleProducts = db.Products
+                .Where(p => p.OldPrice != null)
+                .Take(3)
+                .Include(p => p.Images.Where(i => i.IsMain == true))
+                .Include(p => p.Category)
+                .ToList();
+            return View(model);
         }
         public IActionResult About()
         {

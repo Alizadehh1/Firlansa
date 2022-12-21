@@ -61,6 +61,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label asp-for="Description" class="col-sm-2 col-form-label">Detallı</label>
+                    <div class="col-sm-5">
+                        <p class="form-control">@Html.Raw(Model.Description)</p>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label asp-for="Price" class="col-sm-2 col-form-label">Qiymət</label>
                     <div class="col-sm-5">
                         <p class="form-control">@Model.Price&#8380;</p>
