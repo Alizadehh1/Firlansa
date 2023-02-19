@@ -116,6 +116,9 @@
                                             <td>
                                                 <select asp-items="@ViewBag.Sizes" class="form-control select2" selected-id="@item.SizeId"></select>
                                             </td>
+                                            <td>
+                                                <input type="number" class="form-control" asp-for="@item.Quantity" />
+                                            </td>
                                             <td class="table-operations">
                                             </td>
                                         </tr>
@@ -204,21 +207,24 @@
                 $('#specification tbody tr').each(function (index, item) {
                     const colorId = $(item).find('td:nth-child(1) select').val();
                     const sizeId = $(item).find('td:nth-child(2) select').val();
+                    const quantity = $(item).find('td:nth-child(3) input').val();
 
                     const filtered = specification.filter((pItem) => {
-                        return pItem.colorId == colorId && pItem.sizeId == sizeId;
+                        return pItem.colorId == colorId && pItem.sizeId == sizeId && pItem.quantity == quantity;
                     });
                     if (filtered.length > 0) {
                         return;
                     }
                     specification.push({
                         colorId: colorId,
-                        sizeId: sizeId
+                        sizeId: sizeId,
+                        quantity: quantity
                     });
                 });
                 $(specification).each(function (index,item) {
                     formData.set(`Specification[${index}].SizeId`, item.sizeId);
                     formData.set(`Specification[${index}].ColorId`, item.colorId);
+                    formData.set(`Specification[${index}].Quantity`, item.quantity);
                 });
                 /*
 
@@ -312,7 +318,8 @@
             const tBody = $(e.currentTarget).closest('table').find('tbody');
             const tr = $(`<tr>
                             <td>${(selectColors.replace('#s1#',  newid()))}</td>
-                            <td>${(selectSizes.replace('#s2#',  newid()))}</td>
+                            <td>${(selectSizes.replace('#s2#', newid()))}</td>
+                            <td><input class="form-control" type="number"/></td>
                             </tr>`);
 
 

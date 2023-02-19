@@ -1,0 +1,144 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Wishlist";
+}
+
+<nav class="breadcrumb-nav">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a asp-action="index" asp-controller="home"><i class="d-icon-home"></i></a></li>
+            <li>Seçilmişlər</li>
+        </ul>
+    </div>
+</nav>
+<div class="page-content pt-10 pb-10 mb-2">
+    <div class="container">
+        <div class="emptyWishlistContainer">
+
+        </div>
+        @if (Model.Count > 0)
+        {
+            <table class="shop-table wishlist-table mt-2 mb-4">
+                <thead>
+                    <tr>
+                        <th class="product-name"><span>Məhsul</span></th>
+                        <th class="product-name">Ad</th>
+                        <th class="product-price"><span>Kateqoriya</span></th>
+                        <th class="product-price"><span>Qiymət</span></th>
+                        @*<th class="product-stock-status"><span>Stok vəziyyəti</span></th>*@
+                        <th class="product-add-to-cart"></th>
+                        <th class="product-remove"></th>
+                    </tr>
+                </thead>
+                <tbody class="wishlist-items-wrapper">
+                    @foreach (var product in Model)
+                    {
+                        var imagePath = product.Images.FirstOrDefault().ImagePath;
+                        <tr id="entityTr" data-entity-id="@product.Id">
+                            <td class="product-thumbnail">
+                                <a asp-action="details" asp-route-id="@product.Id">
+                                    <figure>
+                                        <img src="~/uploads/images/@imagePath" width="100" height="100"
+                                             alt="@product.Name">
+                                    </figure>
+                                </a>
+                            </td>
+                            <td class="product-name">
+                                <a asp-action="details" asp-route-id="@product.Id">@product.Name</a>
+                            </td>
+                            <td class="product-price">
+                                <span class="amount">@product.Category.Name</span>
+                            </td>
+                            <td class="product-price">
+                                <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>
+                            </td>
+                            @*<td class="product-stock-status">
+                                    @if (product.Quantity > 0)
+                                    {
+                                        <span class="wishlist-in-stock">Anbarda</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="wishlist-out-stock">Anbarda yoxdur</span>
+                                    }
+                                </td>*@
+                            <td class="product-add-to-cart">
+                                <a asp-action="details" asp-route-id="@product.Id" class="btn-product btn-primary"><span>Seçim edin</span></a>
+                            </td>
+                            <td class="product-remove">
+                                <div>
+                                    <a style="cursor:pointer;" onclick="removeEntity(@product.Id)" class="remove" title="Məhsulu seçilmişlərdən çıxardın">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <i class="emptyWishlist fa-solid fa-heart-crack"></i>
+                <h1 class="emptyBasketText">Seçilmişlər siyahısı boşdur</h1>
+            </div>
+        }
+    </div>
+</div>
+@section js{
+    <script>
+        function checkCart() {
+            let items = readFromCookie();
+            var divContainer = $('<div>', {
+                class: 'd-flex flex-column justify-content-center align-items-center'
+            });
+            var iTag = $('<i>', {
+                class: 'emptyWishlist fa-solid fa-heart-crack'
+            });
+            var h1Tag = $('<h1>').text("Seçilmişlər siyahısı boşdur").addClass("emptyBasketText");
+            let divTag = $('div.emptyWishlistContainer');
+            if (items.length <= 1) {
+                $('table.wishlist-table').remove();
+                iTag.appendTo(divContainer);
+                h1Tag.appendTo(divContainer);
+                divContainer.appendTo(divTag);
+            }
+        }
+        function showWishlistCount() {
+            let items = readFromCookie();
+            $('.wishlist-count').html(items.length - 1);
+
+        }
+        showWishlistCount();
+
+        function readFromCookie() {
+            return ($.cookie('cardsForWishlist') || '').split(',');
+        }
+        function removeEntity(entityId) {
+            let items = readFromCookie();
+            let id = entityId.toString();
+            const index = items.indexOf(id);
+            if (index > -1) {
+                items.splice(index, 1);
+            }
+            $.cookie('cardsForWishlist', items.toString(), { expires: 7, path: '/' });
+
+            $.ajax({
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    toastr.success("Müvəffəqiyyətlə siyahıdan çıxarıldı", response.message)
+                    $(`tr[data-entity-id=${entityId}]`).remove();
+                    showWishlistCount();
+                    checkCart();
+                },
+                error: function (response) {
+                    toastr["error"]("Unsuccessfully", "Texniki xəta baş verdi, xahiş olunur biraz sonra yenidən yoxlayın")
+                }
+            })
+        }
+    </script>
+}

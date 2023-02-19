@@ -215,10 +215,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="RestSharp" Version="107.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AppCode\Resources\Navbar.Designer.cs">
+    <Compile Update="AppCode\Resources\Navbar\Navbar.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Navbar.resx</DependentUpon>
@@ -226,7 +227,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="AppCode\Resources\Navbar.resx">
+    <EmbeddedResource Update="AppCode\Resources\Navbar\Navbar.resx">
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Navbar.Designer.cs</LastGenOutput>

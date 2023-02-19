@@ -400,49 +400,49 @@
                                     </a>
                                 </li>
                                 @if (User.HasAccess("admin.categories.index"))
-                                    {
-                                <li class="">
-                                    <a asp-controller="categories" asp-action="index">
-                                        <span class="pcoded-micon"><i class="icofont-navigation-menu"></i></span>
-                                        <span class="pcoded-mtext">Kateqoriyalar</span>
-                                    </a>
-                                </li>
+                                {
+                                    <li class="">
+                                        <a asp-controller="categories" asp-action="index">
+                                            <span class="pcoded-micon"><i class="icofont-navigation-menu"></i></span>
+                                            <span class="pcoded-mtext">Kateqoriyalar</span>
+                                        </a>
+                                    </li>
                                 }
                                 @if (User.HasAccess("admin.colors.index"))
-                                    {
-                                <li class="">
-                                    <a asp-controller="colors" asp-action="index">
-                                        <span class="pcoded-micon"><i class="fa-solid fa-palette"></i></span>
-                                        <span class="pcoded-mtext">Rənglər</span>
-                                    </a>
-                                </li>
+                                {
+                                    <li class="">
+                                        <a asp-controller="colors" asp-action="index">
+                                            <span class="pcoded-micon"><i class="fa-solid fa-palette"></i></span>
+                                            <span class="pcoded-mtext">Rənglər</span>
+                                        </a>
+                                    </li>
                                 }
                                 @if (User.HasAccess("admin.sizes.index"))
-                                    {
-                                <li class="">
-                                    <a asp-controller="sizes" asp-action="index">
-                                        <span class="pcoded-micon"><i class="fa-solid fa-s"></i></span>
-                                        <span class="pcoded-mtext">Ölçülər</span>
-                                    </a>
-                                </li>
+                                {
+                                    <li class="">
+                                        <a asp-controller="sizes" asp-action="index">
+                                            <span class="pcoded-micon"><i class="fa-solid fa-s"></i></span>
+                                            <span class="pcoded-mtext">Ölçülər</span>
+                                        </a>
+                                    </li>
                                 }
                                 @if (User.HasAccess("admin.contacts.index"))
-                                    {
-                                <li class="">
-                                    <a asp-controller="contacts" asp-action="index">
-                                        <span class="pcoded-micon"><i class="icofont-headphone-alt-2"></i></span>
-                                        <span class="pcoded-mtext">Əlaqələr</span>
-                                    </a>
-                                </li>
+                                {
+                                    <li class="">
+                                        <a asp-controller="contacts" asp-action="index">
+                                            <span class="pcoded-micon"><i class="icofont-headphone-alt-2"></i></span>
+                                            <span class="pcoded-mtext">Əlaqələr</span>
+                                        </a>
+                                    </li>
                                 }
                                 @if (User.HasAccess("admin.faqs.index"))
-                                    {
-                                <li class="">
-                                    <a asp-controller="faqs" asp-action="index">
-                                        <span class="pcoded-micon"><i class="icofont-question"></i></span>
-                                        <span class="pcoded-mtext">Ən çox verilmiş suallar</span>
-                                    </a>
-                                </li>
+                                {
+                                    <li class="">
+                                        <a asp-controller="faqs" asp-action="index">
+                                            <span class="pcoded-micon"><i class="icofont-question"></i></span>
+                                            <span class="pcoded-mtext">Ən çox verilmiş suallar</span>
+                                        </a>
+                                    </li>
                                 }
                                 @if (User.HasAccess("admin.products.index"))
                                 {
@@ -450,6 +450,42 @@
                                         <a asp-controller="products" asp-action="index">
                                             <span class="pcoded-micon"><i class="fa-solid fa-shirt"></i></span>
                                             <span class="pcoded-mtext">Məhsullar</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.HasAccess("admin.productstatuses.index"))
+                                {
+                                    <li class="">
+                                        <a asp-controller="products" asp-action="index">
+                                            <span class="pcoded-micon"><i class="fa-solid fa-bell"></i></span>
+                                            <span class="pcoded-mtext">Məhsul bildirişləri</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.HasAccess("admin.addresses.index"))
+                                {
+                                    <li class="">
+                                        <a asp-controller="addresses" asp-action="index">
+                                            <span class="pcoded-micon"><i class="fa-solid fa-location-dot"></i></span>
+                                            <span class="pcoded-mtext">Ünvanlar</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.HasAccess("admin.orders.index"))
+                                {
+                                    <li class="">
+                                        <a asp-controller="orders" asp-action="index">
+                                            <span class="pcoded-micon"><i class="icofont-basket"></i></span>
+                                            <span class="pcoded-mtext">Sifarişlər</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.HasAccess("admin.users.index"))
+                                {
+                                    <li class="">
+                                        <a asp-controller="users" asp-action="index">
+                                            <span class="pcoded-micon"><i class="icofont-users"></i></span>
+                                            <span class="pcoded-mtext">İstifadəçilər</span>
                                         </a>
                                     </li>
                                 }

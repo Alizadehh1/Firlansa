@@ -1,19 +1,19 @@
 ﻿<nav class="main-nav">
     <ul class="menu">
         <li class="active">
-            <a asp-controller="home" asp-action="index">Ana səhifə</a>
+            <a asp-controller="home" asp-action="index">@Navbar.Home</a>
         </li>
         <li>
-            <a asp-controller="shop" asp-action="index">Məhsullar</a>
+            <a asp-controller="shop" asp-action="index">@Navbar.Shop</a>
         </li>
         <li>
-            <a asp-action="about" asp-controller="home">Haqqımızda</a>
+            <a asp-action="about" asp-controller="home">@Navbar.About_us</a>
         </li>
         <li>
-            <a asp-action="contact" asp-controller="home">Əlaqə</a>
+            <a asp-action="contact" asp-controller="home">@Navbar.Contact</a>
         </li>
         <li>
-            <a asp-action="faq" asp-controller="home">Ən çox verilən suallar</a>
+            <a asp-action="faq" asp-controller="home">@Navbar.FAQs</a>
         </li>
     </ul>
 </nav>

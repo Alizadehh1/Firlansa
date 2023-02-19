@@ -1,0 +1,93 @@
+﻿@model OrderViewModel
+<main class="main">
+    <nav class="breadcrumb-nav">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a asp-action="index" asp-controller="home"><i class="d-icon-home"></i></a></li>
+                <li>Sifariş-#@Model.Order.Id</li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-content pt-10 pb-10 mb-2">
+        <div class="container">
+            <table class="shop-table wishlist-table mt-2 mb-4">
+                <thead>
+                    <tr>
+                        <th class="product-name text-center"><span>Məhsul</span></th>
+                        <th class='text-center'>Adı</th>
+                        <th class="product-stock-status text-center"><span>Rəng</span></th>
+                        <th class="product-stock-status text-center"><span>Ölçü</span></th>
+                        <th class="product-price text-center"><span>Qiymət</span></th>
+                        <th></th>
+                        <th class="product-price text-center"><span>Ədəd</span></th>
+                        <th class="product-price text-center"><span>Yekun</span></th>
+                        <th class="product-add-to-cart"></th>
+                    </tr>
+                </thead>
+                <tbody class="wishlist-items-wrapper">
+                    @foreach (var item in Model.Order.OrderItems)
+                    {
+                        @foreach (var product in Model.Products)
+                        {
+                            if (product.Id == item.ProductId)
+                            {
+                                var imagePath = product.Images.FirstOrDefault(i => i.IsMain).ImagePath;
+                                <tr>
+                                    <td class="product-thumbnail d-flex justify-content-center">
+                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id">
+                                            <figure>
+                                                <img src="~/uploads/images/@imagePath" width="100" height="100"
+                                                     alt="@product.Name">
+                                            </figure>
+                                        </a>
+                                    </td>
+                                    <td class="product-name text-center">
+                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id">@product.Name</a>
+                                    </td>
+                                    <td class="product-name text-center">
+                                        <a>@Model.Order.OrderItems.FirstOrDefault().Color.Name</a>
+                                    </td>
+                                    <td class="product-name text-center">
+                                        <a>@product.Specifications.FirstOrDefault(s => s.SizeId == Model.Order.OrderItems.FirstOrDefault().SizeId).Size.Name</a>
+                                    </td>
+                                    <td class="product-price text-center">
+                                        <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>
+                                    </td>
+                                    <td>
+                                        x
+                                    </td>
+                                    <td style="width:52px;" class="product-name text-center">
+                                        <a>@item.Quantity əd</a>
+                                    </td>
+                                    <td class="product-price text-center">
+                                        <span style="font-weight:bolder" class="amount">@(product.Price * item.Quantity) ₼</span>
+                                    </td>
+                                    <td class="product-add-to-cart">
+                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id" class="btn-product btn-primary"><span>Detallı</span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <span>Məhsulların məbləği: @ViewBag.TotalAmount₼</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Çatdırılma məbləği: @Model.Order.Adress.ShippingPrice₼</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="product-price">
+                            <span>Sifarişin çatdırılma ilə ümumi məbləği: @(ViewBag.TotalAmount+Model.Order.Adress.ShippingPrice)₼</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,145 @@
+﻿@model List<FirlansaUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>İstifadəçilərin Siyahısı</h4>
+                    @*<span>
+                            lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit
+                        </span>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a href="#!">İstifadəçilər</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card">
+        <div class="card-header">
+            <h5>İstifadəçilər</h5>
+        </div>
+        <div class="card-block table-border-style">
+            <div class="dt-responsive table-responsive">
+                <table id="simpletable"
+                       class="table table-striped table-bordered nowrap">
+                    <thead>
+                        <tr>
+                            <th>
+                                İstifadəçi Adı
+                            </th>
+                            <th>
+                                Elektron Poçt
+                            </th>
+                            <th>
+                                Elektron Poçt Təsdiqi
+                            </th>
+                            @*@if (User.HasAccess("admin.users.create"))
+                        {
+                            <th class="actionBtns">
+                                <a asp-action="Create" class="btn btn-success btn-icon"><i class="icofont-plus"></i></a>
+                            </th>
+                        }*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr data-entity-id="@item.Id">
+                                <td>
+                                    @item.UserName
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @if (item.EmailConfirmed)
+                                    {
+                                        <span class="badge badge-success">Təsdiqlənib</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning">Təsdiq Gözləyir</span>
+                                    }
+                                </td>
+                                <td class="actionBtns">
+                                    @if (User.HasAccess("admin.users.details"))
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-icon"><i class="icofont icofont-eye-alt"></i></a>
+                                    }
+                                    @if (User.HasAccess("admin.users.delete"))
+                                    {
+                                        <a onclick="removeEntity(event,@item.Id, '@item.Email')" class="btn btn-danger btn-icon">
+                                            <i class="icofont-trash"></i>
+                                        </a>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section js{
+    <script src="~/admin/files/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/jszip.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/pdfmake.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/vfs_fonts.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/admin/files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/admin/files/assets/pages/data-table/js/data-table-custom.js"></script>
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script>
+        function removeEntity(ev, entityId, username) {
+            swal({
+                title: "Əminsən?",
+                text: `${username} adlı istifadəçi silinəcək, Əminsən?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: `@Url.Action("Delete")/${entityId}`,
+                            type: 'post',
+                            success: function (response) {
+                                if (response.error==true) {
+                                    toastr.error(response.message, "Error!");
+                                    return;
+                                }
+                                toastr.success("Successfully", response.message)
+                                $(`tr[data-entity-id=${entityId}]`).remove();
+                            },
+                            error: function (response) {
+                                toastr["error"]("Unsuccessfully", "Data has not been deleted")
+                            }
+                        })
+                    }
+                });
+        }
+    </script>
+}

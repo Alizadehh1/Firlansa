@@ -21,9 +21,9 @@
             <i class="d-icon-search"></i>
             <span>Search</span>
         </a>
-        <form action="#" class="input-wrapper">
-            <input type="text" class="form-control" name="search" autocomplete="off"
-                   placeholder="Search your keyword..." required />
+        <form method="get" asp-controller="Shop" asp-action="Search" class="input-wrapper">
+            <input type="text" class="form-control" name="query" placeholder="Axtar..." autocomplete="off"
+                   required />
             <button class="btn btn-search" type="submit">
                 <i class="d-icon-search"></i>
             </button>
@@ -41,9 +41,9 @@
     <a class="mobile-menu-close" href="#"><i class="d-icon-times"></i></a>
     <!-- End of CloseButton -->
     <div class="mobile-menu-container scrollable">
-        <form action="#" class="input-wrapper">
-            <input type="text" class="form-control" name="search" autocomplete="off"
-                   placeholder="Search your keyword..." required />
+        <form method="get" asp-controller="Shop" asp-action="Search" class="input-wrapper">
+            <input type="text" class="form-control" name="query" placeholder="Axtar..." autocomplete="off"
+                   required />
             <button class="btn btn-search" type="submit">
                 <i class="d-icon-search"></i>
             </button>

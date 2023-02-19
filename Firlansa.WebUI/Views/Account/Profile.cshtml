@@ -1,4 +1,4 @@
-﻿
+﻿@model ProfileViewModel
 @{
     ViewData["Title"] = "Profile";
 }
@@ -17,13 +17,13 @@
             <div class="tab tab-vertical gutter-lg">
                 <ul class="nav nav-tabs mb-4 col-lg-3 col-md-4" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#dashboard">Dashboard</a>
+                        <a class="nav-link active" href="#dashboard">Ana səhifə</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#orders">Orders</a>
+                        <a class="nav-link" href="#orders">Sifarişlər</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#downloads">Downloads</a>
+                        <a class="nav-link" href="#notifications">Bildirişlər</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#address">Address</a>
@@ -31,15 +31,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#account">Account details</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="logout">Logout</a>
-                    </li>
                 </ul>
                 <div class="tab-content col-lg-9 col-md-8">
                     <div class="tab-pane active" id="dashboard">
                         <p class="mb-0">
                             Hello <span>@User.GetPrincipalName()</span> (not <span>@User.GetPrincipalName()</span>? <a asp-action="logout"
-                                                                               class="text-primary">Log out</a>)
+                                                                                                                       class="text-primary">Log out</a>)
                         </p>
                         <p class="mb-8">
                             From your account dashboard you can view your <a href="#orders"
@@ -49,65 +46,55 @@
                         <a href="shop.html" class="btn btn-dark btn-rounded">Go To Shop<i class="d-icon-arrow-right"></i></a>
                     </div>
                     <div class="tab-pane" id="orders">
-                        <table class="order-table">
+                        <table data-page-length='10' id="table-order" class="order-table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="pl-2">Order</th>
-                                    <th>Date</th>
+                                    <th class="pl-2">Sifariş</th>
+                                    <th>Tarix</th>
                                     <th>Status</th>
-                                    <th>Total</th>
-                                    <th class="pr-2">Actions</th>
+                                    <th class="pr-2"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="order-number"><a href="#">#3596</a></td>
-                                    <td class="order-date"><time>February 24, 2021</time></td>
-                                    <td class="order-status"><span>On hold</span></td>
-                                    <td class="order-total"><span>$900.00 for 5 items</span></td>
-                                    <td class="order-action"><a href="#" class="btn btn-primary btn-link btn-underline">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number"><a href="#">#3593</a></td>
-                                    <td class="order-date"><time>February 21, 2021</time></td>
-                                    <td class="order-status"><span>On hold</span></td>
-                                    <td class="order-total"><span>$290.00 for 2 items</span></td>
-                                    <td class="order-action"><a href="#" class="btn btn-primary btn-link btn-underline">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number"><a href="#">#2547</a></td>
-                                    <td class="order-date"><time>January 4, 2021</time></td>
-                                    <td class="order-status"><span>On hold</span></td>
-                                    <td class="order-total"><span>$480.00 for 8 items</span></td>
-                                    <td class="order-action"><a href="#" class="btn btn-primary btn-link btn-underline">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number"><a href="#">#2549</a></td>
-                                    <td class="order-date"><time>January 19, 2021</time></td>
-                                    <td class="order-status"><span>On hold</span></td>
-                                    <td class="order-total"><span>$680.00 for 5 items</span></td>
-                                    <td class="order-action"><a href="#" class="btn btn-primary btn-link btn-underline">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number"><a href="#">#4523</a></td>
-                                    <td class="order-date"><time>Jun 6, 2021</time></td>
-                                    <td class="order-status"><span>On hold</span></td>
-                                    <td class="order-total"><span>$564.00 for 3 items</span></td>
-                                    <td class="order-action"><a href="#" class="btn btn-primary btn-link btn-underline">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number"><a href="#">#4526</a></td>
-                                    <td class="order-date"><time>Jun 19, 2021</time></td>
-                                    <td class="order-status"><span>On hold</span></td>
-                                    <td class="order-total"><span>$123.00 for 8 items</span></td>
-                                    <td class="order-action"><a href="#" class="btn btn-primary btn-link btn-underline">View</a></td>
-                                </tr>
+                                @foreach (var item in Model.Order)
+                                {
+                                    <tr>
+                                        <td class="order-number"><a href="#">#@item.Id</a></td>
+                                        <td class="order-date"><time>@item.CreatedDated.ToString("yyyy.MM.dd HH:mm:ss")</time></td>
+                                        <td class="order-status">
+                                            @*@if (item.isConfirmed)
+                                                {
+
+                                                }
+                                                else if (item.DeletedById != null)
+                                                {
+                                                    <span style="background-color:red;color:white;">Ləğv olunub</span>
+                                                }
+                                                else
+                                                {
+                                                    <span style="background-color:orange;color:white;">Gözləmədə</span>
+                                                }*@
+                                            <span style="background-color:green;color:white;">@item.OrderStatus</span>
+                                        </td>
+                                        <td class="order-action"><a asp-route-id="@item.Id" asp-action="Order" style="text-decoration:none;" class="btn btn-primary btn-link btn-underline">Detallı</a></td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
-                    <div class="tab-pane" id="downloads">
-                        <p class="mb-4 text-body">No downloads available yet.</p>
-                        <a href="#" class="btn btn-primary btn-link btn-underline">Browser Products<i class="d-icon-arrow-right"></i></a>
+                    <div class="tab-pane" id="notifications">
+                        @if (Model.ProductStatuses.Count == 0)
+                        {
+                            <p class="mb-4 text-body">Hal-hazırda heç bir bildiriş yoxdur.</p>
+
+                        }
+                        else
+                        {
+                            @foreach (var productStatus in Model.ProductStatuses.OrderByDescending(p=>p.DeletedDate))
+                            {
+                                <p class="mb-4 text-body">'@productStatus.Product.Name' adlı '@productStatus.Color.Name' rəngli '@productStatus.Size.Name' ölçülü məhsul yenidən stoklarımızda. (@productStatus.DeletedDate?.ToString("d MMMM, yyyy HH:mm", CultureInfo.GetCultureInfo("az-Az")))</p>
+                            }
+                        }
                     </div>
                     <div class="tab-pane" id="address">
                         <p class="mb-2">
@@ -185,4 +172,18 @@
         </div>
     </div>
 </main>
-
+@section css{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+}
+@section js{
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table-order').DataTable({
+                order: [[0, 'desc']],
+                lengthChange: false,
+                searching: false,
+            });
+        });
+    </script>
+}

@@ -9074,6 +9074,7 @@ button.mfp-arrow {
             background-color: #1ab2e8;
         }
 
+
 .container > .login-popup {
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -10966,6 +10967,14 @@ aside + div .product-single .product-details {
         background: #1da1f2;
         border-color: #1da1f2;
     }
+    .social-link.social-instagram:hover {
+        background: #FF3F30;
+        border-color: #FF3F30;
+    }
+    .social-link.social-tiktok:hover {
+        background: #020202;
+        border-color: #020202;
+    }
 
     .social-link.social-linkedin:hover {
         background: #0073b2;
@@ -11010,11 +11019,6 @@ aside + div .product-single .product-details {
     .social-link.social-xing:hover {
         background: #1a7576;
         border-color: #1a7576;
-    }
-
-    .social-link.social-instagram:hover {
-        background: #7c4a3a;
-        border-color: #7c4a3a;
     }
 
 .no-border .social-link {
@@ -11087,9 +11091,6 @@ aside + div .product-single .product-details {
         color: #1a7576;
     }
 
-    .inline-links .social-link.social-instagram:hover {
-        color: #7c4a3a;
-    }
 
 .page-content.with-sidebar {
     padding-bottom: 10rem;
@@ -19494,7 +19495,9 @@ aside .owl-nav-top .owl-nav {
             top: 50%;
         }
 }
-
+.soldOut{
+    text-decoration:line-through;
+}
 .sample-icons .tab-pane {
     overflow: hidden;
 }

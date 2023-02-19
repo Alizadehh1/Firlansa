@@ -62,8 +62,8 @@
                         </a>
                     </div>
                 </div>
-                <nav class="toolbox sticky-toolbox sticky-content fix-top">
-                    <div class="toolbox-left">
+                <nav class="toolbox sticky-toolbox sticky-content fix-top justify-content-end">
+                    @*<div class="toolbox-left">
                         <div class="toolbox-item toolbox-sort select-box text-dark">
                             <label>Sort By :</label>
                             <select name="orderby" class="form-control">
@@ -76,17 +76,19 @@
                                 <option value="">Clear custom sort</option>
                             </select>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="toolbox-right">
-                        <div class="toolbox-item toolbox-show select-box text-dark">
+                        @*<div class="toolbox-item toolbox-show select-box text-dark">
                             <label>Show :</label>
                             <select name="count" class="form-control">
                                 <option value="12">12</option>
                                 <option value="24">24</option>
                                 <option value="36">36</option>
                             </select>
-                        </div>
+                        </div>*@
+                        
                         <div class="toolbox-item toolbox-layout">
+                            <label>Sıralama :</label>
                             <a href="#product-list" data-container-class="products-wrapper product-lists" class="d-icon-mode-list btn-layout"></a>
                             <a href="#product-wrap" data-container-class="products-wrapper" class="d-icon-mode-grid btn-layout active"></a>
                         </div>
@@ -147,7 +149,8 @@
                 $(container).find('.product').each(function (index,item) {
                     const actionContainer = $(item).find('.product-action');
                     const verticalAction = $(item).find('.product-action-vertical');
-                    
+                    const itemId = $(item).find('figure.product-media').data().entityId;
+                    console.log(itemId);
                     if (isListLayout) {
                         verticalAction.removeClass('product-action-vertical').addClass('product-action');
                         verticalAction.append(actionContainer.html())
@@ -159,13 +162,10 @@
                         console.log('salam')
                         let verticalActionDiv = $('<div>', {
                             class: 'product-action-vertical',
-                            html: `<a href="#" class="btn-product-icon btn-cart" title="Add to cart">
-                    <i class="d-icon-bag"></i>
-                    <label>Add to cart</label>
-                </a>
-                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist">
+                            html: `
+                <button style="cursor:pointer;" onclick="addToWishlist(event,${itemId})" class="btn-product-icon btn-wishlist" title="Add to wishlist">
                     <i class="d-icon-heart"></i>
-                </a>`
+                </button>`
                         });
                         console.log(verticalActionDiv);
                         $('figure.product-media .product-action').css("display", "flex");
@@ -174,7 +174,7 @@
                 })
 
             })
-            
+
         })
 
         function specificationsDetermine(e) {
@@ -201,7 +201,38 @@
                 $('.product-size').css('display', 'none');
             }
         }
+        function addToWishlist(ev,productId) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            addToCookie(productId);
 
+            console.log(readFromCookie())
+        }
+        function readFromCookie() {
+            return ($.cookie('cardsForWishlist') || '').split(',');
+        }
+        function addToCookie(cardId) {
+            let items = readFromCookie();
+            let length = items.filter(item => item == cardId).length;
+            if (length > 0) {
+                toastr.warning("Bu məhsulu artıq seçilmişlərə əlavə etmisiniz!", "Uğursuz");
+                return;
+            }
+            items.push(cardId);
+            $.cookie('cardsForWishlist', items.toString(), { expires: 7, path: '/' });
+            $.ajax({
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    toastr.success("Uğurla seçilmişlərə əlavə edildi", response.message)
+                },
+                error: function (response) {
+                    toastr["error"]("Uğursuz", "Əlavə edilmədi")
+                }
+            })
+        }
         function addToCart(ev) {
             ev.preventDefault();
             ev.stopPropagation();
@@ -350,7 +381,7 @@
             })
         }
         function setFilter() {
-           
+
             if ($.setFilterProcessId != undefined) {
                 clearTimeout($.setFilterProcessId);
             }

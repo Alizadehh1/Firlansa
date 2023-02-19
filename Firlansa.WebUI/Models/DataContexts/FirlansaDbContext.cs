@@ -2,10 +2,6 @@
 using Firlansa.WebUI.Models.Entities.Membership;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Firlansa.WebUI.Models.DataContexts
 {
@@ -22,8 +18,13 @@ namespace Firlansa.WebUI.Models.DataContexts
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+        public DbSet<ProductStatus> ProductStatuses { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Adress> Adresses { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Subscribe> Subscribes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

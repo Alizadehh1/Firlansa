@@ -1,7 +1,11 @@
 ﻿@model ShopViewModel
 @{
+    var linkTiktok = "https://www.tiktok.com/@firlansa.baku";
     ViewData["Title"] = "Details";
     int count = 1;
+    int? userId = Convert.ToInt32(User.GetUserId());
+    if (userId == null)
+        userId = 0;
 }
 <div class="page-content mb-10 pb-6">
     <div class="container">
@@ -52,7 +56,6 @@
 
                     <h1 class="product-name">@Model.Product.Name</h1>
                     <div class="product-meta">
-                        SKU: <span class="product-sku">12345670</span>
                         Kateqoriya: <span class="product-brand">@Model.Product.Category.Name</span>
                     </div>
                     <div class="product-price">
@@ -81,10 +84,16 @@
                                 <div class="product-variations">
                                     @foreach (var size in Model.ProductSpecifications.Where(ps => ps.ColorId == color.Id))
                                     {
-                                        <a class="size" data-size-id="@size.SizeId" href="#">@size.Size.Name</a>
+                                        if (size.Quantity <= 0)
+                                        {
+                                            <a data-size-id="@size.SizeId" data-color-id="@color.Id" class="size soldOut">@size.Size.Name</a>
+                                        }
+                                        else
+                                        {
+                                            <a style="width:auto;height:auto;" data-qty="@size.Quantity" class="size" data-size-id="@size.SizeId" href="#">@size.Size.Name</a>
+                                        }
                                     }
                                 </div>
-
                                 <a href="#collapse1-3" class="size-guide">
                                     <i class="d-icon-th-list"></i>Ölçü
                                 </a>
@@ -103,6 +112,9 @@
                             <button id="btnCart" data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
                                 <i class="d-icon-bag"></i>Səbətə əlavə et
                             </button>
+                            <button style="background-color: #F27A1A;color:white;display:none;" id="btnNotify" data-item-id="@Model.Product.Id" onclick="addToNotify(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                                <i class="fa-solid fa-bell"></i>Gələndə xəbər et
+                            </button>
                         </div>
                     </div>
 
@@ -110,13 +122,12 @@
 
                     <div class="product-footer">
                         <div class="social-links mr-4">
-                            <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
-                            <a href="#" class="social-link social-instagram fab fa-instagram"></a>
-                            <a href="#" class="social-link social-tiktok fab fa-tiktok"></a>
+                            <a href="https://www.instagram.com/firlansa.baku/" class="fa-brands fa-instagram social-link social-instagram"></a>
+                            <a href="@linkTiktok" class="social-link social-tiktok fa-brands fa-tiktok"></a>
                         </div>
                         <span class="divider d-lg-show"></span>
                         <div class="product-action">
-                            <a href="#" class="btn-product btn-wishlist mr-6">
+                            <a style="cursor:pointer;" onclick="addToWishlist(event,@Model.Product.Id)" class="btn-product btn-wishlist mr-6">
                                 <i class="d-icon-heart"></i>Seçilmişlərə əlavə et
                             </a>
                         </div>
@@ -400,37 +411,30 @@
 								}
 							}
 						}">
-                @foreach (var products in Model.Products)
+                @foreach (var product in Model.Products)
                 {
-                    if (Model.Product.CategoryId == products.CategoryId && Model.Product.Id != products.Id)
+                    if (Model.Product.CategoryId == product.CategoryId && Model.Product.Id != product.Id)
                     {
                         <div class="product shadow-media">
                             <figure class="product-media">
-                                <a asp-route-id="@products.Id">
-                                    <img src="~/uploads/images/@products.Images.FirstOrDefault().ImagePath" alt="@products.Name" width="280" height="315">
+                                <a asp-route-id="@product.Id">
+                                    <img src="~/uploads/images/@product.Images.FirstOrDefault().ImagePath" alt="@product.Name" width="280" height="315">
                                 </a>
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
-                                       data-target="#addCartModal" title="Add to cart">
-                                        <i class="d-icon-bag"></i>
-                                    </a>
-                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist">
+                                    <button style="cursor:pointer;" onclick="addToWishlist(event,@product.Id)" class="btn-product-icon btn-wishlist" title="Seçilmişlərə əlavə et">
                                         <i class="d-icon-heart"></i>
-                                    </a>
-                                </div>
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-quickview" title="Quick View">Quick View</a>
+                                    </button>
                                 </div>
                             </figure>
                             <div class="product-details">
                                 <div class="product-cat">
-                                    <a asp-route-id="@products.Id">@products.Category.Name</a>
+                                    <a asp-route-id="@product.Id">@product.Category.Name</a>
                                 </div>
                                 <h3 class="product-name">
-                                    <a asp-route-id="@products.Id">@products.Name</a>
+                                    <a asp-route-id="@product.Id">@product.Name</a>
                                 </h3>
                                 <div class="product-price">
-                                    <span class="price">@products.Price</span>
+                                    <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>
                                 </div>
                             </div>
                         </div>
@@ -453,9 +457,19 @@
                         if ($(item).data('entity-id') == colorId)
                             $(item).css('display', 'flex');
                         let size = $('.product-size .product-variations a.size');
+
                         size.click(function (item) {
                             if ($(item.currentTarget).hasClass('active')) {
-                                $('#btnCart').removeAttr('disabled');
+                                if ($(item.currentTarget).hasClass('soldOut')) {
+                                    $('#btnCart').css("display", "none");
+                                    $('#btnNotify').css("display", "flex");
+                                    $('#btnNotify').removeAttr('disabled');
+                                }
+                                else {
+                                    $('#btnNotify').css("display", "none");
+                                    $('#btnCart').css("display", "flex");
+                                    $('#btnCart').removeAttr('disabled');
+                                }
                             }
                         })
                     });
@@ -465,6 +479,104 @@
                 }
             })
         });
+
+        function addToWishlist(ev, productId) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            addToCookie(productId);
+
+            console.log(readFromCookie())
+        }
+        function readFromCookie() {
+            return ($.cookie('cardsForWishlist') || '').split(',');
+        }
+        function addToCookie(cardId) {
+            let items = readFromCookie();
+            let length = items.filter(item => item == cardId).length;
+            if (length > 0) {
+                toastr.warning("Bu məhsulu artıq seçilmişlərə əlavə etmisiniz!", "Uğursuz");
+                return;
+            }
+            items.push(cardId);
+            $.cookie('cardsForWishlist', items.toString(), { expires: 7, path: '/' });
+            $.ajax({
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    toastr.success("Uğurla seçilmişlərə əlavə edildi", response.message)
+                },
+                error: function (response) {
+                    toastr["error"]("Uğursuz", "Əlavə edilmədi")
+                }
+            })
+        }
+        function addToNotify(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            let data = $(ev.currentTarget).data();
+            let colors = document.querySelectorAll('.color');
+            let color;
+            let size;
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].getAttribute('class') == 'color active') {
+                    color = $(colors[i]).data();
+                }
+            }
+            let sizes = document.querySelectorAll('.size');
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].getAttribute('class') == 'size soldOut active') {
+                    size = $(sizes[i]).data();
+                }
+            }
+            let activeSpecs = $('.product-variations a.active');
+            if (color == undefined) {
+                toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (size == undefined) {
+                toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (activeSpecs.length != 2) {
+                toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            addToNotification(data.itemId, color.colorId, size.sizeId);
+        }
+        function addToNotification(cardId, cardColor, cardSize) {
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            else {
+                let items = [];
+                items.push(cardId, cardColor, cardSize,@User.GetUserId());
+                console.log(items);
+                $.ajax({
+                    url: `@Url.Action("Notification")`,
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(items),
+                    success: function (response) {
+                        if (response.error == true) {
+                            toastr.error(response.message, "Uğursuz!");
+                            return;
+                        }
+                        toastr.success("Bildirişlərə uğurla əlavə edildi", response.message)
+                    },
+                    error: function (response) {
+                        toastr["error"]("Uğursuz!", response.message)
+                    }
+                })
+            }
+        }
+
         function addToCart(ev) {
             ev.preventDefault();
             ev.stopPropagation();
@@ -484,6 +596,10 @@
                     size = $(sizes[i]).data();
                 }
             }
+            if (qty > size.qty) {
+                toastr.warning(`Təəssüf ki bu məhsuldan ${size.qty} ədəd qalıb`, "Uğursuz");
+                return;
+            }
             let activeSpecs = $('.product-variations a.active');
             if (qty <= 0) {
                 toastr.warning("Miqdarı düzgün qeyd edin!", "Uğursuz");
@@ -501,6 +617,7 @@
                 toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
                 return;
             }
+            console.log(size.qty);
             console.log(data.itemId);
             console.log(qty);
             console.log(color.colorId);
@@ -572,29 +689,29 @@
 
             /**/
             let productContainer = `<div data-specification="${cardId}-${cardColor}-${cardSize}" class="product product-cart">
-                                    <figure class="product-media1">
-                                        <a href="${link}">
-                                                    <img src="${imageSrc}" alt="${name}" width="80"
-                                                         height="88" />
-                                        </a>
-                                        <button onclick="removeEntity1(${cardId},${cardColor},${cardSize},${cardQty},event)" class="btn btn-link btn-close">
-                                            <i class="fas fa-times"></i><span class="sr-only">Bağla</span>
-                                        </button>
-                                    </figure>
-                                    <div class="product-detail">
-                                        <a href="${link}" class="product-name">${name}</a>
-                                        <div class="price-box">
-                                                <span class="product-quantity">${count}</span>
-                                                <span class="product-price">${price}</span>
+                                        <figure class="product-media1">
+                                            <a href="${link}">
+                                                        <img src="${imageSrc}" alt="${name}" width="80"
+                                                             height="88" />
+                                            </a>
+                                            <button onclick="removeEntity1(${cardId},${cardColor},${cardSize},${cardQty},event)" class="btn btn-link btn-close">
+                                                <i class="fas fa-times"></i><span class="sr-only">Bağla</span>
+                                            </button>
+                                        </figure>
+                                        <div class="product-detail">
+                                            <a href="${link}" class="product-name">${name}</a>
+                                            <div class="price-box">
+                                                    <span class="product-quantity">${count}</span>
+                                                    <span class="product-price">${price}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 `
 
             let cartTotal = `<label>Cəmi:</label>
-                        <span class="price">${totalPrice}</span><span>&#8380;</span>`
-            let cartAction = `<a asp-action="basket" asp-controller="shop" class="btn btn-dark btn-link">Səbətə bax</a>
-                        <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>`
+                            <span class="price">${totalPrice}</span><span>&#8380;</span>`
+            let cartAction = `<a href="/shop/basket" class="btn btn-dark btn-link">Səbətə bax</a>
+                            <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>`
 
             $.ajax({
 

@@ -1,0 +1,162 @@
+﻿@model ProductStatusViewModel
+@{
+    ViewData["Title"] = "Index";
+    int count = 0;
+}
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Məhsul tələbatı bildirişlərinin siyahısı</h4>
+                    @*<span>
+                            lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit
+                        </span>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a href="#!">Bildirişlər</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card">
+        <div class="card-header">
+            <h5>Bildirişlər</h5>
+        </div>
+        <div class="card-block">
+            <div class="dt-responsive table-responsive">
+                <table id="simpletable" class="table table-striped table-bordered nowrap">
+                    <thead>
+                        <tr>
+                            <th class="sorting_desc" aria-sort="descending">
+                                Məhsul #Id
+                            </th>
+                            <th>
+                                Şəkil
+                            </th>
+                            <th>
+                                Ad
+                            </th>
+                            <th>
+                                Rəng
+                            </th>
+                            <th>
+                                Ölçü
+                            </th>
+                            <th>
+                                Tələbat sayı
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var productStatusDistinct in Model.ProductStatusesDistinct)
+                        {
+                            count = 0;
+
+                            foreach (var productStatus in Model.ProductStatuses)
+                            {
+                                if (productStatusDistinct.ProductId == productStatus.ProductId && productStatusDistinct.ColorId == productStatus.ColorId && productStatusDistinct.SizeId == productStatus.SizeId)
+                                {
+                                    count++;
+                                }
+                            }
+                            foreach (var product in Model.Products)
+                            {
+                                if (product.Id == productStatusDistinct.ProductId)
+                                {
+                                    var imagePath = product.Images.FirstOrDefault(i => i.IsMain).ImagePath;
+                                    <tr data-entity-id="@productStatusDistinct.ProductId-@productStatusDistinct.ColorId-@productStatusDistinct.SizeId">
+                                        <td>
+                                            #@productStatusDistinct.ProductId
+                                        </td>
+                                        <td>
+                                            <img class="image" src="~/uploads/images/@imagePath?" />
+                                        </td>
+                                        <td>
+                                            @productStatusDistinct.Product.Name
+                                        </td>
+                                        <td>
+                                            @productStatusDistinct.Color.Name
+                                        </td>
+                                        <td>
+                                            @productStatusDistinct.Size.Name
+                                        </td>
+                                        <td>
+                                            @count nəfər
+                                        </td>
+                                        <td style="display:table-cell;" class="actionBtns">
+                                            <a style="background-color:orange;border:none; color:white;" onclick="notifyEntity(event,@productStatusDistinct.ProductId, @productStatusDistinct.ColorId, @productStatusDistinct.SizeId , '@productStatusDistinct.Product.Name')" class="btn btn-info btn-icon"><i class="fa-solid fa-bell"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+}
+@section js{
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#simpletable').DataTable({
+                order: [[5, 'desc']],
+            });
+        });
+        function notifyEntity(ev, productId, colorId, sizeId, name) {
+            swal({
+                title: "Əminsən?",
+                text: `"${name}" stoka yenidən gəldiyi istifadəçilərə bildiriləcək, əminsən?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        let items = [];
+                        items.push(productId, colorId, sizeId);
+                        console.log(items);
+                        $.ajax({
+                            url: `@Url.Action("Notify")`,
+                            type: 'post',
+                            contentType: 'application/json',
+                            data: JSON.stringify(items),
+                            success: function (response) {
+                                if (response.error==true) {
+                                    toastr.error(response.message, "Error!");
+                                    return;
+                                }
+                                $(`tr[data-entity-id=${productId}-${colorId}-${sizeId}]`).remove();
+                                toastr.success("Uğurludur!", response.message)
+                            },
+                            error: function (response) {
+                                toastr["error"]("Unsuccessfully", "Silinmə baş vermədi, yenidən yoxlayın!")
+                            }
+                        })
+                    }
+                });
+        }
+    </script>
+}
+

@@ -83,6 +83,7 @@
                                 <label asp-for="Description" class="control-label">Detallı</label>
                                 <textarea asp-for="Description" class="form-control editor"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
+                                
                             </div>
                         </div>
                     </div>
@@ -95,6 +96,7 @@
                                     <tr>
                                         <th style="text-align:center;">Rəng</th>
                                         <th style="text-align:center;">Ölçü</th>
+                                        <th style="text-align:center;">Miqdar</th>
                                         <th class="table-operations">
                                             <button class="btn btn-info" onclick="createPricing(event)">
                                                 Əlavə et
@@ -180,6 +182,7 @@
                 $('#specification tbody tr').each(function (index, item) {
                     const colorId = $(item).find('td:nth-child(1) select').val();
                     const sizeId = $(item).find('td:nth-child(2) select').val();
+                    const quantity = $(item).find('td:nth-child(3) input').val();
 
                     const filtered = specification.filter((pItem) => {
                         return pItem.colorId == colorId && pItem.sizeId == sizeId;
@@ -189,12 +192,14 @@
                     }
                     specification.push({
                         colorId: colorId,
-                        sizeId: sizeId
+                        sizeId: sizeId,
+                        quantity: quantity
                     });
                 });
                 $(specification).each(function (index,item) {
                     formData.set(`Specification[${index}].SizeId`, item.sizeId);
                     formData.set(`Specification[${index}].ColorId`, item.colorId);
+                    formData.set(`Specification[${index}].Quantity`, item.quantity);
                     console.log(index);
                     index++;
                 });
@@ -290,7 +295,8 @@
             const tBody = $(e.currentTarget).closest('table').find('tbody');
             const tr = $(`<tr>
                             <td>${(selectColors.replace('#s1#',  newid()))}</td>
-                            <td>${(selectSizes.replace('#s2#',  newid()))}</td>
+                            <td>${(selectSizes.replace('#s2#', newid()))}</td>
+                            <td><input class="form-control" type="number"/></td>
                             </tr>`);
 
 

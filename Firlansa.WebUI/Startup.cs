@@ -39,7 +39,7 @@ namespace Firlansa.WebUI
 
                 cfg.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddNewtonsoftJson(cfg =>cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+                .AddNewtonsoftJson(cfg => cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddRouting(cfg =>
             {
@@ -74,7 +74,6 @@ namespace Firlansa.WebUI
             {
                 cfg.LoginPath = "/signin.html";
                 cfg.AccessDeniedPath = "/accessdenied.html";
-                cfg.LogoutPath = "/logout.html";
 
                 cfg.ExpireTimeSpan = new TimeSpan(60, 0, 5, 0);
                 cfg.Cookie.Name = "Firlansa";
@@ -118,11 +117,28 @@ namespace Firlansa.WebUI
 
             app.UseRouting();
 
+            app.UseRequestLocalization(cfg =>
+            {
+                cfg.AddSupportedUICultures("az", "en");
+                cfg.AddSupportedCultures("az", "en");
+                cfg.RequestCultureProviders.Clear();
+                cfg.RequestCultureProviders.Add(new CultureProvider());
+            });
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(cfg =>
             {
+                cfg.MapControllerRoute(
+                    name: "default",
+                    pattern: "{lang}/{controller=home}/{action=index}/{id?}",
+                    constraints: new
+                    {
+                        lang = "en|az|ru"
+                    }
+                    );
+
                 cfg.MapAreaControllerRoute(
                     name: "defaultAdmin",
                     areaName: "Admin",

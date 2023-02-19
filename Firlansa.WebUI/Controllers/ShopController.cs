@@ -1,12 +1,20 @@
-﻿using Firlansa.WebUI.Models.DataContexts;
+﻿using Firlansa.WebUI.AppCode.Extensions;
+using Firlansa.WebUI.AppCode.Infrastructure;
+using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
 using Firlansa.WebUI.Models.FormModels;
 using Firlansa.WebUI.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Firlansa.WebUI.Controllers
@@ -19,6 +27,7 @@ namespace Firlansa.WebUI.Controllers
         {
             this.db = db;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var model = new ShopViewModel();
@@ -34,18 +43,19 @@ namespace Firlansa.WebUI.Controllers
                 .ToListAsync();
             model.Products = await db.Products
                 .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
-                .Include(p=>p.Category)
+                .Include(p => p.Category)
                 .Where(p => p.DeletedById == null)
                 .ToListAsync();
             return View(model);
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Filter(ShopFilterFormModel model)
         {
             var query = db.Products
                 .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
                 .Include(p => p.Category)
-                .Include(p=>p.Specifications.Where(s=>s.DeletedById==null))
+                .Include(p => p.Specifications.Where(s => s.DeletedById == null))
                 .Where(p => p.DeletedById == null)
                 .AsQueryable();
 
@@ -71,6 +81,7 @@ namespace Firlansa.WebUI.Controllers
             //    data = await query.ToListAsync()
             //});
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var model = new ShopViewModel();
@@ -94,7 +105,7 @@ namespace Firlansa.WebUI.Controllers
                 .ToList();
             model.ProductSpecifications = db.ProductSpecifications
                 .Where(ps => ps.DeletedById == null && ps.ProductId == id)
-                .Include(ps=>ps.Size)
+                .Include(ps => ps.Size)
                 .Distinct()
                 .ToList();
             model.Products = await db.Products
@@ -107,6 +118,7 @@ namespace Firlansa.WebUI.Controllers
             }
             return View(model);
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Quickview(int id)
         {
             var model = new ShopViewModel();
@@ -143,6 +155,25 @@ namespace Firlansa.WebUI.Controllers
             }
             return View(model);
         }
+        [AllowAnonymous]
+        public async Task<IActionResult> Wishlist()
+        {
+            if (Request.Cookies.TryGetValue("cardsForWishlist", out string cardsForCookie))
+            {
+                int[] idsFromCookie = cardsForCookie.Split(",").Where(CheckIsNumber)
+                        .Select(item => int.Parse(item))
+                        .ToArray();
+
+                var products = from p in db.Products.Where(p => p.DeletedById == null)
+                               where idsFromCookie.Contains(p.Id) && p.DeletedById == null
+                               select p;
+
+                return View(products.Include(p => p.Category).Include(i => i.Images.Where(i => i.IsMain && i.DeletedById == null)).ToList());
+            }
+
+            return View(new List<Product>());
+        }
+        [AllowAnonymous]
         public async Task<IActionResult> Basket()
         {
             if (Request.Cookies.TryGetValue("cards", out string cards) && Request.Cookies.TryGetValue("colors", out string colors) && Request.Cookies.TryGetValue("sizes", out string sizes) && Request.Cookies.TryGetValue("qtys", out string qtys))
@@ -174,6 +205,19 @@ namespace Firlansa.WebUI.Controllers
                     .Where(p => p.DeletedById == null)
                     .ToList();
 
+                var data = db.Adresses
+                 .Where(c => c.DeletedById == null)
+                 .Select(c => new
+                 {
+                     Id = c.Id,
+                     Name = c.ParentId == null ? c.Name : $"- {c.Name}"
+                 })
+                 .ToList();
+                var addresses = new SelectList(data, "Id", "Name");
+                var districts = db.Adresses
+                    .Where(a => a.DeletedById == null)
+                    .ToList();
+
 
                 List<Product> products = new List<Product>();
 
@@ -191,19 +235,194 @@ namespace Firlansa.WebUI.Controllers
 
                 ViewBag.Colors = colorsFromCookie;
                 ViewBag.ProductIds = productIdsFromCookie;
+                ViewBag.SecretKey = "894D14D6CBE44397AC28DFF6C5BE2A43";
+                ViewBag.Merchant = "ES1091685";
 
-
-                var productss = Tuple.Create(products, colorsFromCookie, sizesFromCookie, quantitiesFromCookie);
+                var productss = Tuple.Create(products, colorsFromCookie, sizesFromCookie, quantitiesFromCookie, addresses, districts);
 
                 return View(productss);
             }
-            return View(new Tuple<List<Product>, int[], int[], int[]>(null, null, null, null));
+            return View(new Tuple<List<Product>, int[], int[], int[], SelectList, Order>(null, null, null, null, null, null));
 
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Notification([FromBody] int[] items)
+        {
+            var product = await db.Products
+                .FirstOrDefaultAsync(m => m.Id == items[0] && m.DeletedById == null);
+            var currentProductStatus = await db.ProductStatuses
+                .FirstOrDefaultAsync(ps => ps.FirlansaUserId == items[3] && ps.ColorId == items[1] && ps.SizeId == items[2] && ps.ProductId == items[0] && ps.DeletedById == null);
+            if (product == null)
+                return Json(new CommandJsonResponse(true, $"Xəta baş verdi, belə bir məhsul tapılmadı, zəhmət olmasa yenidən yoxlayın!"));
+            else if (currentProductStatus != null)
+                return Json(new CommandJsonResponse(true, $"Bu məhsulu artıq bildirişlərə əlavə etmisiniz!"));
+            var productStatus = new ProductStatus();
+            var num = db.Products.Where(p => p.Id > 2);
+            productStatus.ProductId = items[0];
+            productStatus.ColorId = items[1];
+            productStatus.SizeId = items[2];
+            productStatus.FirlansaUserId = Convert.ToInt32(User.GetUserId());
+            await db.ProductStatuses.AddAsync(productStatus);
+            await db.SaveChangesAsync();
+            return Json(new CommandJsonResponse(false, $"Siz '{product.Name}' adlı məhsul yenidən stokda olduqda xəbərdar olacaqsız!"));
+        }
+        public async Task<IActionResult> CompleteOrder(int id)
+        {
+            var entity = await db.Orders
+                .Include(o => o.Adress)
+                .Include(o=>o.FirlansaUser)
+                .FirstOrDefaultAsync(o => o.Id == id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            var client = new RestClient("https://api.payriff.com/api/v2/getStatusOrder");
+            var request = new RestRequest();
+            request.Timeout = -1;
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", "894D14D6CBE44397AC28DFF6C5BE2A43");
+            var body = @"{" + "\n" +
+            @"    ""body"": {" + "\n" +
+            @"        ""language"": ""Az""," + "\n" +
+            @$"        ""orderId"": ""{entity.OrderId}""," + "\n" +
+            @$"        ""sessionId"": ""{entity.SessionId}""" + "\n" +
+            @"    }," + "\n" +
+            @"    ""merchant"": ""ES1091685""" + "\n" +
+            @"}";
+            request.AddJsonBody(body);
+            var response = await client.PostAsync(request);
+            var responseJson = JsonConvert.DeserializeObject<dynamic>(response.Content);
+            var statusOrder = responseJson.payload.orderStatus;
+            if (!response.IsSuccessful)
+            {
+                return NotFound();
+            }
+            if (statusOrder == "APPROVED")
+            {
+                entity.OrderStatus = "APPROVED";
+                await db.SaveChangesAsync();
+            }
+            return View(statusOrder);
+        }
+
+        public async Task<IActionResult> PlaceOrder(string productIds, string quantities, string colorIds, string sizeIds, string location, string phoneNumber, int addressId)
+        {
+
+            int[] productId = productIds.Split(",").Where(CheckIsNumber)
+                        .Select(item => int.Parse(item))
+                        .ToArray();
+            int[] quantity = quantities.Split(",").Where(CheckIsNumber)
+                        .Select(item => int.Parse(item))
+                        .ToArray();
+            int[] colorId = colorIds.Split(",").Where(CheckIsNumber)
+                        .Select(item => int.Parse(item))
+                        .ToArray();
+            int[] sizeId = sizeIds.Split(",").Where(CheckIsNumber)
+                        .Select(item => int.Parse(item))
+                        .ToArray();
+
+
+            var newOrder = new Order();
+            newOrder.FirlansaUserId = Convert.ToInt32(User.GetUserId());
+            newOrder.Location = location;
+            newOrder.PhoneNumber = phoneNumber;
+            newOrder.AdressId = addressId;
+            newOrder.OrderStatus = "Created";
+            if (productId != null)
+            {
+                newOrder.OrderItems = new List<OrderItem>();
+                int i = 0;
+                foreach (var prid in productId)
+                {
+                    db.ProductSpecifications.FirstOrDefault(ps => ps.ProductId == prid && ps.SizeId == sizeId[i] && ps.ColorId == colorId[i]).Quantity -= quantity[i];
+                    newOrder.OrderItems.Add(new OrderItem
+                    {
+                        ProductId = prid,
+                        ColorId = colorId[i],
+                        SizeId = sizeId[i],
+                        OrderId = newOrder.Id,
+                        Quantity = quantity[i]
+                    });
+                    i++;
+                }
+            }
+            await db.Orders.AddAsync(newOrder);
+            await db.SaveChangesAsync();
+
+
+
+            return Json(new CommandJsonResponse(false, $"{newOrder.Id}"));
+
+        }
+        //public async Task<IActionResult> CreateOrder(int id)
+        //{
+        //    Uri myUri = new Uri("https://api.payriff.com/api/v2/getStatusOrder", UriKind.Absolute);
+        //    var client = new RestClient(myUri);
+        //    client.Timeout = 1200000;
+        //    client.ReadWriteTimeout = 1200000;
+        //    var request = new RestRequest(Method.POST);
+        //    request.AddHeader("Content-Type", "application/json");
+        //    request.AddHeader("Authorization", "894D14D6CBE44397AC28DFF6C5BE2A43");
+        //    var body = @"{" + "\n" +
+        //    @"    ""body"": {" + "\n" +
+        //    @"        ""language"": ""Az""," + "\n" +
+        //    @$"        ""orderId"": ""524587""," + "\n" +
+        //    @$"        ""sessionId"": ""9B66629FB901BD5A60FF831AD996E510""" + "\n" +
+        //    @"    }," + "\n" +
+        //    @"    ""merchant"": ""ES1091685""" + "\n" +
+        //    @"}";
+        //    request.AddParameter("application/json", body, ParameterType.RequestBody);
+        //    IRestResponse response = client.Execute(request);
+        //    var responseJson = JsonConvert.DeserializeObject<dynamic>(response.Content);
+        //    return Json(new CommandJsonResponse(false, $"{responseJson}"));
+        //}
+        public async Task<IActionResult> SetOrderAndSessionId(int id,int orderId,string sessionId)
+        {
+            var order = await db.Orders
+                .FirstOrDefaultAsync(o => o.Id == id);
+            order.OrderId = orderId;
+            order.SessionId = sessionId;
+            await db.SaveChangesAsync();
+            return Json(new CommandJsonResponse(false, $"{orderId}/{sessionId}"));
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return RedirectToAction("Index", "Shop");
+            }
+            var model = new ShopViewModel();
+            model.Categories = await db.Categories
+                .Where(c => c.DeletedById == null)
+                .Include(c => c.Children.Where(c => c.DeletedById == null))
+                .ToListAsync();
+            model.Colors = await db.Colors
+                .Where(c => c.DeletedById == null)
+                .ToListAsync();
+            model.Sizes = await db.Sizes
+                .Where(s => s.DeletedById == null)
+                .ToListAsync();
+            model.Products = await db.Products
+                .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
+                .Include(p => p.Category)
+                .Where(p => p.DeletedById == null && p.Name.ToLower().Contains(query.ToLower())
+                || p.Description.ToLower().Contains(query.ToLower())
+                || p.ShortDescription.ToLower().Contains(query.ToLower())
+                || p.Price.ToString().ToLower().Contains(query.ToLower())
+                || p.Category.Name.ToLower().Contains(query.ToLower()))
+                .ToListAsync();
+            return View(model);
         }
 
         private bool CheckIsNumber(string value)
         {
             return int.TryParse(value, out int v);
+        }
+        private bool CheckIsDouble(string value)
+        {
+            return double.TryParse(value, out double v);
         }
     }
 }

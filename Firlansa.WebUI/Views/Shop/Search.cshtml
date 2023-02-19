@@ -1,0 +1,411 @@
+﻿@model ShopViewModel
+@{
+    ViewData["Title"] = "SearchInput";
+}
+
+<nav class="breadcrumb-nav">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a asp-controller="home" asp-action="index"><i class="d-icon-home"></i></a></li>
+            <li>Məhsullar</li>
+        </ul>
+    </div>
+</nav>
+<div class="page-content pb-10 mb-3">
+    <div class="container">
+        <div class="row gutter-lg main-content-wrap">
+            <aside class="col-lg-3 sidebar sidebar-fixed shop-sidebar sticky-sidebar-wrapper">
+                <div class="sidebar-overlay"></div>
+                <a href="#" class="sidebar-toggle"><i class="fas fa-chevron-right"></i></a>
+                <a class="sidebar-close" href="#"><i class="d-icon-times"></i></a>
+                <div class="sidebar-content">
+                    <div class="sticky-sidebar">
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">Kateqoriyalar</h3>
+                            @Extension.GetCategoriesRaw(Model.Categories)
+                        </div>
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">Ölçü</h3>
+                            <ul class="widget-body filter-items" data-entity-name="sizes">
+                                @foreach (var size in Model.Sizes)
+                                {
+                                    <li data-entity-id="@size.Id">
+                                        <a href="#">@size.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">Rəng</h3>
+                            <ul class="widget-body filter-items" data-entity-name="colors">
+                                @foreach (var color in Model.Colors)
+                                {
+                                    <li data-entity-id="@color.Id">
+                                        <a href="#">@color.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <div class="col-lg-9 main-content">
+                <div class="shop-banner-default banner mb-1"
+                     style="background-image: url('./assets/images/shop/banner.jpg'); background-color: #4e6582;">
+                    <div class="banner-content">
+                        <h4 class="banner-subtitle font-weight-bold ls-normal text-uppercase text-white">
+                            Firlansa Shop
+                        </h4>
+                        <h1 class="banner-title font-weight-bold text-white">Banner with Sidebar</h1>
+                        <a href="#" class="btn btn-white btn-outline btn-icon-right btn-rounded text-normal">
+                            Discover
+                            now<i class="d-icon-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <nav class="toolbox sticky-toolbox sticky-content fix-top">
+                    <div class="toolbox-left">
+                        <div class="toolbox-item toolbox-sort select-box text-dark">
+                            <label>Sort By :</label>
+                            <select name="orderby" class="form-control">
+                                <option value="default">Default</option>
+                                <option value="popularity" selected="selected">Most Popular</option>
+                                <option value="rating">Average rating</option>
+                                <option value="date">Latest</option>
+                                <option value="price-low">Sort forward price low</option>
+                                <option value="price-high">Sort forward price high</option>
+                                <option value="">Clear custom sort</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="toolbox-right">
+                        <div class="toolbox-item toolbox-show select-box text-dark">
+                            <label>Show :</label>
+                            <select name="count" class="form-control">
+                                <option value="12">12</option>
+                                <option value="24">24</option>
+                                <option value="36">36</option>
+                            </select>
+                        </div>
+                        <div class="toolbox-item toolbox-layout">
+                            <a href="#product-list" data-container-class="products-wrapper product-lists" class="d-icon-mode-list btn-layout"></a>
+                            <a href="#product-wrap" data-container-class="products-wrapper" class="d-icon-mode-grid btn-layout active"></a>
+                        </div>
+                    </div>
+                </nav>
+                <div id="productContainer" class="products-wrapper">
+                    <partial name="_ProductContainer" model="@Model.Products">
+                </div>
+                <div id="loaderImg" class="text-center">
+                    <img src="https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b9523ty8t2fgeq7tx5ii5bkg6zwx9a2w0kwsta3n9vwm&rid=200w.gif&ct=g" alt="loading..." />
+                </div>
+                <nav class="toolbox toolbox-pagination">
+                    <p class="show-info">Showing 12 of 56 Products</p>
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1"
+                               aria-disabled="true">
+                                <i class="d-icon-arrow-left"></i>Prev
+                            </a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item page-item-dots"><a class="page-link" href="#">6</a></li>
+                        <li class="page-item">
+                            <a class="page-link page-link-next" href="#" aria-label="Next">
+                                Next<i class="d-icon-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.min.css">
+    <link href="~/assets/css/product-style.css" rel="stylesheet" />
+}
+@section js{
+    <script>
+        $('#loaderImg').hide();
+        $(document).ready(function () {
+            $('.toolbox-layout a[href^="#product-"]').click(function (e) {
+                e.preventDefault();
+
+                $(e.currentTarget).parent().find('a').removeClass('active');
+                $(e.currentTarget).addClass('active');
+
+                const isListLayout = $(e.currentTarget).attr('href') === '#product-list';
+                const data = $(e.currentTarget).data();
+                const container = $('#productContainer');
+
+                $(container).attr('class', data.containerClass)
+
+                $(container).find('.product').each(function (index,item) {
+                    const actionContainer = $(item).find('.product-action');
+                    const verticalAction = $(item).find('.product-action-vertical');
+
+                    if (isListLayout) {
+                        verticalAction.removeClass('product-action-vertical').addClass('product-action');
+                        verticalAction.append(actionContainer.html())
+                        $(item).find('.product-details').append(verticalAction);
+                        $('figure.product-media .product-action').css("display","none");
+                    }
+                    else {
+                        $('.product-details .product-action').css("display", "none");
+                        console.log('salam')
+                        let verticalActionDiv = $('<div>', {
+                            class: 'product-action-vertical',
+                            html: `<a href="#" class="btn-product-icon btn-cart" title="Add to cart">
+                    <i class="d-icon-bag"></i>
+                    <label>Add to cart</label>
+                </a>
+                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist">
+                    <i class="d-icon-heart"></i>
+                </a>`
+                        });
+                        console.log(verticalActionDiv);
+                        $('figure.product-media .product-action').css("display", "flex");
+                        $(item).find('figure.product-media').append(verticalActionDiv);
+                    }
+                })
+
+            })
+
+        })
+
+        function specificationsDetermine(e) {
+            console.log("salam")
+            $('.product-size').css('display', 'none');
+            $('.product-size .product-variations a.active').removeClass('active');
+            if (!$(e.currentTarget).hasClass('active')) {
+
+                let colorId = $(e.currentTarget).data("color-id");
+                $('.product-size').each(function (index, item) {
+                    if ($(item).data('entity-id') == colorId)
+                        $(item).css('display', 'flex');
+                    let size = $('.product-size .product-variations a.size');
+                    console.log('sakanaaaa')
+                    console.log(size)
+                    size.click(function (item) {
+                        if ($(item.currentTarget).hasClass('active')) {
+                            $('#btnCart').removeAttr('disabled');
+                        }
+                    })
+                });
+            }
+            else {
+                $('.product-size').css('display', 'none');
+            }
+        }
+
+        function addToCart(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            let data = $(ev.currentTarget).data();
+            let qty = $(ev.currentTarget).prev().find('#qty').val();
+            let colors = document.querySelectorAll('.color');
+            let color;
+            let size;
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].getAttribute('class') == 'color active') {
+                    color = $(colors[i]).data();
+                }
+            }
+            let sizes = document.querySelectorAll('.size');
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].getAttribute('class') == 'size active') {
+                    size = $(sizes[i]).data();
+                }
+            }
+            let activeSpecs = $('.product-variations a.active');
+            if (qty <= 0) {
+                toastr.warning("Miqdarı düzgün qeyd edin!", "Uğursuz");
+                return;
+            }
+            else if (color == undefined) {
+                toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (size == undefined) {
+                toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (activeSpecs.length != 2) {
+                toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            console.log(data.itemId);
+            console.log(qty);
+            console.log(color.colorId);
+            console.log(size.sizeId);
+            addToBasket(data.itemId, color.colorId, size.sizeId, qty, ev);
+        }
+
+        function addToBasket(cardId, cardColor, cardSize, cardQty, ev) {
+            let colorAndSize = `${cardId}-${cardColor}-${cardSize}`;
+            console.log(colorAndSize);
+            let items = readFromBasket();
+            let colors = readFromBasketColor();
+            let sizes = readFromBasketSize();
+            let qtys = readFromBasketQty();
+            let colorsAndSizes = readFromBasketColorAndSize();
+            let length = colorsAndSizes.filter(item => item == colorAndSize).length;
+
+            if (length > 0) {
+                toastr.warning("Bu məhsulu artıq əlavə etmisiniz!", "Uğursuz");
+                return;
+            }
+            items.push(cardId);
+            colors.push(cardColor);
+            sizes.push(cardSize);
+            qtys.push(cardQty);
+            colorsAndSizes.push(colorAndSize);
+            $.cookie('cards', items.toString(), { expires: 7, path: '/' });
+            $.cookie('colors', colors.toString(), { expires: 7, path: '/' });
+            $.cookie('sizes', sizes.toString(), { expires: 7, path: '/' });
+            $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
+            $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
+            ev.preventDefault();
+            var t = $(ev.currentTarget).closest(".product");
+            let name = t.find(".product-name").text();
+            let link = `/shop/details/${cardId}`;
+            let imageSrc = t.find("figure.main img").attr("src");
+            let price = t.find("div.product-price").html();
+            let count = t.find(".quantity").length > 0 ? t.find(".quantity").val() : 1;
+            let miniBasket = $('#basketProducts');
+            let cartActionContainer = $('div.cart-action');
+            let cartTotalContainer = $('div.cart-total');
+            let totalPrice = 0;
+            let subTotalPrice = $('div.cart-total span.price');
+            if (subTotalPrice.length == 0) {
+                let productsCart = $('div#basketProducts div.product-cart');
+                if (productsCart.length == 0) {
+                    totalPrice = parseInt(price) * count;
+                }
+            }
+            else {
+                let previousTotalPrice = subTotalPrice.text();
+                totalPrice = parseInt(previousTotalPrice) + (parseInt(price) * count);
+                subTotalPrice.text(totalPrice);
+            }
+            console.log(totalPrice);
+            //let prices = $('div.cart-total span.price');
+            //let subTotalPriceExistThisProduct = 0;
+            //for (var i = 0; i < prices.length; i++) {
+            //    subTotalPriceExistThisProduct += prices[i];
+            //}
+            //let subTotalPrice = subTotalPriceExistThisProduct + price * count;
+
+            /**/
+            let productContainer = `<div data-specification="${cardId}-${cardColor}-${cardSize}" class="product product-cart">
+                                            <figure class="product-media1">
+                                                <a href="${link}">
+                                                            <img src="${imageSrc}" alt="${name}" width="80"
+                                                                 height="88" />
+                                                </a>
+                                                <button onclick="removeEntity1(${cardId},${cardColor},${cardSize},${cardQty},event)" class="btn btn-link btn-close">
+                                                    <i class="fas fa-times"></i><span class="sr-only">Bağla</span>
+                                                </button>
+                                            </figure>
+                                            <div class="product-detail">
+                                                <a href="${link}" class="product-name">${name}</a>
+                                                <div class="price-box">
+                                                        <span class="product-quantity">${count}</span>
+                                                        <span class="product-price">${price}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+`
+
+            let cartTotal = `<label>Cəmi:</label>
+                                <span class="price">${totalPrice}</span><span>&#8380;</span>`
+            let cartAction = `<a href="/shop/basket" class="btn btn-dark btn-link">Səbətə bax</a>
+                                <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>`
+
+            $.ajax({
+
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    if (readFromBasket().length <= 2) {
+                        cartActionContainer.append(cartAction);
+                        cartTotalContainer.append(cartTotal);
+                        $("div.dropdown-box div.d-flex").remove();
+                    }
+                    toastr.success("Səbətə uğurla əlavə edildi", response.message)
+                    showCardCount();
+                    miniBasket.append(productContainer);
+
+
+                },
+                error: function (response) {
+                    toastr["error"]("Uğursuz", "Əlavə edilmədi")
+                }
+            })
+        }
+        function setFilter() {
+
+            if ($.setFilterProcessId != undefined) {
+                clearTimeout($.setFilterProcessId);
+            }
+                $('#productContainer').html('')
+                $('#loaderImg').show();
+            $.setFilterProcessId = setTimeout(function () {
+                const filterObj = {};
+                $("ul[data-entity-name]").each(function (index, item) {
+                    const entityPropertyName = $(item).data('entity-name');
+                    filterObj[entityPropertyName] = [];
+
+                    $(item).find('li.active').each(function (indexLi, itemLi) {
+
+                        filterObj[entityPropertyName].push($(itemLi).data('entity-id'));
+                    });
+
+                })
+                $("#categoryFilter").each(function (index, item) {
+                    filterObj["categories"] = [];
+
+                    $(item).find('li.active').each(function (indexLi, itemLi) {
+                        filterObj["categories"].push($(itemLi).find('a[data-entity-id]').data('entity-id'));
+                    });
+
+                })
+
+                console.log(filterObj);
+
+                $.ajax({
+                    url: '@Url.Action("Filter")',
+                    type: 'POST',
+                    data: filterObj,
+                    dataType: 'html',
+                    contentType: 'application/x-www-form-urlencoded',
+                    beforeSend: function () {
+                        $('#loaderImg').show();
+                    },
+                    success: function (response) {
+                        /*console.log(response);*/
+                        $('#productContainer').html(response);
+                        const el = $('a[href="#product-list"]');
+                        if (el.hasClass('active'))
+                            el[0].click('');
+
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    }
+                })
+                    .always(function () {
+                        $('#loaderImg').hide();
+                    });
+            }, 2000)
+        }
+    </script>
+}
+

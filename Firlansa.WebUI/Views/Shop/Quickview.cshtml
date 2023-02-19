@@ -1,5 +1,6 @@
 ﻿@model ShopViewModel
 @{
+    var linkTiktok = "https://www.tiktok.com/@firlansa.baku";
     Layout = null;
 }
 <div class="product product-single row product-popup">
@@ -24,17 +25,9 @@
         <div class="product-details scrollable pr-0 pr-md-3">
             <h1 class="product-name mt-0">@Model.Product.Name</h1>
             <div class="product-meta">
-                SKU: <span class="product-sku">12345670</span>
                 Kateqoriya: <span class="product-brand">@Model.Product.Category.Name</span>
             </div>
             <div class="product-price">@Model.Product.Price&#8380;</div>
-            <div class="ratings-container">
-                <div class="ratings-full">
-                    <span class="ratings" style="width:80%"></span>
-                    <span class="tooltiptext tooltip-top"></span>
-                </div>
-                <a href="#product-tab-reviews" class="link-to-tab rating-reviews">( 11 reviews )</a>
-            </div>
             <p class="product-short-desc">
                 @Model.Product.ShortDescription
             </p>
@@ -44,9 +37,8 @@
                 <div class="product-variations">
                     @foreach (var color in Model.Colors)
                     {
-
                         <a onclick="specificationsDetermine(event)" class="color" data-color-id="@color.Id" data-src="~/assets/images/demos/demo7/products/big1.jpg" href="#"
-                           style="background-color: @color.HexCode"></a>
+                           style="background-color: @color.HexCode">@(color.Name == "Ağ" || color.Name == "Ag" || color.Name == "White" ? color.Name : "")</a>
                     }
                 </div>
             </div>
@@ -75,8 +67,7 @@
                         <button class="quantity-plus d-icon-plus"></button>
                     </div>
                     <button id="btnCart" data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
-                        <i class="d-icon-bag"></i>Add to
-                        Cart
+                        <i class="d-icon-bag"></i>Səbətə əlavə et
                     </button>
                 </div>
             </div>
@@ -84,11 +75,12 @@
             <hr class="product-divider mb-3">
             <div class="product-footer">
                 <div class="social-links mr-4">
-                    <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
-                    <a href="#" class="social-link social-instagram fab fa-instagram"></a>
-                    <a href="#" class="social-link social-tiktok fab fa-tiktok"></a>
+                    <a href="https://www.instagram.com/firlansa.baku/" class="fa-brands fa-instagram social-link social-instagram"></a>
+                    <a href="@linkTiktok" class="social-link social-tiktok fa-brands fa-tiktok"></a>
                 </div>
-                <a href="#" class="btn-product btn-wishlist mr-4"><i class="d-icon-heart"></i>Add to wishlist</a>
+                <a style="cursor:pointer;" onclick="addToWishlist(event,@Model.Product.Id)" class="btn-product btn-wishlist mr-6">
+                    <i class="d-icon-heart"></i>Seçilmişlərə əlavə et
+                </a>
             </div>
         </div>
     </div>

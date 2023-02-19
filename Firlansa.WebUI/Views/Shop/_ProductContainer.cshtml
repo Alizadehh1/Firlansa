@@ -3,30 +3,30 @@
 @foreach (var product in Model)
 {
     string imagePath = product.Images.FirstOrDefault().ImagePath;
-    <div class="product">
-        <figure class="product-media">
+    <div  class="product">
+        <figure data-entity-id="@product.Id" class="product-media">
             <a asp-action="details" asp-route-id="@product.Id">
                 <img src="~/uploads/images/@imagePath" alt="@product.Name" width="280" height="315">
             </a>
             <div class="product-action-vertical">
-                <a href="#" class="btn-product-icon btn-cart" title="Add to cart">
+                @*<a href="#" class="btn-product-icon btn-cart" title="Add to cart">
                     <i class="d-icon-bag"></i>
                     <label>Add to cart</label>
-                </a>
-                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist">
+                </a>*@
+                <button style="cursor:pointer;" onclick="addToWishlist(event,@product.Id)" class="btn-product-icon btn-wishlist" title="Seçilmişlərə əlavə et">
                     <i class="d-icon-heart"></i>
-                </a>
+                </button>
             </div>
             <div style="top:unset;" class="product-action">
                 <a asp-action="quickview" asp-route-id="@product.Id" data-toggle="login-modal" class="btn-quickview" title="Quick View">
                     <i class="d-icon-search"></i>
-                    <label>Quick View</label>
+                    <label>Ətraflı Baxış</label>
                 </a>
             </div>
         </figure>
         <div class="product-details">
             <div class="product-cat">
-                <a href="shop-grid-3col.html">@product.Category.Name</a>
+                <a asp-action="details" asp-route-id="@product.Id">@product.Category.Name</a>
             </div>
             <h3 class="product-name">
                 <a asp-action="details" asp-route-id="@product.Id">@product.Name</a>

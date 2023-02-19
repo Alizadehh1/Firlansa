@@ -21,5 +21,6 @@ namespace Firlansa.WebUI.Models.Entities
         public string ForSearch { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
         public virtual ICollection<ProductSpecification> Specifications { get; set; }
+        public virtual ICollection<ProductStatus> Statuses { get; set; }
     }
 }

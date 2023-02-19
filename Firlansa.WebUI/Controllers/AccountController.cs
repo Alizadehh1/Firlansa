@@ -2,11 +2,14 @@
 using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities.Membership;
 using Firlansa.WebUI.Models.FormModels;
+using Firlansa.WebUI.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,9 +51,53 @@ namespace Firlansa.WebUI.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction(nameof(SignIn));
         }
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            return View();
+            var viewModel = new ProfileViewModel();
+            viewModel.Order = db.Orders.Where(o => o.FirlansaUserId.ToString() == User.GetUserId()).OrderByDescending(o => o.CreatedDated).Include(o => o.OrderItems).ToList();
+            viewModel.FirlansaUser = await userManager.FindByIdAsync(User.GetUserId());
+            viewModel.ProductStatuses = await db.ProductStatuses
+                .Where(ps => ps.DeletedById != null && ps.FirlansaUserId == Convert.ToInt32(User.GetUserId()))
+                .Include(ps=>ps.Product)
+                .Include(ps=>ps.Color)
+                .Include(ps=>ps.Size)
+                .ToListAsync();
+            return View(viewModel);
+        }
+        public async Task<IActionResult> Order(int id)
+        {
+            var viewModel = new OrderViewModel();
+            viewModel.Order = db.Orders
+                .Include(o => o.Adress)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefault(o => o.Id == id);
+            viewModel.Orders = db.Orders
+                .Where(o => o.Id == id)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .ToList()
+                .OrderByDescending(o => o.CreatedDated);
+            viewModel.Products = db.Products
+                .Where(p => p.DeletedById == null)
+                .Include(p => p.Category)
+                .Include(p => p.Images.Where(i => i.IsMain && i.DeletedById == null))
+                .Include(p => p.Specifications.Where(s => s.DeletedById == null))
+                .ThenInclude(p => p.Color)
+                .Include(p => p.Specifications.Where(s => s.DeletedById == null))
+                .ThenInclude(p => p.Size)
+                .ToList();
+            viewModel.Users = db.Users.ToList();
+            double totalAmount = 0;
+            foreach (var orderItem in db.OrderItems)
+            {
+                if (orderItem.OrderId == id)
+                {
+                    totalAmount += orderItem.Product.Price * orderItem.Quantity;
+                }
+            }
+            ViewBag.TotalAmount = totalAmount;
+            return View(viewModel);
         }
         [HttpPost]
         [Route("/signin.html")]

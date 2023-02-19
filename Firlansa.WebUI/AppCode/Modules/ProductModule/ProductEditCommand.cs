@@ -129,7 +129,8 @@ namespace Firlansa.WebUI.AppCode.Modules.ProductModule
                         product.Specifications.Add(new Firlansa.WebUI.Models.Entities.ProductSpecification
                         {
                             ColorId = specification.ColorId,
-                            SizeId = specification.SizeId
+                            SizeId = specification.SizeId,
+                            Quantity = specification.Quantity
                         });
                     }
                 }

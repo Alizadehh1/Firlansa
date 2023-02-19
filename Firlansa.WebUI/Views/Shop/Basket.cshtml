@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Product>, int[], int[], int[]>
+﻿@model Tuple<List<Product>, int[], int[], int[], SelectList, List<Adress>>
 @{
     ViewData["Title"] = "Basket";
 }
@@ -47,10 +47,10 @@
                             <tbody>
                                 @for (int i = 0; i < Model.Item1.Count; i++)
                                 {
-                                    <tr id="entityTr" data-id="@Model.Item1[i].Id" data-specification="@Model.Item1[i].Id-@Model.Item2[i]-@Model.Item3[i]" data-entity-id="@Model.Item1[i].Id" data-price="@Model.Item1[i].Price" data-quantity="@Model.Item4[i]">
+                                    <tr id="entityTr" data-id="@Model.Item1[i].Id" data-color-id="@Model.Item2[i]" data-size-id="@Model.Item3[i]" data-specification="@Model.Item1[i].Id-@Model.Item2[i]-@Model.Item3[i]" data-entity-id="@Model.Item1[i].Id" data-price="@Model.Item1[i].Price" data-quantity="@Model.Item4[i]">
                                         <td class="product-thumbnail">
                                             <figure>
-                                                <a href="product-simple.html">
+                                                <a asp-action="details" asp-controller="shop" asp-route-id="@Model.Item1[i].Id">
                                                     <img src="~/uploads/images/@Model.Item1[i].Images.FirstOrDefault().ImagePath" width="100" height="100"
                                                          alt="@Model.Item1[i].Name">
                                                 </a>
@@ -107,9 +107,10 @@
             {
                 if (Model.Item2.Length != 0)
                 {
-                    <aside id="placingOrder" class="col-lg-4 sticky-sidebar-wrapper">
+
+                    <aside class="col-lg-4 sticky-sidebar-wrapper">
                         <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
-                            <div class="summary mb-4">
+                            <div id="placingOrder" class="summary mb-4">
                                 <h3 class="summary-title text-left">Səbət Ümumi</h3>
                                 <table class="shipping">
                                     <tr class="summary-subtotal">
@@ -123,66 +124,30 @@
                                     <tr class="sumnary-shipping shipping-row-last">
                                         <td colspan="2">
                                             <h4 class="summary-subtitle">Çatdırılma hesablanması</h4>
-                                            <ul>
-                                                <li>
-                                                    <div class="custom-radio">
-                                                        <input type="radio" id="flat_rate" name="shipping" class="custom-control-input" checked>
-                                                        <label class="custom-control-label" for="flat_rate">Flat rate</label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="custom-radio">
-                                                        <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-                                                        <label class="custom-control-label" for="free-shipping">
-                                                            Free
-                                                            shipping
-                                                        </label>
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="custom-radio">
-                                                        <input type="radio" id="local_pickup" name="shipping" class="custom-control-input">
-                                                        <label class="custom-control-label" for="local_pickup">Local pickup</label>
-                                                    </div>
-                                                </li>
-                                            </ul>
                                         </td>
                                     </tr>
                                 </table>
                                 <div class="shipping-address">
-                                    <label>Shipping to <strong>CA.</strong></label>
-                                    <div class="select-box">
-                                        <select name="country" class="form-control">
-                                            <option value="us" selected>United States (US)</option>
-                                            <option value="uk"> United Kingdom</option>
-                                            <option value="fr">France</option>
-                                            <option value="aus">Austria</option>
+                                    <label><strong>Ölkə</strong> daxili çatdırılma mövcuddur.</label>
+                                    <div style="margin-bottom:15px;">
+                                        <select onchange="setShippingPrice()" name="districts" class="form-control select2" asp-items="Model.Item5">
+                                            <option selected disabled>---İnzibati ərazini seçin---</option>
                                         </select>
                                     </div>
-                                    <div class="select-box">
-                                        <select name="country" class="form-control">
-                                            <option value="us" selected>California</option>
-                                            <option value="uk">Alaska</option>
-                                            <option value="fr">Delaware</option>
-                                            <option value="aus">Hawaii</option>
-                                        </select>
-                                    </div>
-                                    <input type="text" class="form-control" name="code" placeholder="Town / City" />
-                                    <input type="text" class="form-control" name="code" placeholder="ZIP" />
-                                    <a href="#" class="btn btn-md btn-dark btn-rounded btn-outline">Update totals</a>
+                                    <input id="locationInput" type="text" required class="form-control" name="code" placeholder="Çatdırılma ünvanı*" />
+                                    <input id="mobileInput" type="number" class="form-control" name="code" placeholder="Əlaqə nömrəsi*" />
                                 </div>
                                 <table class="total">
                                     <tr class="summary-subtotal">
                                         <td>
-                                            <h4 class="summary-subtitle">Total</h4>
+                                            <h4 class="summary-subtitle">Çatdırılma ilə Cəmi</h4>
                                         </td>
                                         <td>
-                                            <p class="summary-total-price ls-s">$426.99</p>
+                                            <p class="summary-total-price ls-s">0</p>
                                         </td>
                                     </tr>
                                 </table>
-                                <a href="checkout.html" class="btn btn-dark btn-rounded btn-checkout">Proceed to checkout</a>
+                                <button id="placeOrderBtn" onclick="placeOrder()" class="btn btn-dark btn-rounded btn-checkout">Sifarişi tamamla</button>
                             </div>
                         </div>
                     </aside>
@@ -191,7 +156,59 @@
         </div>
     </div>
 </div>
+@section css{
+    <style>
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            background-color: unset;
+        }
+
+        .selection > .select2-selection.select2-selection--single {
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+            padding: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            font-size: 16px;
+            border-radius: 2px;
+            border: 1px solid #ccc;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border: none;
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                padding: .375rem .75rem;
+            }
+
+        .select2-selection__arrow {
+            height: 35px !important;
+            top: 1px !important;
+            right: 3px !important;
+        }
+
+        th.table-row-select,
+        td.table-row-select {
+            width: 50px;
+            min-width: 50px;
+            max-width: 50px;
+            text-align: center;
+        }
+    </style>
+    <link href="~/libs/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/libs/toastr.js/toastr.css" rel="stylesheet" />
+}
 @section js{
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/admin/files/assets/js/customize.js"></script>
     <script>
         function showCardCount() {
             let items = readFromBasket();
@@ -211,7 +228,7 @@
             $('div.step-by').remove();
             if (items.length <= 1) {
                 $('table.shipping').remove();
-                $('aside#placingOrder').remove();
+                $('aside.sticky-sidebar-wrapper').remove();
                 iTag.appendTo(divContainer);
                 h1Tag.appendTo(divContainer);
                 divContainer.appendTo(divTag);
@@ -226,6 +243,7 @@
                 totalPrice = totalPrice + parseInt(items[i].textContent);
             }
             $('p.summary-subtotal-price').html(`${totalPrice}₼`);
+            $('p.summary-total-price').html(`${totalPrice}₼`);
         }
         setTotalPrice();
         function removeEntity(entityId, entityColor, entitySize ,entityQty) {
@@ -297,45 +315,162 @@
             $(row).find('td.product-price .amount').html(`${(data.price * quantity)}₼`);
             setTotalPrice();
         }
-        @*function placeOrder() {
-            let btn = document.getElementById('placeOrderBtn');
-            btn.disabled = true;
+        function setShippingPrice() {
+            const selectedDistrictName = $("span.select2-selection__rendered").attr("title");
+            const options = $('select[name="districts"] option');
+            for (var i = 0; i < options.length; i++) {
+                if ($(options[i]).html() == selectedDistrictName) {
+                    var addressId = $(options[i]).val();
+                }
+            }
+
+            @foreach (var address in Model.Item6)
+            {
+                <text>
+                    if (@address.Id == addressId) {
+                        var shippingPrice = @address.ShippingPrice;
+                    }
+                </text>
+            }
+            let items = document.querySelectorAll('td.product-price span.amount');
+            let totalPrice = 0;
+            for (var i = 0; i < items.length; i++) {
+                totalPrice = totalPrice + parseInt(items[i].textContent);
+            }
+            $('p.summary-total-price').html(`${totalPrice + shippingPrice}₼`);
+            console.log(shippingPrice);
+        }
+        async function placeOrder() {
+            const btn = $('#placeOrderBtn');
+
+            $(btn).attr('disable', 'disabled');
+
             let items = document.querySelectorAll('#entityTr');
             let productIds = [];
             let quantity = [];
-            let price = [];
+            let colorIds = [];
+            let sizeIds = [];
             for (var i = 0; i < items.length; i++) {
                 let data = $(items[i]).data();
                 productIds.push(data.id);
+                colorIds.push(data.colorId);
+                sizeIds.push(data.sizeId);
                 quantity.push(data.quantity);
-                price.push(data.price);
             }
-            let totalAmount = $('p.summary-subtotal-price').html();
             let itemsIds = readFromBasket();
-            let itemsPrice = readFromBasketPrices();
-            itemsIds.splice(0, itemsIds.length);
-            itemsPrice.splice(0, itemsPrice.length);
+            let colors = readFromBasketColor();
+            let sizes = readFromBasketSize();
+            let colorsAndSizes = readFromBasketColorAndSize();
+            let qtys = readFromBasketQty();
+
+            //itemsIds.splice(0, itemsIds.length);
+            //colors.splice(0, colors.length);
+            //sizes.splice(0, sizes.length);
+            //colorsAndSizes.splice(0, colorsAndSizes.length);
+            //qtys.splice(0, qtys.length);
+
+            const location = $('#locationInput').val();
+            const phoneNumber = $('#mobileInput').val();
+            const selectedDistrictName = $("span.select2-selection__rendered").attr("title");
+            const options = $('select[name="districts"] option');
+            for (var i = 0; i < options.length; i++) {
+                if ($(options[i]).html() == selectedDistrictName) {
+                    var addressId = $(options[i]).val();
+                }
+            }
+
+            @foreach (var address in Model.Item6)
+            {
+                <text>
+                    if (@address.Id == addressId) {
+                        var shippingPrice = @address.ShippingPrice;
+                    }
+                </text>
+            }
+            console.log(shippingPrice);
             $.cookie('cards', itemsIds.toString(), { expires: 7, path: '/' });
-            $.cookie('prices', itemsPrice.toString(), { expires: 7, path: '/' });
+            $.cookie('colors', colors.toString(), { expires: 7, path: '/' });
+            $.cookie('sizes', sizes.toString(), { expires: 7, path: '/' });
+            $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
+            $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
+
+
+
+
+
             $.ajax({
                 url: "@Url.Action("PlaceOrder")",
                 data: {
                     productIds: productIds.toString(),
                     quantities: quantity.toString(),
-                    totalAmount: totalAmount,
-                    prices: price.toString()
+                    colorIds: colorIds.toString(),
+                    sizeIds: sizeIds.toString(),
+                    location: location,
+                    phoneNumber: phoneNumber,
+                    addressId: addressId
                 },
-                success: function (response) {
-                    if (response.error == true) {
-                        toastr.error(response.message, 'Error!');
-                        btn.disabled = false;
-                        return;
-                    }
-                    btn.disabled = false;
-                    toastr.success(response.message, 'Success!');
-                    location.href = `@Url.Action("Index")`;
+                success: async function (response) {
+                    //toastr.success("Ugur1", response.message);
+                    var id = parseInt(response.message)
+                    let routeUrl = `@Url.Action("CompleteOrder")/${id}`;
+                    let approveUrl = `https://localhost:44379${routeUrl}`;
+
+                    var myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    myHeaders.append("Authorization", "@ViewBag.SecretKey");
+                    var rawCreateOrder = JSON.stringify({
+                        "body": {
+                            "amount": 1.2,
+                            "currencyType": "AZN",
+                            "description": "Example",
+                            "language": "AZ",
+                            "approveURL": approveUrl,
+                            "cancelURL": "https://localhost:44379",
+                            "declineURL": "https://localhost:44379"
+                        },
+                        "merchant": "@ViewBag.Merchant"
+                    });
+
+                    var requestOptions = {
+                        method: 'POST',
+                        headers: myHeaders,
+                        body: rawCreateOrder,
+                        redirect: 'follow'
+                    };
+                    const responseApi = await fetch("https://api.payriff.com/api/v2/createOrder", requestOptions);
+                    const result = await responseApi.json();
+                    var orderId = result.payload.orderId;
+                    let sessionId = result.payload.sessionId;
+                    console.log(orderId);
+                    console.log(sessionId);
+                    $.ajax({
+                        url: "@Url.Action("SetOrderAndSessionId")",
+                        data: {
+                            id: id,
+                            orderId: orderId,
+                            sessionId: sessionId
+                        },
+                        success: function (response) {
+                            toastr.success("Ugur", response.message);
+                        },
+                        error: function (response) {
+                            toastr.error(response.message, 'Error!');
+                        }
+                    })
+                    console.log(approveUrl)
+                    window.location.replace(result.payload.paymentUrl);
+                },
+                error: function (response) {
+                    $(btn).removeAttr('disable');
+                    toastr.error(response.message, 'Error!');
                 }
-            });
-        }*@
+            })
+        }
+    </script>
+    <script src="~/libs/select2/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
     </script>
 }

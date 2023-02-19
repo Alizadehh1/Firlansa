@@ -120,6 +120,12 @@
   <data name="About us" xml:space="preserve">
     <value>Haqqımızda</value>
   </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Əlaqə</value>
+  </data>
+  <data name="FAQs" xml:space="preserve">
+    <value>Ən çox verilən suallar</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Ana səhifə</value>
   </data>

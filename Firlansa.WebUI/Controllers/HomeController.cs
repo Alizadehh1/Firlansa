@@ -1,7 +1,9 @@
-﻿using Firlansa.WebUI.Models;
+﻿using Firlansa.WebUI.AppCode.Modules.SubscribeModule;
+using Firlansa.WebUI.Models;
 using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
 using Firlansa.WebUI.Models.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +20,12 @@ namespace Firlansa.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly FirlansaDbContext db;
+        private readonly IMediator mediator;
 
-        public HomeController(FirlansaDbContext db)
+        public HomeController(FirlansaDbContext db,IMediator mediator)
         {
             this.db = db;
+            this.mediator = mediator;
         }
 
         public async Task<IActionResult> Index()
@@ -29,10 +33,9 @@ namespace Firlansa.WebUI.Controllers
             var model = new HomeViewModel();
             model.LastestProducts = (from data in db.Products
                                      orderby data.CreatedDated descending
-                                     select data).Take(3).Include(p => p.Images.Where(i => i.IsMain == true)).Include(p=>p.Category).ToList();
+                                     select data).Where(p=>p.DeletedById==null).Take(5).Include(p => p.Images.Where(i => i.IsMain == true)).Include(p=>p.Category).ToList();
             model.SaleProducts = db.Products
-                .Where(p => p.OldPrice != null)
-                .Take(3)
+                .Where(p => p.OldPrice != null && p.DeletedById == null)
                 .Include(p => p.Images.Where(i => i.IsMain == true))
                 .Include(p => p.Category)
                 .ToList();
@@ -69,6 +72,23 @@ namespace Firlansa.WebUI.Controllers
         {
             var faqs = await db.Faqs.Where(f => f.DeletedById == null).ToListAsync();
             return View(faqs);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Subscribe(SubscribeCreateCommand command)
+        {
+
+            var response = await mediator.Send(command);
+
+            return Json(response);
+        }
+
+        [HttpGet]
+        [Route("/subscribe-confirm")]
+        public async Task<IActionResult> SubscribeConfirm(SubscribeConfirmCommand command)
+        {
+            var response = await mediator.Send(command);
+
+            return View(response);
         }
     }
 }

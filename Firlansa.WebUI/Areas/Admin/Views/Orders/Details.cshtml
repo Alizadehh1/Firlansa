@@ -1,0 +1,383 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Sifariş</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a href="#!">Sifariş</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card p-3">
+        <div class="card-block">
+            <h1>Sifariş haqda Ümumi Məlumat</h1>
+            <div class="row">
+                <div class="col-6 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Order.Id" class="control-label">Sifariş nömrəsi</label>
+                        <p class="form-control">#@Model.Order.Id</p>
+                    </div>
+                </div>
+                @foreach (var user in Model.Users)
+                {
+                    if (user.Id == Model.Order.FirlansaUserId)
+                    {
+                        <div class="col-6 col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="@user.Email" class="control-label">Elektron Poçt</label>
+                                <p class="form-control">@user.Email</p>
+                            </div>
+                        </div>
+                    }
+
+                }
+                <div class="col-6 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Order.CreatedDated" class="control-label">Sifariş vaxtı</label>
+                        <p class="form-control orderTime">@Model.Order.CreatedDated.ToString("dd/MM/yy HH:mm", CultureInfo.GetCultureInfo("az-Az"))</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Order.Adress.Name" class="control-label">İnzibati Ərazi</label>
+                        <p class="form-control orderTime">@Model.Order.Adress.Name</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Order.Location" class="control-label">Ünvan</label>
+                        <p class="form-control orderTime">@Model.Order.Location</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Order.PhoneNumber" class="control-label">Əlaqə Nömrəsi</label>
+                        <p class="form-control orderTime">@Model.Order.PhoneNumber</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <table class="shop-table wishlist-table mt-2 mb-4">
+                    <thead>
+                        <tr>
+                            <th class="product-name text-center"><span>Məhsul</span></th>
+                            <th class='text-center'>Adı</th>
+                            <th style="width:120px;" class="product-stock-status text-center"><span>Kateqoriya</span></th>
+                            <th class='text-center'>Ölçü</th>
+                            <th class='text-center'>Rəng</th>
+                            <th class="product-price text-center"><span>Qiymət</span></th>
+                            <th></th>
+                            <th class="product-price text-center"><span>Ədəd</span></th>
+                            <th class="product-price text-center"><span>Yekun</span></th>
+                            <th class="product-add-to-cart"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="wishlist-items-wrapper">
+                        @foreach (var item in Model.Order.OrderItems)
+                        {
+                            @foreach (var product in Model.Products)
+                            {
+                                if (product.Id == item.ProductId)
+                                {
+                                    var imagePath = product.Images.FirstOrDefault(i => i.IsMain).ImagePath;
+                                    <tr>
+                                        <td class="product-thumbnail d-flex justify-content-center">
+                                            <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id">
+                                                <figure>
+                                                    <img src="~/uploads/images/@imagePath" width="100" height="100"
+                                                         alt="@product.Name">
+                                                </figure>
+                                            </a>
+                                        </td>
+                                        <td class="product-name text-center">
+                                            <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id">@product.Name</a>
+                                        </td>
+                                        <td class="product-name text-center">
+                                            <a>@product.Category.Name</a>
+                                        </td>
+                                        <td class="product-name text-center">
+                                            <a>@product.Specifications.FirstOrDefault(s=>s.SizeId==item.SizeId && s.ColorId==item.ColorId).Size.Name</a>
+                                        </td>
+                                        <td class="product-name text-center">
+                                            <a>@product.Specifications.FirstOrDefault(s=>s.SizeId==item.SizeId && s.ColorId==item.ColorId).Color.Name</a>
+                                        </td>
+                                        <td class="product-price text-center">
+                                            <span style="font-weight:bolder" class="amount">@product.Price ₼</span>
+                                        </td>
+                                        <td>
+                                            x
+                                        </td>
+                                        <td style="width:52px;" class="product-name text-center">
+                                            <a>@item.Quantity əd</a>
+                                        </td>
+                                        <td class="product-price text-center">
+                                            <span style="font-weight:bolder" class="amount">@(product.Price * item.Quantity) ₼</span>
+                                        </td>
+                                        <td class="product-add-to-cart">
+                                            <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id" class="btn-product btn-primary"><span>Detallı</span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="product-price">
+                                <span>Çatdırılma məbləği: @Model.Order.Adress.ShippingPrice₼</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="product-price">
+                                    <span>Sifarişin çatdırılma ilə ümumi məbləği: @(ViewBag.TotalAmount+Model.Order.Adress.ShippingPrice)₼</span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <a asp-action="Index" class="btn btn-info btn-icon"><i class="icofont-arrow-left"></i></a> |
+            <button class="btn btn-info" onclick="printMe()">Print</button>
+        </div>
+    </div>
+</div>
+@section css{
+    <style>
+
+        .shop-table {
+            text-align: left;
+            font-family: Poppins, sans-serif;
+        }
+
+            .shop-table tbody {
+                border-bottom: 1px solid #e1e1e1;
+            }
+
+            .shop-table td {
+                padding: 1.5rem 1rem 1.5rem 0;
+                border-top: 1px solid #e1e1e1;
+            }
+
+            .shop-table th {
+                padding: 0.3rem 0 0.3rem;
+                font-weight: 600;
+                line-height: 1.875;
+                text-transform: uppercase;
+                color: #222;
+            }
+
+            .shop-table img {
+                display: block;
+                max-width: 100px;
+            }
+
+            .shop-table .product-thumbnail a {
+                display: block;
+                width: 100px;
+            }
+
+            .shop-table .remove {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 2.3rem;
+                height: 2.3rem;
+                color: #222;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+            }
+
+            .shop-table .product-name {
+                white-space: normal;
+                color: #000;
+            }
+
+            .shop-table td.product-remove {
+                padding-right: 0;
+                width: 23px;
+            }
+
+            .shop-table .product-price {
+                display: table-cell;
+            }
+
+        @@media (min-width: 768px) {
+            .wishlist-table td.product-price {
+                width: 130px;
+            }
+
+            .wishlist-table td.product-stock-status {
+                width: 130px;
+            }
+        }
+
+        @@media (min-width: 992px) {
+            .wishlist-table td.product-price {
+                width: 107px;
+            }
+
+            .wishlist-table td.product-stock-status {
+                width: 201px;
+            }
+
+            .wishlist-table td.product-add-to-cart {
+                width: 235px;
+            }
+        }
+
+        .btn-product {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 1.14em 0;
+            background-color: #26c;
+            color: #fff;
+            font-family: Poppins, sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+
+            .btn-product:hover {
+                color: #fff;
+            }
+
+        @@media (max-width: 767px) {
+            .shop-table {
+                text-align: center;
+            }
+
+                .shop-table thead {
+                    display: none;
+                }
+
+                .shop-table tbody,
+                .shop-table tr,
+                .shop-table td {
+                    display: block;
+                }
+
+                .shop-table tbody {
+                    border: 1px solid #e1e1e1;
+                }
+
+                .shop-table tr {
+                    position: relative;
+                    padding: 4rem 1rem 4rem;
+                }
+
+                    .shop-table tr + tr {
+                        border-top: 1px solid #e1e1e1;
+                    }
+
+                .shop-table td {
+                    padding: 0;
+                    border: none;
+                }
+
+                .shop-table .product-thumbnail {
+                    margin-bottom: 1rem;
+                }
+
+                    .shop-table .product-thumbnail a,
+                    .shop-table .btn-product,
+                    .shop-table td {
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+
+                .shop-table .product-stock-status {
+                    margin-bottom: 1rem;
+                }
+
+                .shop-table .btn-product {
+                    max-width: 220px;
+                }
+
+                .shop-table .product-remove {
+                    position: absolute;
+                    right: 2rem;
+                    top: 2rem;
+                    padding: 0.5rem;
+                    width: auto;
+                }
+
+                .shop-table .product-quantity {
+                    margin-bottom: 1rem;
+                }
+
+            .wishlist-table td.product-price {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        .wishlist-table th.product-name {
+            padding-left: 2px;
+            width: 120px;
+        }
+
+        .wishlist-table .wishlist-out-stock {
+            color: #d26e4b;
+        }
+
+        .wishlist-table .wishlist-in-stock {
+            color: #26c;
+        }
+
+        .wishlist-table .btn-product {
+            white-space: nowrap;
+            width: 13rem;
+            margin: 0 auto;
+            font-size: 12px;
+            width: 130px;
+            height: 42px;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+            .wishlist-table .btn-product:hover {
+                color: #fff;
+                background-color: #26c;
+            }
+
+            .wishlist-table .btn-product.btn-disabled {
+                border-color: #f2f3f5 !important;
+                background-color: #f2f3f5 !important;
+            }
+    </style>
+}
+@section js{
+    <script>
+        function printMe() {
+            var selection = document.querySelector('.card-block').innerHTML;
+            var body = document.querySelector('body').innerHTML;
+            document.querySelector('body').innerHTML = selection;
+            window.print();
+            document.querySelector('body').innerHTML = body;
+        }
+    </script>
+}

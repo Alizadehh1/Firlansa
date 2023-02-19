@@ -54,7 +54,6 @@ namespace Firlansa.WebUI.AppCode.Modules.ProductModule
                 product.ForSearch = request.Name;
 
 
-
                 if (request.Images != null && request.Images.Any(i => i.File != null))
                 {
                     product.Images = new List<ProductImage>();
@@ -84,8 +83,10 @@ namespace Firlansa.WebUI.AppCode.Modules.ProductModule
                     {
                         product.Specifications.Add(new Firlansa.WebUI.Models.Entities.ProductSpecification
                         {
+                            
                             ColorId = specification.ColorId,
-                            SizeId = specification.SizeId
+                            SizeId = specification.SizeId,
+                            Quantity = specification.Quantity
                         });
                     }
                 }

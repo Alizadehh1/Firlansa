@@ -39,7 +39,7 @@ namespace Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Firlansa.WebUI.AppCode.Resources.Navbar", typeof(Navbar).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Firlansa.WebUI.AppCode.Resources.Navbar.Navbar", typeof(Navbar).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,24 @@ namespace Resources {
         public static string About_us {
             get {
                 return ResourceManager.GetString("About us", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Əlaqə.
+        /// </summary>
+        public static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ən çox verilən suallar.
+        /// </summary>
+        public static string FAQs {
+            get {
+                return ResourceManager.GetString("FAQs", resourceCulture);
             }
         }
         

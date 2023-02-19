@@ -54,8 +54,22 @@ using Firlansa.WebUI.Models.FormModels;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 8 "C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\Views\_ViewImports.cshtml"
+using System.Globalization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 9 "C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\Views\_ViewImports.cshtml"
+using Resources;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"892cdaedcbbce98cc7e6fc359283d002f0a84dc1", @"/Views/Shared/Components/Basket/Default.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"09d3743615352b0f04d0f140fb7ec118dd40d209", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e69c718b0497370eb6f2339725ec33eec2cb2871", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared_Components_Basket_Default : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("width", new global::Microsoft.AspNetCore.Html.HtmlString("80"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -179,7 +193,7 @@ using Firlansa.WebUI.Models.FormModels;
 #line hidden
 #nullable disable
             WriteLiteral("\" class=\"product product-cart\">\r\n                    <figure class=\"product-media1\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "892cdaedcbbce98cc7e6fc359283d002f0a84dc19772", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "892cdaedcbbce98cc7e6fc359283d002f0a84dc110143", async() => {
                 WriteLiteral("\r\n");
 #nullable restore
 #line 34 "C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\Views\Shared\Components\Basket\Default.cshtml"
@@ -192,7 +206,7 @@ using Firlansa.WebUI.Models.FormModels;
 #line hidden
 #nullable disable
                 WriteLiteral("                                    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "892cdaedcbbce98cc7e6fc359283d002f0a84dc110480", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "892cdaedcbbce98cc7e6fc359283d002f0a84dc110852", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -307,7 +321,7 @@ WriteAttributeValue("", 1868, ViewBag.Quantities[i], 1868, 22, false);
                     </figure>
                     <div class=""product-detail"">
                         ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "892cdaedcbbce98cc7e6fc359283d002f0a84dc117017", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "892cdaedcbbce98cc7e6fc359283d002f0a84dc117389", async() => {
 #nullable restore
 #line 48 "C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\Views\Shared\Components\Basket\Default.cshtml"
                                                                                                                              Write(ViewBag.Products[i].Name);
@@ -418,7 +432,7 @@ WriteAttributeValue("", 1868, ViewBag.Quantities[i], 1868, 22, false);
 #line hidden
 #nullable disable
             WriteLiteral("                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "892cdaedcbbce98cc7e6fc359283d002f0a84dc122591", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "892cdaedcbbce98cc7e6fc359283d002f0a84dc122963", async() => {
                 WriteLiteral("Səbətə bax");
             }
             );

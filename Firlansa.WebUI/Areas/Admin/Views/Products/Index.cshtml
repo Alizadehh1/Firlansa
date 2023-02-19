@@ -132,7 +132,7 @@
                                 $(`tr[data-entity-id=${entityId}]`).remove();
                             },
                             error: function (response) {
-                                //toastr["error"]("Unsuccessfully", "Data has not been deleted")
+                                toastr["error"]("Unsuccessfully", "Silinmə baş vermədi, yenidən yoxlayın!")
                             }
                         })
                     }
