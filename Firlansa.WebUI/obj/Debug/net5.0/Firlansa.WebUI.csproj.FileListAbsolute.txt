@@ -287,3 +287,10 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlans
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\bin\Debug\net5.0\en\Firlansa.WebUI.resources.dll
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.Navbar.Navbar.en.resources
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\en\Firlansa.WebUI.resources.dll
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.ContactForm.ContactFormResource.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.LayoutResource.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.Navbar.Navbar.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.ContactForm.ContactFormResource.en.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.ContactForm.ContactFormResource.ru.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.Navbar.Navbar.en.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.Navbar.Navbar.ru.resources
