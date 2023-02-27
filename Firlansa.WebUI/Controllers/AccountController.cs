@@ -54,13 +54,13 @@ namespace Firlansa.WebUI.Controllers
         public async Task<IActionResult> Profile()
         {
             var viewModel = new ProfileViewModel();
-            viewModel.Order = db.Orders.Where(o => o.FirlansaUserId.ToString() == User.GetUserId()).OrderByDescending(o => o.CreatedDated).Include(o => o.OrderItems).ToList();
+            viewModel.Order = db.Orders.Where(o => o.FirlansaUserId.ToString() == User.GetUserId() && o.OrderStatus == "APPROVED" && o.DeletedById == null).OrderByDescending(o => o.CreatedDated).Include(o => o.OrderItems).ToList();
             viewModel.FirlansaUser = await userManager.FindByIdAsync(User.GetUserId());
             viewModel.ProductStatuses = await db.ProductStatuses
                 .Where(ps => ps.DeletedById != null && ps.FirlansaUserId == Convert.ToInt32(User.GetUserId()))
-                .Include(ps=>ps.Product)
-                .Include(ps=>ps.Color)
-                .Include(ps=>ps.Size)
+                .Include(ps => ps.Product)
+                .Include(ps => ps.Color)
+                .Include(ps => ps.Size)
                 .ToListAsync();
             return View(viewModel);
         }

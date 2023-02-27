@@ -294,8 +294,8 @@
             let id = entityId.toString();
             let button = ev.currentTarget;
             let priceBox = $(button).parent().next().find("div");
-            let deletingPrice = parseFloat($(priceBox).find("span.product-price").html());
-            let deletinCount = parseFloat($(priceBox).find("span.product-quantity").html());
+            let deletingPrice = parseFloat($(priceBox).find("span.product-price").html()).toFixed(2);
+            let deletinCount = parseFloat($(priceBox).find("span.product-quantity").html()).toFixed(2);
             const index = items.indexOf(id);
             if (index > -1) {
                 items.splice(index, 1);
@@ -311,8 +311,8 @@
             $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
             if (items.length > 1) {
                 let deletingSubtotal = deletingPrice * deletinCount;
-                let previousSubtotal = parseFloat($("div.cart-total span.price").html());
-                $("div.cart-total span.price").html(previousSubtotal - deletingSubtotal);
+                let previousSubtotal = parseFloat($("div.cart-total span.price").html()).toFixed(2);
+                $("div.cart-total span.price").html((previousSubtotal - deletingSubtotal).toFixed(2));
                 console.log(previousSubtotal);
                 console.log($("div.cart-total span.price").html(previousSubtotal - deletingSubtotal));
             }

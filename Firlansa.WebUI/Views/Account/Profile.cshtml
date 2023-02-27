@@ -26,10 +26,10 @@
                         <a class="nav-link" href="#notifications">Bildirişlər</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#address">Address</a>
+                        <a class="nav-link" href="#account">Account details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#account">Account details</a>
+                        <a asp-action="logout" >Log Out</a>
                     </li>
                 </ul>
                 <div class="tab-content col-lg-9 col-md-8">
@@ -62,19 +62,7 @@
                                         <td class="order-number"><a href="#">#@item.Id</a></td>
                                         <td class="order-date"><time>@item.CreatedDated.ToString("yyyy.MM.dd HH:mm:ss")</time></td>
                                         <td class="order-status">
-                                            @*@if (item.isConfirmed)
-                                                {
-
-                                                }
-                                                else if (item.DeletedById != null)
-                                                {
-                                                    <span style="background-color:red;color:white;">Ləğv olunub</span>
-                                                }
-                                                else
-                                                {
-                                                    <span style="background-color:orange;color:white;">Gözləmədə</span>
-                                                }*@
-                                            <span style="background-color:green;color:white;">@item.OrderStatus</span>
+                                            <span style="background-color:green;color:white;">Ödənilib</span>
                                         </td>
                                         <td class="order-action"><a asp-route-id="@item.Id" asp-action="Order" style="text-decoration:none;" class="btn btn-primary btn-link btn-underline">Detallı</a></td>
                                     </tr>
@@ -96,43 +84,9 @@
                             }
                         }
                     </div>
-                    <div class="tab-pane" id="address">
-                        <p class="mb-2">
-                            The following addresses will be used on the checkout page by default.
-                        </p>
-                        <div class="row">
-                            <div class="col-sm-6 mb-4">
-                                <div class="card card-address">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-uppercase">Billing Address</h5>
-                                        <p>
-                                            John Doe<br>
-                                            Firlansa Company<br>
-                                            Steven street<br>
-                                            El Carjon, CA 92020
-                                        </p>
-                                        <a href="#" class="btn btn-link btn-secondary btn-underline">
-                                            Edit <i class="far fa-edit"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 mb-4">
-                                <div class="card card-address">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-uppercase">Shipping Address</h5>
-                                        <p>You have not set up this type of address yet.</p>
-                                        <a href="#" class="btn btn-link btn-secondary btn-underline">
-                                            Edit <i class="far fa-edit"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="tab-pane" id="account">
                         <form action="#" class="form">
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="col-sm-6">
                                     <label>First Name *</label>
                                     <input type="text" class="form-control" name="first_name" required="">
@@ -148,11 +102,11 @@
                             <small class="d-block form-text mb-7">
                                 This will be how your name will be displayed
                                 in the account section and in reviews
-                            </small>
+                            </small>*@
 
                             <label>Email Address *</label>
                             <p class="form-control">@User.GetPrincipalName()</p>
-                            <fieldset>
+                            @*<fieldset>
                                 <legend>Password Change</legend>
                                 <label>Current password (leave blank to leave unchanged)</label>
                                 <input type="password" class="form-control" name="current_password">
@@ -164,7 +118,7 @@
                                 <input type="password" class="form-control" name="confirm_password">
                             </fieldset>
 
-                            <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
+                            <button type="submit" class="btn btn-primary">SAVE CHANGES</button>*@
                         </form>
                     </div>
                 </div>
@@ -180,7 +134,7 @@
     <script>
         $(document).ready(function () {
             $('#table-order').DataTable({
-                order: [[0, 'desc']],
+                order: [[1, 'desc']],
                 lengthChange: false,
                 searching: false,
             });

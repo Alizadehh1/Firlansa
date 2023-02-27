@@ -285,12 +285,13 @@
             if (subTotalPrice.length == 0) {
                 let productsCart = $('div#basketProducts div.product-cart');
                 if (productsCart.length == 0) {
-                    totalPrice = parseInt(price) * count;
+                    totalPrice = parseFloat(price) * count;
                 }
             }
             else {
                 let previousTotalPrice = subTotalPrice.text();
-                totalPrice = parseInt(previousTotalPrice) + (parseInt(price) * count);
+                totalPrice =
+                    (previousTotalPrice) + (parseFloat(price) * count);
                 subTotalPrice.text(totalPrice);
             }
             console.log(totalPrice);

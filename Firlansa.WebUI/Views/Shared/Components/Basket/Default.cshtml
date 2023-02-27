@@ -63,7 +63,7 @@
             if (ViewBag.Colors.Length != 0)
             {
                 <label>Cəmi:</label>
-                <span class="price">@ViewBag.SubTotal</span><span>&#8380;</span>
+                <span class="price">@ViewBag.SubTotal.ToString("0.00")</span><span>&#8380;</span>
             }
         }
 

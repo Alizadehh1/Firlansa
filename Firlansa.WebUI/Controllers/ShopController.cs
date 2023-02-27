@@ -16,7 +16,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-
+using Recources;
 namespace Firlansa.WebUI.Controllers
 {
     public class ShopController : Controller
@@ -249,6 +249,7 @@ namespace Firlansa.WebUI.Controllers
         [Authorize]
         public async Task<IActionResult> Notification([FromBody] int[] items)
         {
+
             var product = await db.Products
                 .FirstOrDefaultAsync(m => m.Id == items[0] && m.DeletedById == null);
             var currentProductStatus = await db.ProductStatuses
@@ -267,11 +268,13 @@ namespace Firlansa.WebUI.Controllers
             await db.SaveChangesAsync();
             return Json(new CommandJsonResponse(false, $"Siz '{product.Name}' adlı məhsul yenidən stokda olduqda xəbərdar olacaqsız!"));
         }
+        [Authorize]
         public async Task<IActionResult> CompleteOrder(int id)
         {
             var entity = await db.Orders
+                .Include(o => o.OrderItems)
                 .Include(o => o.Adress)
-                .Include(o=>o.FirlansaUser)
+                .Include(o => o.FirlansaUser)
                 .FirstOrDefaultAsync(o => o.Id == id);
             if (entity == null)
             {
@@ -281,34 +284,45 @@ namespace Firlansa.WebUI.Controllers
             var request = new RestRequest();
             request.Timeout = -1;
             request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", "894D14D6CBE44397AC28DFF6C5BE2A43");
+            request.AddHeader("Authorization", "C7DF29708CC0410192D48AAC06B3A1C0");
             var body = @"{" + "\n" +
             @"    ""body"": {" + "\n" +
             @"        ""language"": ""Az""," + "\n" +
             @$"        ""orderId"": ""{entity.OrderId}""," + "\n" +
             @$"        ""sessionId"": ""{entity.SessionId}""" + "\n" +
             @"    }," + "\n" +
-            @"    ""merchant"": ""ES1091685""" + "\n" +
+            @"    ""merchant"": ""ES1091628""" + "\n" +
             @"}";
-            request.AddJsonBody(body);
-            var response = await client.PostAsync(request);
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            var response = client.Post(request);
             var responseJson = JsonConvert.DeserializeObject<dynamic>(response.Content);
             var statusOrder = responseJson.payload.orderStatus;
             if (!response.IsSuccessful)
+                return NotFound();
+
+            if (statusOrder == "APPROVED")
+            {
+                foreach (var item in entity.OrderItems)
+                {
+                    db.ProductSpecifications.FirstOrDefault(ps => ps.ProductId == item.ProductId && ps.SizeId == item.SizeId && ps.ColorId == item.ColorId).Quantity -= item.Quantity;
+                }
+            }
+            else
             {
                 return NotFound();
             }
-            if (statusOrder == "APPROVED")
-            {
-                entity.OrderStatus = "APPROVED";
-                await db.SaveChangesAsync();
-            }
+
+            entity.OrderStatus = statusOrder;
+            await db.SaveChangesAsync();
             return View(statusOrder);
         }
-
-        public async Task<IActionResult> PlaceOrder(string productIds, string quantities, string colorIds, string sizeIds, string location, string phoneNumber, int addressId)
+        [Authorize]
+        public async Task<IActionResult> PlaceOrder(string productIds, string quantities, string colorIds, string sizeIds, string location, string phoneNumber, int addressId,string postCode)
         {
-
+            if (location ==null || phoneNumber==null || addressId==0 || postCode == null)
+            {
+                return Json(new CommandJsonResponse(true, "Zəhmət olmasa çatdırılma məlumatlarını düzgün daxil edin"));
+            }
             int[] productId = productIds.Split(",").Where(CheckIsNumber)
                         .Select(item => int.Parse(item))
                         .ToArray();
@@ -328,14 +342,20 @@ namespace Firlansa.WebUI.Controllers
             newOrder.Location = location;
             newOrder.PhoneNumber = phoneNumber;
             newOrder.AdressId = addressId;
-            newOrder.OrderStatus = "Created";
+            newOrder.OrderStatus = "CREATED";
+            newOrder.PostCode = postCode;
+            double totalPrice = 0;
             if (productId != null)
             {
                 newOrder.OrderItems = new List<OrderItem>();
                 int i = 0;
                 foreach (var prid in productId)
                 {
-                    db.ProductSpecifications.FirstOrDefault(ps => ps.ProductId == prid && ps.SizeId == sizeId[i] && ps.ColorId == colorId[i]).Quantity -= quantity[i];
+                    if (db.ProductSpecifications.FirstOrDefault(ps=>ps.ColorId== colorId[i] && ps.SizeId == sizeId[i] && ps.ProductId==prid).Quantity < quantity[i])
+                    {
+                        return Json(new CommandJsonResponse(true, $"Almaq istədiyiniz məhsul təəssüf ki stoklarımızda {db.ProductSpecifications.FirstOrDefault(ps => ps.ColorId == colorId[i] && ps.SizeId == sizeId[i] && ps.ProductId == prid).Quantity} ədəd qalıb"));
+                    }
+                    totalPrice += db.Products.FirstOrDefault(p => p.Id == prid).Price * quantity[i];
                     newOrder.OrderItems.Add(new OrderItem
                     {
                         ProductId = prid,
@@ -347,44 +367,40 @@ namespace Firlansa.WebUI.Controllers
                     i++;
                 }
             }
+
+            totalPrice += db.Adresses.FirstOrDefault(a => a.Id == addressId).ShippingPrice;
             await db.Orders.AddAsync(newOrder);
             await db.SaveChangesAsync();
 
+            string routeUrl = $"{Url.Action("CompleteOrder")}/{newOrder.Id}";
+            string approveUrl = $"https://localhost:44379/shop/completeOrder{routeUrl}";
 
 
-            return Json(new CommandJsonResponse(false, $"{newOrder.Id}"));
-
-        }
-        //public async Task<IActionResult> CreateOrder(int id)
-        //{
-        //    Uri myUri = new Uri("https://api.payriff.com/api/v2/getStatusOrder", UriKind.Absolute);
-        //    var client = new RestClient(myUri);
-        //    client.Timeout = 1200000;
-        //    client.ReadWriteTimeout = 1200000;
-        //    var request = new RestRequest(Method.POST);
-        //    request.AddHeader("Content-Type", "application/json");
-        //    request.AddHeader("Authorization", "894D14D6CBE44397AC28DFF6C5BE2A43");
-        //    var body = @"{" + "\n" +
-        //    @"    ""body"": {" + "\n" +
-        //    @"        ""language"": ""Az""," + "\n" +
-        //    @$"        ""orderId"": ""524587""," + "\n" +
-        //    @$"        ""sessionId"": ""9B66629FB901BD5A60FF831AD996E510""" + "\n" +
-        //    @"    }," + "\n" +
-        //    @"    ""merchant"": ""ES1091685""" + "\n" +
-        //    @"}";
-        //    request.AddParameter("application/json", body, ParameterType.RequestBody);
-        //    IRestResponse response = client.Execute(request);
-        //    var responseJson = JsonConvert.DeserializeObject<dynamic>(response.Content);
-        //    return Json(new CommandJsonResponse(false, $"{responseJson}"));
-        //}
-        public async Task<IActionResult> SetOrderAndSessionId(int id,int orderId,string sessionId)
-        {
-            var order = await db.Orders
-                .FirstOrDefaultAsync(o => o.Id == id);
-            order.OrderId = orderId;
-            order.SessionId = sessionId;
+            var client = new RestClient("https://api.payriff.com/api/v2/createOrder");
+            var request = new RestRequest();
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", "C7DF29708CC0410192D48AAC06B3A1C0");
+            var body = @"{" + "\n" +
+            @"    ""body"": {" + "\n" +
+            @$"        ""amount"": {totalPrice}," + "\n" +
+            @"        ""currencyType"": ""AZN""," + "\n" +
+            @"        ""description"": ""Example""," + "\n" +
+            @"        ""language"": ""AZ""," + "\n" +
+            @$"        ""approveURL"": ""{approveUrl}""," + "\n" +
+            @"        ""cancelURL"": ""https://localhost:44379""," + "\n" +
+            @"        ""declineURL"": ""https://decline,com""" + "\n" +
+            @"    }," + "\n" +
+            @"    ""merchant"": ""ES1091628""" + "\n" +
+            @"}";
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            var response = client.Post(request);
+            var responseJson = JsonConvert.DeserializeObject<dynamic>(response.Content);
+            var paymentUrl = responseJson.payload.paymentUrl;
+            newOrder.OrderId = responseJson.payload.orderId;
+            newOrder.SessionId = responseJson.payload.sessionId;
             await db.SaveChangesAsync();
-            return Json(new CommandJsonResponse(false, $"{orderId}/{sessionId}"));
+            return Json(new CommandJsonResponse(false, $"{paymentUrl}"));
+
         }
         [AllowAnonymous]
         public async Task<IActionResult> Search(string query)

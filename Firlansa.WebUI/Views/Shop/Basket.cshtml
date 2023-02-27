@@ -85,7 +85,7 @@
                                             </div>
                                         </td>
                                         <td class="product-price">
-                                            <span class="amount">@(Model.Item1[i].Price * Model.Item4[i])₼</span>
+                                            <span class="amount">@((Model.Item1[i].Price * Model.Item4[i]).ToString("0.00"))₼</span>
                                         </td>
                                         <td class="product-close">
                                             <a onclick="removeEntity(@Model.Item1[i].Id,@Model.Item2[i],@Model.Item3[i],@Model.Item4[i])" class="product-remove" style="cursor:pointer;" title="Məhsulu silin">
@@ -136,6 +136,8 @@
                                     </div>
                                     <input id="locationInput" type="text" required class="form-control" name="code" placeholder="Çatdırılma ünvanı*" />
                                     <input id="mobileInput" type="number" class="form-control" name="code" placeholder="Əlaqə nömrəsi*" />
+                                    <input id="postCodeInput" type="text" class="form-control" name="code" placeholder="Poçt kodu (İndeksi)*" />
+                                    <span>Zəhmət olmasa məlumatları düzgün daxil edin, əks halda çatdırılma baş verməyəcək.</span>
                                 </div>
                                 <table class="total">
                                     <tr class="summary-subtotal">
@@ -240,10 +242,10 @@
             let items = document.querySelectorAll('td.product-price span.amount');
             let totalPrice = 0;
             for (var i = 0; i < items.length; i++) {
-                totalPrice = totalPrice + parseInt(items[i].textContent);
+                totalPrice = totalPrice + parseFloat(items[i].textContent);
             }
-            $('p.summary-subtotal-price').html(`${totalPrice}₼`);
-            $('p.summary-total-price').html(`${totalPrice}₼`);
+            $('p.summary-subtotal-price').html(`${totalPrice.toFixed(2)}₼`);
+            $('p.summary-total-price').html(`${totalPrice.toFixed(2)}₼`);
         }
         setTotalPrice();
         function removeEntity(entityId, entityColor, entitySize ,entityQty) {
@@ -295,7 +297,7 @@
                 $(row).data('quantity', quantity);
             }
             $(row).find('input.quantity1').val(quantity);
-            $(row).find('td.product-price .amount').html(`${(data.price * quantity)}₼`);
+            $(row).find('td.product-price .amount').html(`${(data.price * quantity).toFixed(2)}₼`);
             setTotalPrice();
         }
         function minusQuantity(e) {
@@ -312,7 +314,7 @@
 
             }
             $(row).find('input.quantity1').val(quantity);
-            $(row).find('td.product-price .amount').html(`${(data.price * quantity)}₼`);
+            $(row).find('td.product-price .amount').html(`${(data.price * quantity).toFixed(2)}₼`);
             setTotalPrice();
         }
         function setShippingPrice() {
@@ -328,19 +330,19 @@
             {
                 <text>
                     if (@address.Id == addressId) {
-                        var shippingPrice = @address.ShippingPrice;
+                        var shippingPrice = parseFloat(@address.ShippingPrice);
                     }
                 </text>
             }
             let items = document.querySelectorAll('td.product-price span.amount');
-            let totalPrice = 0;
+            let totalPrice = 0.0;
             for (var i = 0; i < items.length; i++) {
-                totalPrice = totalPrice + parseInt(items[i].textContent);
+                totalPrice = totalPrice + parseFloat(items[i].textContent);
             }
-            $('p.summary-total-price').html(`${totalPrice + shippingPrice}₼`);
+            $('p.summary-total-price').html(`${(totalPrice + shippingPrice).toFixed(2)}₼`);
             console.log(shippingPrice);
         }
-        async function placeOrder() {
+        function placeOrder() {
             const btn = $('#placeOrderBtn');
 
             $(btn).attr('disable', 'disabled');
@@ -371,6 +373,7 @@
 
             const location = $('#locationInput').val();
             const phoneNumber = $('#mobileInput').val();
+            const postCode = $('#postCodeInput').val();
             const selectedDistrictName = $("span.select2-selection__rendered").attr("title");
             const options = $('select[name="districts"] option');
             for (var i = 0; i < options.length; i++) {
@@ -383,7 +386,7 @@
             {
                 <text>
                     if (@address.Id == addressId) {
-                        var shippingPrice = @address.ShippingPrice;
+                        var shippingPrice = parseFloat(@address.ShippingPrice);
                     }
                 </text>
             }
@@ -394,10 +397,7 @@
             $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
             $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
 
-
-
-
-
+            toastr.success("Zəhmət olmasa", "Bir qədər gözləyin");
             $.ajax({
                 url: "@Url.Action("PlaceOrder")",
                 data: {
@@ -407,58 +407,16 @@
                     sizeIds: sizeIds.toString(),
                     location: location,
                     phoneNumber: phoneNumber,
-                    addressId: addressId
+                    addressId: addressId,
+                    postCode: postCode
                 },
                 success: async function (response) {
-                    //toastr.success("Ugur1", response.message);
-                    var id = parseInt(response.message)
-                    let routeUrl = `@Url.Action("CompleteOrder")/${id}`;
-                    let approveUrl = `https://localhost:44379${routeUrl}`;
-
-                    var myHeaders = new Headers();
-                    myHeaders.append("Content-Type", "application/json");
-                    myHeaders.append("Authorization", "@ViewBag.SecretKey");
-                    var rawCreateOrder = JSON.stringify({
-                        "body": {
-                            "amount": 1.2,
-                            "currencyType": "AZN",
-                            "description": "Example",
-                            "language": "AZ",
-                            "approveURL": approveUrl,
-                            "cancelURL": "https://localhost:44379",
-                            "declineURL": "https://localhost:44379"
-                        },
-                        "merchant": "@ViewBag.Merchant"
-                    });
-
-                    var requestOptions = {
-                        method: 'POST',
-                        headers: myHeaders,
-                        body: rawCreateOrder,
-                        redirect: 'follow'
-                    };
-                    const responseApi = await fetch("https://api.payriff.com/api/v2/createOrder", requestOptions);
-                    const result = await responseApi.json();
-                    var orderId = result.payload.orderId;
-                    let sessionId = result.payload.sessionId;
-                    console.log(orderId);
-                    console.log(sessionId);
-                    $.ajax({
-                        url: "@Url.Action("SetOrderAndSessionId")",
-                        data: {
-                            id: id,
-                            orderId: orderId,
-                            sessionId: sessionId
-                        },
-                        success: function (response) {
-                            toastr.success("Ugur", response.message);
-                        },
-                        error: function (response) {
-                            toastr.error(response.message, 'Error!');
-                        }
-                    })
-                    console.log(approveUrl)
-                    window.location.replace(result.payload.paymentUrl);
+                    if (response.message == "Zəhmət olmasa çatdırılma məlumatlarını düzgün daxil edin" || response.message.slice(0, 5) == "Almaq") {
+                        toastr.error("Uğursuz", response.message);
+                        return;
+                    }
+                    toastr.success("Uğurlu", "Ödəniş səhifəsinə yönləndirilir...");
+                    window.location.replace(response.message);
                 },
                 error: function (response) {
                     $(btn).removeAttr('disable');

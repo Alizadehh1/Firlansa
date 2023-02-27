@@ -80,7 +80,6 @@
                         <div data-entity-id="@color.Id" style="display:none;" class="product-form product-size">
                             <label>Size:</label>
                             <div class="product-form-group">
-
                                 <div class="product-variations">
                                     @foreach (var size in Model.ProductSpecifications.Where(ps => ps.ColorId == color.Id))
                                     {
@@ -669,12 +668,12 @@
             if (subTotalPrice.length == 0) {
                 let productsCart = $('div#basketProducts div.product-cart');
                 if (productsCart.length == 0) {
-                    totalPrice = parseInt(currentPrice) * count;
+                    totalPrice = parseFloat(currentPrice) * count;
                 }
             }
             else {
                 let previousTotalPrice = subTotalPrice.text();
-                totalPrice = parseInt(previousTotalPrice) + (parseInt(currentPrice) * count);
+                totalPrice = parseFloat(previousTotalPrice) + (parseFloat(currentPrice) * count);
                 subTotalPrice.text(totalPrice);
             }
             console.log(totalPrice);

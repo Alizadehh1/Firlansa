@@ -78,7 +78,7 @@
                                     @item.ShortDescription.ToEllipse(15)
                                 </td>
                                 <td>
-                                    @item.Price&#8380;
+                                    <ins class="new-price">@item.Price&#8380;</ins><del class="old-price">@(item.OldPrice != null ? item.OldPrice + "₼" : null)</del>
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id"><button class="btn btn-warning btn-icon"><i class="icofont-pencil-alt-5"></i></button></a> |

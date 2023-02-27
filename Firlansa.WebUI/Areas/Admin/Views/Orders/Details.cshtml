@@ -40,7 +40,7 @@
                 {
                     if (user.Id == Model.Order.FirlansaUserId)
                     {
-                        <div class="col-6 col-lg-4">
+                        <div class="col-12 col-lg-4">
                             <div class="form-group">
                                 <label asp-for="@user.Email" class="control-label">Elektron Poçt</label>
                                 <p class="form-control">@user.Email</p>
@@ -71,6 +71,12 @@
                     <div class="form-group">
                         <label asp-for="Order.PhoneNumber" class="control-label">Əlaqə Nömrəsi</label>
                         <p class="form-control orderTime">@Model.Order.PhoneNumber</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Order.PostCode" class="control-label">Poçt kodu (İndeksi)</label>
+                        <p class="form-control orderTime">@Model.Order.PostCode</p>
                     </div>
                 </div>
             </div>

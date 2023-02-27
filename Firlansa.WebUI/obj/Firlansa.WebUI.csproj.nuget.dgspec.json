@@ -86,7 +86,7 @@
             },
             "RestSharp": {
               "target": "Package",
-              "version": "[107.0.1, )"
+              "version": "[108.0.3, )"
             }
           },
           "imports": [

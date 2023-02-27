@@ -215,11 +215,21 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="RestSharp" Version="107.0.1" />
+    <PackageReference Include="RestSharp" Version="108.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AppCode\Resources\Navbar\Navbar.Designer.cs">
+    <Compile Update="AppCode\Resources\UserUI\ContactForm\ContactFormResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContactFormResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AppCode\Resources\UserUI\LayoutResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LayoutResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AppCode\Resources\UserUI\Navbar\Navbar.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Navbar.resx</DependentUpon>
@@ -227,10 +237,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="AppCode\Resources\Navbar\Navbar.resx">
-      <CustomToolNamespace>Resources</CustomToolNamespace>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\ContactForm\ContactFormResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactFormResource.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Recources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\LayoutResource.resx">
+      <CustomToolNamespace>Recources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LayoutResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\Navbar\Navbar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Navbar.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Recources</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
 

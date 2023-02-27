@@ -16,6 +16,7 @@ namespace Firlansa.WebUI.Models.Entities
         public string Location { get; set; }
         [Required(ErrorMessage = "Əlaqə nömrəsini daxil edin zəhmət olmasa!")]
         public string PhoneNumber { get; set; }
+        public string PostCode { get; set; }
         public string OrderStatus { get; set; }
         public int OrderId { get; set; }
         public string SessionId { get; set; }

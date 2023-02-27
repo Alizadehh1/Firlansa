@@ -27,7 +27,9 @@
             <div class="product-meta">
                 Kateqoriya: <span class="product-brand">@Model.Product.Category.Name</span>
             </div>
-            <div class="product-price">@Model.Product.Price&#8380;</div>
+            <div class="product-price">
+                <ins class="new-price">@Model.Product.Price&#8380;</ins><del class="old-price">@(Model.Product.OldPrice != null ? Model.Product.OldPrice + "₼" : null)</del>
+            </div>
             <p class="product-short-desc">
                 @Model.Product.ShortDescription
             </p>
@@ -50,7 +52,14 @@
                         <div class="product-variations">
                             @foreach (var size in Model.ProductSpecifications.Where(ps => ps.ColorId == color.Id))
                             {
-                                <a class="size" data-size-id="@size.SizeId" href="#">@size.Size.Name</a>
+                                if (size.Quantity <= 0)
+                                {
+                                    <a data-size-id="@size.SizeId" data-color-id="@color.Id" class="size soldOut">@size.Size.Name</a>
+                                }
+                                else
+                                {
+                                    <a style="width:auto;height:auto;" data-qty="@size.Quantity" class="size" data-size-id="@size.SizeId" href="#">@size.Size.Name</a>
+                                }
                             }
                         </div>
                     </div>
@@ -68,6 +77,9 @@
                     </div>
                     <button id="btnCart" data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
                         <i class="d-icon-bag"></i>Səbətə əlavə et
+                    </button>
+                    <button style="background-color: #F27A1A;color:white;display:none;" id="btnNotify" data-item-id="@Model.Product.Id" onclick="addToNotify(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                        <i class="fa-solid fa-bell"></i>Gələndə xəbər et
                     </button>
                 </div>
             </div>
