@@ -79,6 +79,15 @@ namespace Recources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Səbət.
+        /// </summary>
+        public static string Cart {
+            get {
+                return ResourceManager.GetString("Cart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Əlaqə.
         /// </summary>
         public static string Contact {

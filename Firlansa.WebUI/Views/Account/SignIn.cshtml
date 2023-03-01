@@ -11,11 +11,11 @@
                     <div class="tab tab-nav-simple tab-nav-boxed form-tab">
                         <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active border-no lh-1 ls-normal">Giriş</a>
+                                <a class="nav-link active border-no lh-1 ls-normal">@Navbar.Signin</a>
                             </li>
-                            <li class="delimiter">və ya</li>
+                            <li class="delimiter">@AccountPage.or</li>
                             <li class="nav-item">
-                                <a class="navbar-account border-no lh-1 ls-normal" asp-action="Register">Qeydiyyat</a>
+                                <a class="navbar-account border-no lh-1 ls-normal" asp-action="Register">@Navbar.Register</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -38,14 +38,14 @@
                                         </div>
                                     }
                                     <div class="form-group mb-3">
-                                        <input class="form-control" asp-for="Email" placeholder="E-Poçt və ya İstifadəçi Adı *" />
+                                        <input class="form-control" asp-for="Email" placeholder="@AccountPage.Email_Address *" />
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" asp-for="Password" placeholder="Şifrə *" />
+                                        <input class="form-control" asp-for="Password" placeholder="@AccountPage.Password *" />
                                         <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
-                                    <button class="btn btn-dark btn-block btn-rounded" type="submit">Giriş</button>
+                                    <button class="btn btn-dark btn-block btn-rounded" type="submit">@Navbar.Signin</button>
                                 </form>
                             </div>
                         </div>

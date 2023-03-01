@@ -1,4 +1,5 @@
 ﻿using Firlansa.WebUI.AppCode.Infrastructure;
+using Recources;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,12 +7,12 @@ namespace Firlansa.WebUI.Models.Entities
 {
     public class Contact : BaseEntity
     {
-        [Required(ErrorMessage = "Comment cannot be empty")]
+        [Required(ErrorMessageResourceType = typeof(ContactForm), ErrorMessageResourceName = "CantBeEmpty")]
         public string Comment { get; set; }
-        [Required(ErrorMessage = "Name cannot be empty")]
+        [Required(ErrorMessageResourceType = typeof(ContactForm), ErrorMessageResourceName = "CantBeEmpty")]
         public string Name { get; set; }
-        [EmailAddress(ErrorMessage = "Email is not correctly")]
-        [Required(ErrorMessage = "Email cannot be empty")]
+        [Required(ErrorMessageResourceType = typeof(ContactForm), ErrorMessageResourceName = "CantBeEmpty")]
+        [EmailAddress(ErrorMessageResourceType = typeof(ContactForm), ErrorMessageResourceName = "InvalidEmailAddress")]
         public string Email { get; set; }
         public int? AnsweredById { get; set; }
         public DateTime? AnswerDate { get; set; }

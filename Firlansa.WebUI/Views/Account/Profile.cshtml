@@ -7,51 +7,49 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li><a asp-action="index" asp-controller="home"><i class="d-icon-home"></i></a></li>
-                <li>Profil</li>
+                <li>@AccountPage.Profile</li>
             </ul>
         </div>
     </nav>
     <div class="page-content mt-4 mb-10 pb-6">
         <div class="container">
-            <h2 class="title title-center mb-10">My Account</h2>
+            <h2 class="title title-center mb-10">@AccountPage.My_Account</h2>
             <div class="tab tab-vertical gutter-lg">
                 <ul class="nav nav-tabs mb-4 col-lg-3 col-md-4" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#dashboard">Ana səhifə</a>
+                        <a class="nav-link active" href="#dashboard">@AccountPage.Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#orders">Sifarişlər</a>
+                        <a class="nav-link" href="#orders">@AccountPage.Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#notifications">Bildirişlər</a>
+                        <a class="nav-link" href="#notifications">@AccountPage.Notifications</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#account">Account details</a>
+                        <a class="nav-link" href="#account">@AccountPage.Account_details</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-action="logout" >Log Out</a>
+                        <a asp-action="logout">@AccountPage.Log_Out</a>
                     </li>
                 </ul>
                 <div class="tab-content col-lg-9 col-md-8">
                     <div class="tab-pane active" id="dashboard">
                         <p class="mb-0">
-                            Hello <span>@User.GetPrincipalName()</span> (not <span>@User.GetPrincipalName()</span>? <a asp-action="logout"
-                                                                                                                       class="text-primary">Log out</a>)
+                            @AccountPage.Hello <span>@User.GetPrincipalName()</span>
                         </p>
                         <p class="mb-8">
-                            From your account dashboard you can view your <a href="#orders"
-                                                                             class="link-to-tab text-primary">recent orders</a>, manage your shipping and billing
-                            addresses,<br>and edit your password and account details.
+                            @AccountPage.From_your_account_dashboard_you_can_view_your <a href="#orders"
+                                             class="link-to-tab text-primary">@AccountPage.recent_orders</a> @AccountPage.and_account_details_
                         </p>
-                        <a href="shop.html" class="btn btn-dark btn-rounded">Go To Shop<i class="d-icon-arrow-right"></i></a>
+                        <a href="shop.html" class="btn btn-dark btn-rounded">@AccountPage.Go_To_Shop<i class="d-icon-arrow-right"></i></a>
                     </div>
                     <div class="tab-pane" id="orders">
                         <table data-page-length='10' id="table-order" class="order-table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="pl-2">Sifariş</th>
-                                    <th>Tarix</th>
-                                    <th>Status</th>
+                                    <th class="pl-2">@AccountPage.Order</th>
+                                    <th>@AccountPage.Date</th>
+                                    <th>@AccountPage.Status</th>
                                     <th class="pr-2"></th>
                                 </tr>
                             </thead>
@@ -62,9 +60,9 @@
                                         <td class="order-number"><a href="#">#@item.Id</a></td>
                                         <td class="order-date"><time>@item.CreatedDated.ToString("yyyy.MM.dd HH:mm:ss")</time></td>
                                         <td class="order-status">
-                                            <span style="background-color:green;color:white;">Ödənilib</span>
+                                            <span style="background-color:green;color:white;">@AccountPage.Paid</span>
                                         </td>
-                                        <td class="order-action"><a asp-route-id="@item.Id" asp-action="Order" style="text-decoration:none;" class="btn btn-primary btn-link btn-underline">Detallı</a></td>
+                                        <td class="order-action"><a asp-route-id="@item.Id" asp-action="Order" style="text-decoration:none;" class="btn btn-primary btn-link btn-underline">@AccountPage.Details</a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -73,8 +71,7 @@
                     <div class="tab-pane" id="notifications">
                         @if (Model.ProductStatuses.Count == 0)
                         {
-                            <p class="mb-4 text-body">Hal-hazırda heç bir bildiriş yoxdur.</p>
-
+                            <p class="mb-4 text-body">@AccountPage.There_are_currently_no_notifications_</p>
                         }
                         else
                         {
@@ -104,7 +101,7 @@
                                 in the account section and in reviews
                             </small>*@
 
-                            <label>Email Address *</label>
+                            <label>@AccountPage.Email_Address *</label>
                             <p class="form-control">@User.GetPrincipalName()</p>
                             @*<fieldset>
                                 <legend>Password Change</legend>

@@ -117,19 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantBeEmpty" xml:space="preserve">
-    <value>CantBeEmpty</value>
+  <data name="Address" xml:space="preserve">
+    <value>Ünvan</value>
   </data>
-  <data name="Comment" xml:space="preserve">
-    <value>Comment</value>
+  <data name="Contact Info" xml:space="preserve">
+    <value>Əlaqə məlumatları</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
+  <data name="Discounts" xml:space="preserve">
+    <value>Endirimlər</value>
   </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>InvalidEmailAddress</value>
+  <data name="Enter your email" xml:space="preserve">
+    <value>Elektron poçtunuzu daxil edin</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="Firlansa - online clothing store" xml:space="preserve">
+    <value>Firlansa - onlayn geyim mağazası</value>
+  </data>
+  <data name="Firlansa Online Clothing Store &amp;copy; 2019. All rights reserved!" xml:space="preserve">
+    <value>Firlansa Onlayn geyim mağazası © 2019. Bütün huquqlar qorunur!</value>
+  </data>
+  <data name="M - S / 10:00 AM - 8:00 PM" xml:space="preserve">
+    <value>B.E - B / 10:00 AM - 8:00 PM</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Abunə olun</value>
+  </data>
+  <data name="Welcome to Firlansa - online clothing store" xml:space="preserve">
+    <value>Firlansa - onlayn geyim mağazasına xoş gəlmişsiniz</value>
+  </data>
+  <data name="Working hours" xml:space="preserve">
+    <value>İş Saatı</value>
   </data>
 </root>

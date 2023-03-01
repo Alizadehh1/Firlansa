@@ -46,7 +46,7 @@ namespace Firlansa.WebUI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("ShippingPrice")
-                        .HasColumnType("decimal(38,17)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -419,7 +419,7 @@ namespace Firlansa.WebUI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<string>("OrderStatus")

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="AppCode\Resources\UserUI\ContactForm\ContactFormResource.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\admin\files\bower_components\animate.css\animate.css" />
     <Content Include="wwwroot\admin\files\bower_components\bootstrap-daterangepicker\daterangepicker.css" />
     <Content Include="wwwroot\admin\files\bower_components\bootstrap-multiselect\dist\css\bootstrap-multiselect.css" />
@@ -219,15 +223,32 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="AppCode\Resources\UserUI\ContactForm\ContactFormResource.Designer.cs">
+    <Resource Include="AppCode\Resources\UserUI\ContactForm\ContactFormResource.resx">
+      <Generator></Generator>
+      <CustomToolNamespace>Recources</CustomToolNamespace>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AppCode\Resources\UserUI\AboutPage\AboutPage.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ContactFormResource.resx</DependentUpon>
+      <DependentUpon>AboutPage.resx</DependentUpon>
     </Compile>
-    <Compile Update="AppCode\Resources\UserUI\LayoutResource.Designer.cs">
+    <Compile Update="AppCode\Resources\UserUI\AccountPage\AccountPage.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>LayoutResource.resx</DependentUpon>
+      <DependentUpon>AccountPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AppCode\Resources\UserUI\ContactForm\ContactForm.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContactForm.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AppCode\Resources\UserUI\LayoutRes\LayoutRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LayoutRes.resx</DependentUpon>
     </Compile>
     <Compile Update="AppCode\Resources\UserUI\Navbar\Navbar.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -237,15 +258,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="AppCode\Resources\UserUI\ContactForm\ContactFormResource.resx">
+    <EmbeddedResource Update="AppCode\Resources\UserUI\AboutPage\AboutPage.resx">
+      <CustomToolNamespace>Recources</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ContactFormResource.Designer.cs</LastGenOutput>
+      <LastGenOutput>AboutPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\AboutPage\AboutPage.ru.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\AccountPage\AccountPage.resx">
+      <CustomToolNamespace>Recources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\ContactForm\ContactForm.resx">
+      <CustomToolNamespace>Recources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactForm.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\ContactForm\ContactForm.ru.resx">
       <CustomToolNamespace>Recources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Update="AppCode\Resources\UserUI\LayoutResource.resx">
-      <CustomToolNamespace>Recources</CustomToolNamespace>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\LayoutRes\LayoutRes.en.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\LayoutRes\LayoutRes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LayoutResource.Designer.cs</LastGenOutput>
+      <LastGenOutput>LayoutRes.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Recources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="AppCode\Resources\UserUI\Navbar\Navbar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -123,6 +123,9 @@
   <data name="Account" xml:space="preserve">
     <value>Profil</value>
   </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Səbət</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Əlaqə</value>
   </data>

@@ -117,19 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantBeEmpty" xml:space="preserve">
-    <value>Hе может быть пустым</value>
+  <data name="About Us" xml:space="preserve">
+    <value>About Us</value>
   </data>
-  <data name="Comment" xml:space="preserve">
-    <value>Kомментарий</value>
+  <data name="Already thousands of people are very satisfied by Firlansa" xml:space="preserve">
+    <value>Already thousands of people are very satisfied by Firlansa</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Электронная почта</value>
+  <data name="Cotton blend" xml:space="preserve">
+    <value>Cotton blend</value>
   </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>Неверный адрес электронной почты</value>
+  <data name="Happy Customer" xml:space="preserve">
+    <value>Happy Customer</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Имя</value>
+  <data name="Online Clothing Store" xml:space="preserve">
+    <value>Online Clothing Store</value>
+  </data>
+  <data name="Our Store" xml:space="preserve">
+    <value>Our Store</value>
+  </data>
+  <data name="Provide fashionable and qualified products" xml:space="preserve">
+    <value>Provide fashionable and qualifed products</value>
+  </data>
+  <data name="Quality Clothes" xml:space="preserve">
+    <value>Quality Clothes</value>
+  </data>
+  <data name="Straight fit" xml:space="preserve">
+    <value>Straight fit</value>
+  </data>
+  <data name="The address of quality clothes" xml:space="preserve">
+    <value>The address of quality clothes</value>
+  </data>
+  <data name="Visit Our Store" xml:space="preserve">
+    <value>Visit Our Store</value>
+  </data>
+  <data name="We design new products. You crowd-fund them at incredible prices." xml:space="preserve">
+    <value>We design new products. You crowd-fund them at incredible prices.</value>
+  </data>
+  <data name="We have collected everything you are looking for in one place" xml:space="preserve">
+    <value>We have collected everything you are looking for in one place</value>
+  </data>
+  <data name="Welcome Firlansa" xml:space="preserve">
+    <value>Welcome Firlansa</value>
+  </data>
+  <data name="What We Do" xml:space="preserve">
+    <value>What We Do</value>
   </data>
 </root>

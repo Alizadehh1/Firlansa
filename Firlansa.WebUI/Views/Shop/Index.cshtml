@@ -1,6 +1,9 @@
 ﻿@model ShopViewModel
 @{
     ViewData["Title"] = "Index";
+    int? userId = Convert.ToInt32(User.GetUserId());
+    if (userId == null)
+        userId = 0;
 }
 <nav class="breadcrumb-nav">
     <div class="container">
@@ -146,7 +149,7 @@
 
                 $(container).attr('class', data.containerClass)
 
-                $(container).find('.product').each(function (index,item) {
+                $(container).find('.product').each(function (index, item) {
                     const actionContainer = $(item).find('.product-action');
                     const verticalAction = $(item).find('.product-action-vertical');
                     const itemId = $(item).find('figure.product-media').data().entityId;
@@ -155,7 +158,7 @@
                         verticalAction.removeClass('product-action-vertical').addClass('product-action');
                         verticalAction.append(actionContainer.html())
                         $(item).find('.product-details').append(verticalAction);
-                        $('figure.product-media .product-action').css("display","none");
+                        $('figure.product-media .product-action').css("display", "none");
                     }
                     else {
                         $('.product-details .product-action').css("display", "none");
@@ -174,8 +177,106 @@
                 })
 
             })
+        });
 
-        })
+        //let color = $('.product-color .product-variations a.color');
+        //color.click()
+
+        function determineAddOrNotify(item) {
+            $('.product-size').css('display', 'none');
+            $('.product-size .product-variations a.active').removeClass('active');
+            if (!$(item.currentTarget).hasClass('active')) {
+                let colorId = $(item.currentTarget).data("color-id");
+                $('.product-size').each(function (index, item) {
+                    if ($(item).data('entity-id') == colorId)
+                        $(item).css('display', 'flex');
+                    let size = $('.product-size .product-variations a.size');
+
+                    size.click(function (item) {
+                        if ($(item.currentTarget).hasClass('active')) {
+                            if ($(item.currentTarget).hasClass('soldOut')) {
+                                $('#btnCart').css("display", "none");
+                                $('#btnNotify').css("display", "flex");
+                                $('#btnNotify').removeAttr('disabled');
+                            }
+                            else {
+                                $('#btnNotify').css("display", "none");
+                                $('#btnCart').css("display", "flex");
+                                $('#btnCart').removeAttr('disabled');
+                            }
+                        }
+                    })
+                });
+            }
+            else {
+                $('.product-size').css('display', 'none');
+            }
+        }
+
+        function addToNotify(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            let data = $(ev.currentTarget).data();
+            let colors = document.querySelectorAll('.color');
+            let color;
+            let size;
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].getAttribute('class') == 'color active') {
+                    color = $(colors[i]).data();
+                }
+            }
+            let sizes = document.querySelectorAll('.size');
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].getAttribute('class') == 'size soldOut active') {
+                    size = $(sizes[i]).data();
+                }
+            }
+            let activeSpecs = $('.product-variations a.active');
+            if (color == undefined) {
+                toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (size == undefined) {
+                toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (activeSpecs.length != 2) {
+                toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            addToNotification(data.itemId, color.colorId, size.sizeId);
+        }
+        function addToNotification(cardId, cardColor, cardSize) {
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            else {
+                let items = [];
+                items.push(cardId, cardColor, cardSize,@User.GetUserId());
+                console.log(items);
+                $.ajax({
+                    url: `@Url.Action("Notification")`,
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(items),
+                    success: function (response) {
+                        if (response.error == true) {
+                            toastr.error(response.message, "Uğursuz!");
+                            return;
+                        }
+                        toastr.success("Bildirişlərə uğurla əlavə edildi", response.message)
+                    },
+                    error: function (response) {
+                        toastr["error"]("Uğursuz!", response.message)
+                    }
+                })
+            }
+        }
 
         function specificationsDetermine(e) {
             console.log("salam")
@@ -200,6 +301,7 @@
             else {
                 $('.product-size').css('display', 'none');
             }
+            determineAddOrNotify(e);
         }
         function addToWishlist(ev,productId) {
             ev.preventDefault();
@@ -323,7 +425,7 @@
                 totalPrice = previousTotalPrice + (price * count);
                 subTotalPrice.text(totalPrice.toFixed(2));
             }
-            
+
             totalPrice = totalPrice.toFixed(2);
             console.log(totalPrice);
             //let prices = $('div.cart-total span.price');

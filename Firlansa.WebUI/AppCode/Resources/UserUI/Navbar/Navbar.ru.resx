@@ -123,6 +123,9 @@
   <data name="Account" xml:space="preserve">
     <value>Профиль</value>
   </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Корзина</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Контакт</value>
   </data>

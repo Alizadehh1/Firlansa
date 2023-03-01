@@ -7,12 +7,12 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a asp-action="index"><i class="d-icon-home"></i></a></li>
-            <li>Əlaqə</li>
+            <li>@Recources.Navbar.Contact</li>
         </ul>
     </div>
 </nav>
 <div class="page-header" style="background-image: url(/assets/images/page-header/contact-us.jpg)">
-    <h1 class="page-title font-weight-bold text-capitalize ls-l">Contact Us</h1>
+    <h1 class="page-title font-weight-bold text-capitalize ls-l">@Recources.ContactForm.Contact_Us</h1>
 </div>
 <div class="page-content mt-10 pt-7">
     <section class="contact-section">
@@ -21,16 +21,15 @@
                 <div class="col-lg-3 col-md-4 col-sm-6 ls-m mb-4">
                     <div class="grey-section d-flex align-items-center h-100">
                         <div>
-                            <h4 class="mb-2 text-capitalize">Headquarters</h4>
-                            <p>1600 Amphitheatre Parkway<br>New York WC1 1BA</p>
+                            <h4 class="mb-2 text-capitalize">@Recources.ContactForm.Branch</h4>
+                            <p>@Recources.ContactForm.May_28__opposite_the_Nasimi_district_police_department_</p>
 
-                            <h4 class="mb-2 text-capitalize">Phone Number</h4>
+                            <h4 class="mb-2 text-capitalize">@Recources.ContactForm.Phone_Number</h4>
                             <p>
-                                <a href="tel:#">1.800.458.56</a><br>
-                                <a href="tel:#">1.800.458.56</a>
+                                <a href="tel:+994516239107">(051)623-91-07</a><br>
                             </p>
 
-                            <h4 class="mb-2 text-capitalize">Support</h4>
+                            <h4 class="mb-2 text-capitalize">@Recources.ContactForm.Support</h4>
                             <p class="mb-4">
                                 <a href="#">support@your-domain.com</a><br>
                                 <a href="#">help@your-domain.com</a><br>
@@ -42,25 +41,24 @@
                 <div class="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                     <div class="w-100">
                         <form class="pl-lg-2" id="contactForm" method="post">
-                            <h4 class="ls-m font-weight-bold">Let’s Connect</h4>
+                            @*<h4 class="ls-m font-weight-bold">@Recources.ContactForm.</h4>*@
                             <p>
-                                Your email address will not be published. Required fields are
-                                marked *
+                                @Recources.ContactForm.Your_email_address_will_not_be_published__Required_fields_are_marked__
                             </p>
                             <div class="row mb-2">
                                 <div class="col-12 mb-4">
                                     <textarea asp-for="Comment" class="form-control" required
-                                              placeholder="Comment*"></textarea>
+                                              placeholder="@Recources.ContactForm.Comment*"></textarea>
                                 </div>
                                 <div class="col-md-6 mb-4">
-                                    <input asp-for="Name" class="form-control" type="text" placeholder="Name *" required>
+                                    <input asp-for="Name" class="form-control" type="text" placeholder="@Recources.ContactForm.Name *" required>
                                 </div>
                                 <div class="col-md-6 mb-4">
-                                    <input asp-for="Email" class="form-control" type="email" placeholder="Email *" required>
+                                    <input asp-for="Email" class="form-control" type="email" placeholder="@Recources.ContactForm.Email *" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-dark btn-rounded">
-                                Post Comment<i class="d-icon-arrow-right"></i>
+                                @Recources.ContactForm.Post_Comment<i class="d-icon-arrow-right"></i>
                             </button>
                         </form>
                     </div>
@@ -72,15 +70,15 @@
 
     <section class="store-section mt-6 pt-10 pb-8">
         <div class="container">
-            <h2 class="title title-center mb-7 text-normal">Our store</h2>
+            <h2 class="title title-center mb-7 text-normal">@Recources.ContactForm.Our_Store</h2>
             <div class="row cols-sm-2 cols-lg-4 justify-content-center">
                 <div class="store">
                     <figure class="banner-radius">
                         <img src="~/assets/images/subpages/2022-07-12.jpg" alt="store" width="280" height="280">
-                        <h4 class="overlay-visible">Bakı</h4>
+                        <h4 class="overlay-visible">@Recources.ContactForm.Baku</h4>
                         <div class="overlay overlay-transparent">
                             <a class="mt-8" href="mail:#">mail@firlansastore.com</a>
-                            <a href="tel:#">Phone: (123) 456-7890</a>
+                            <a href="tel:#">@Recources.ContactForm.Phone: (123) 456-7890</a>
                             <div class="social-links mt-1">
                                 <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
                                 <a href="#" class="social-link social-twitter fab fa-twitter"></a>

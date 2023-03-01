@@ -11,6 +11,7 @@ namespace Firlansa.WebUI.Models.Entities
         public string Name { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         [Required(ErrorMessage = "Çatdırılma qiymətini daxil edin!")]
+        [DataType("decimal(38,2)")]
         public double ShippingPrice { get; set; }
         public int? ParentId { get; set; }
         public virtual Adress Parent { get; set; }

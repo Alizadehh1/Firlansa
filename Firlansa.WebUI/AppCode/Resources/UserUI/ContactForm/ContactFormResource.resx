@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantBeEmpty" xml:space="preserve">
+  <data name="Baku" xml:space="preserve">
+    <value>Bakı</value>
+  </data>
+  <data name="Branch" xml:space="preserve">
+    <value>Filial</value>
+  </data>
+  <data name="Cannot be empty" xml:space="preserve">
     <value>Boş buraxıla bilməz</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Rəy</value>
+  </data>
+  <data name="Contact Us" xml:space="preserve">
+    <value>Bizimlə əlaqə</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-poçt</value>
@@ -129,7 +138,31 @@
   <data name="InvalidEmailAddress" xml:space="preserve">
     <value>Bu e-poçt formata uyğun deyil</value>
   </data>
+  <data name="Let's Connect" xml:space="preserve">
+    <value>Qoşulaq</value>
+  </data>
+  <data name="May 28, opposite the Nasimi district police department." xml:space="preserve">
+    <value>28 may Nəsimi rayon Polis idarəsi ilə üzbəüz</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Ad</value>
+  </data>
+  <data name="Our Store" xml:space="preserve">
+    <value>Mağazamız</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Nömrə</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Əlaqə Nömrəsi</value>
+  </data>
+  <data name="Post Comment" xml:space="preserve">
+    <value>Şərh Yaz</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Dəstək</value>
+  </data>
+  <data name="Your email address will not be published. Required fields are marked *" xml:space="preserve">
+    <value>Sizin elektron poçtunuz paylaşılmayacaq. Tələb olunan sahələr qeyd olunub *</value>
   </data>
 </root>

@@ -35,28 +35,31 @@
 </head>
 <body class="home">
     <div class="page-wrapper">
-        <h1 class="d-none">Firlansa - onlayn geyim mağazası</h1>
+        <h1 class="d-none">@LayoutRes.Firlansa___online_clothing_store</h1>
         <header class="header">
             <div class="header-top">
                 <div class="container">
                     <div class="header-left">
-                        <p class="welcome-msg">Firlansa onlayn geyim mağazasına xoş gəlmisiniz</p>
+                        <p class="welcome-msg">@LayoutRes.Welcome_to_Firlansa___online_clothing_store</p>
                     </div>
                     <div class="header-right">
                         <div class="dropdown ml-5">
-                            <a href="#language">AZ</a>
+                            <a data-lang-viewer="language">AZ</a>
                             <ul class="dropdown-box">
                                 <li>
-                                    <a href="#RU">RU</a>
+                                    <a href="#" data-lang="az">AZ</a>
                                 </li>
                                 <li>
-                                    <a href="#ENG">ENG</a>
+                                    <a href="#" data-lang="ru">RU</a>
+                                </li>
+                                <li>
+                                    <a href="#" data-lang="en">ENG</a>
                                 </li>
                             </ul>
                         </div>
                         <span class="divider"></span>
-                        <a asp-action="contact" asp-controller="home" class="contact d-lg-show"><i class="d-icon-map"></i>Əlaqə</a>
-                        <a asp-action="faq" asp-controller="home" class="help d-lg-show"><i class="d-icon-info"></i> Kömək lazımdır?</a>
+                        <a asp-action="contact" asp-controller="home" class="contact d-lg-show"><i class="d-icon-map"></i>@Navbar.Contact</a>
+                        <a asp-action="faq" asp-controller="home" class="help d-lg-show"><i class="d-icon-info"></i> @Navbar.FAQs</a>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <a asp-action="Profile" asp-controller="account">
@@ -66,10 +69,10 @@
                         else
                         {
                             <a asp-action="SignIn" asp-controller="account">
-                                <i style="margin-right: 3px;" class="d-icon-user"></i>Giriş
+                                <i style="margin-right: 3px;" class="d-icon-user"></i>@Navbar.Signin
                             </a>
                             <span class="delimiter" style="display:flex!important">/</span>
-                            <a class="ml-0" asp-action="Register" asp-controller="account">Qeydiyyat</a>
+                            <a class="ml-0" asp-action="Register" asp-controller="account">@Navbar.Register</a>
                         }
                     </div>
                 </div>
@@ -85,7 +88,7 @@
                         </a>
                         <div class="header-search hs-simple">
                             <form method="get" asp-controller="Shop" asp-action="Search" class="input-wrapper">
-                                <input type="text" class="form-control" name="query" placeholder="Axtar..." autocomplete="off"
+                                <input type="text" class="form-control" name="query" placeholder="@Navbar.Search..." autocomplete="off"
                                        required />
                                 <button class="btn btn-search" type="submit">
                                     <i class="d-icon-search"></i>
@@ -99,7 +102,7 @@
                                 <i class="d-icon-phone"></i>
                             </div>
                             <div class="icon-box-content d-lg-show">
-                                <h4 class="icon-box-title">Elə indi əlaqə saxla:</h4>
+                                <h4 class="icon-box-title">@Navbar.Contact:</h4>
                                 <p>+994513614581</p>
                             </div>
                         </a>
@@ -146,13 +149,13 @@
                         <div class="col-lg-9">
                             <div class="widget widget-newsletter form-wrapper form-wrapper-inline">
                                 <div class="newsletter-info mx-auto mr-lg-2 ml-lg-4">
-                                    <h4 class="widget-title">Kompaniyalar və Endirimlər</h4>
+                                    <h4 class="widget-title">@LayoutRes.Discounts</h4>
                                 </div>
                                 <form method="post" id="subscribeForm" class="input-wrapper input-wrapper-inline">
                                     <input type="email" class="form-control" name="email" id="email"
-                                           placeholder="Elektron poçtunuzu daxil edin..." required />
+                                           placeholder="@LayoutRes.Enter_your_email...." required />
                                     <button id="btnSubs" class="btn btn-primary btn-rounded btn-md ml-2" type="submit">
-                                        Abunə olun<i class="d-icon-arrow-right"></i>
+                                        @LayoutRes.Subscribe<i class="d-icon-arrow-right"></i>
                                     </button>
                                 </form>
                             </div>
@@ -165,25 +168,25 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-6">
                             <div class="widget widget-info">
-                                <h4 class="widget-title">Əlaqə məlumatları</h4>
+                                <h4 class="widget-title">@LayoutRes.Contact_Info</h4>
                                 <ul class="widget-body">
                                     <li>
-                                        <label>Əlaqə nömrəsi:</label>
+                                        <label>@ContactForm.Phone_Number:</label>
                                         <a href="tel:+994516239107">+994 51 623 91 07</a>
                                     </li>
                                     <li>
-                                        <label>Email:</label>
+                                        <label>@ContactForm.Email:</label>
                                         <a href="mailto:mail@Firlansa.com">mail@Firlansa.com</a>
                                     </li>
                                     <li>
-                                        <label>Ünvan:</label>
-                                        <a href="#">28 may Nəsimi rayon Polis idarəsi ilə üzbəüz</a>
+                                        <label>@LayoutRes.Address:</label>
+                                        <a href="#">@ContactForm.May_28__opposite_the_Nasimi_district_police_department_</a>
                                     </li>
                                     <li>
-                                        <label>İŞ SAATI:</label>
+                                        <label>@LayoutRes.Working_hours:</label>
                                     </li>
                                     <li>
-                                        <a href="#">B.E - B / 10:00 AM - 8:00 PM</a>
+                                        <a href="#">@LayoutRes.M___S___10_00_AM___8_00_PM</a>
                                     </li>
                                 </ul>
                             </div>
@@ -205,7 +208,7 @@
                         </figure>
                     </div>
                     <div class="footer-center">
-                        <p class="copyright">Firlansa Onlayn geyim mağazası &copy; 2019. Bütün huquqlar qorunur!</p>
+                        <p class="copyright">@LayoutRes.Firlansa_Online_Clothing_Store__copy__2019__All_rights_reserved_</p>
                     </div>
                     <div class="footer-right">
                         <div class="social-links">
@@ -265,6 +268,30 @@
 
                 });
             });
+
+            const lang = `@Context.GetCurrentCulture()`;
+
+            const selectedLangText = $(`[data-lang="${lang}"`).text();
+
+            $(`[data-lang-viewer="language"]`).text(selectedLangText);
+
+            $('[data-lang]').click(function (e) {
+                e.preventDefault();
+
+                let path = `${window.location.pathname}${window.location.search}`;
+                let selectedLang = $(e.currentTarget).data('lang');
+
+                let result = /\/(en|az|ru)?\/?(.*)?/.exec(path);
+
+                if (result != null && result[2] != undefined) {
+                    path = `/${selectedLang}/${result[2]}`;
+                }
+                else if (result != null) {
+                    path = `/${selectedLang}`;
+                }
+
+                window.location.href = path;
+            })
         });
             
         function readFromBasket() {

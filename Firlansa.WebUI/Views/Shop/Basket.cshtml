@@ -1,6 +1,9 @@
-﻿@model Tuple<List<Product>, int[], int[], int[], SelectList, List<Adress>>
+﻿@model Tuple<List<Product>, int[], int[], int[], SelectListItem[], List<Adress>>
 @{
     ViewData["Title"] = "Basket";
+    int? userId = Convert.ToInt32(User.GetUserId());
+    if (userId == null)
+        userId = 0;
 }
 
 <div class="page-content pt-7 pb-10">
@@ -85,7 +88,7 @@
                                             </div>
                                         </td>
                                         <td class="product-price">
-                                            <span class="amount">@((Model.Item1[i].Price * Model.Item4[i]).ToString("0.00"))₼</span>
+                                            <span class="amount">@((Model.Item1[i].Price * Model.Item4[i]).ToString("0.##########"))₼</span>
                                         </td>
                                         <td class="product-close">
                                             <a onclick="removeEntity(@Model.Item1[i].Id,@Model.Item2[i],@Model.Item3[i],@Model.Item4[i])" class="product-remove" style="cursor:pointer;" title="Məhsulu silin">
@@ -242,10 +245,10 @@
             let items = document.querySelectorAll('td.product-price span.amount');
             let totalPrice = 0;
             for (var i = 0; i < items.length; i++) {
-                totalPrice = totalPrice + parseFloat(items[i].textContent);
+                totalPrice = totalPrice + parseFloat($(items[i]).text().replace(",", "."));
             }
-            $('p.summary-subtotal-price').html(`${totalPrice.toFixed(2)}₼`);
-            $('p.summary-total-price').html(`${totalPrice.toFixed(2)}₼`);
+            $('p.summary-subtotal-price').html(`${totalPrice}₼`);
+            $('p.summary-total-price').html(`${totalPrice}₼`);
         }
         setTotalPrice();
         function removeEntity(entityId, entityColor, entitySize ,entityQty) {
@@ -314,7 +317,7 @@
 
             }
             $(row).find('input.quantity1').val(quantity);
-            $(row).find('td.product-price .amount').html(`${(data.price * quantity).toFixed(2)}₼`);
+            $(row).find('td.product-price .amount').html(`${(data.price.replace(",", ".") * quantity).toFixed(2)}₼`);
             setTotalPrice();
         }
         function setShippingPrice() {
@@ -329,8 +332,9 @@
             @foreach (var address in Model.Item6)
             {
                 <text>
-                    if (@address.Id == addressId) {
-                        var shippingPrice = parseFloat(@address.ShippingPrice);
+                if (@address.Id == addressId) {
+                        let shippingPriceFromDb = @address.ShippingPrice.ToString().Replace(",", ".");
+                        var shippingPrice = parseFloat(shippingPriceFromDb);
                     }
                 </text>
             }
@@ -346,7 +350,10 @@
             const btn = $('#placeOrderBtn');
 
             $(btn).attr('disable', 'disabled');
-
+            if (@userId == 0) {
+                toastr.error("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
             let items = document.querySelectorAll('#entityTr');
             let productIds = [];
             let quantity = [];
@@ -365,11 +372,11 @@
             let colorsAndSizes = readFromBasketColorAndSize();
             let qtys = readFromBasketQty();
 
-            //itemsIds.splice(0, itemsIds.length);
-            //colors.splice(0, colors.length);
-            //sizes.splice(0, sizes.length);
-            //colorsAndSizes.splice(0, colorsAndSizes.length);
-            //qtys.splice(0, qtys.length);
+            itemsIds.splice(0, itemsIds.length);
+            colors.splice(0, colors.length);
+            sizes.splice(0, sizes.length);
+            colorsAndSizes.splice(0, colorsAndSizes.length);
+            qtys.splice(0, qtys.length);
 
             const location = $('#locationInput').val();
             const phoneNumber = $('#mobileInput').val();
@@ -386,7 +393,8 @@
             {
                 <text>
                     if (@address.Id == addressId) {
-                        var shippingPrice = parseFloat(@address.ShippingPrice);
+                        let shippingPriceFromDb = @address.ShippingPrice.ToString().Replace(",", ".");
+                        var shippingPrice = parseFloat(shippingPriceFromDb);
                     }
                 </text>
             }
@@ -411,12 +419,14 @@
                     postCode: postCode
                 },
                 success: async function (response) {
-                    if (response.message == "Zəhmət olmasa çatdırılma məlumatlarını düzgün daxil edin" || response.message.slice(0, 5) == "Almaq") {
-                        toastr.error("Uğursuz", response.message);
+                    if (response.message.slice(0, 5) == "https") {
+                        toastr.success("Uğurlu", "Ödəniş səhifəsinə yönləndirilir...");
+                        window.location.replace(response.message);
                         return;
                     }
-                    toastr.success("Uğurlu", "Ödəniş səhifəsinə yönləndirilir...");
-                    window.location.replace(response.message);
+                    toastr.error("Uğursuz", response.message);
+                    return;
+                    
                 },
                 error: function (response) {
                     $(btn).removeAttr('disable');

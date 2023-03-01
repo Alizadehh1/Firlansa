@@ -119,8 +119,8 @@ namespace Firlansa.WebUI
 
             app.UseRequestLocalization(cfg =>
             {
-                cfg.AddSupportedUICultures("az", "en");
-                cfg.AddSupportedCultures("az", "en");
+                cfg.AddSupportedUICultures("az", "en","ru");
+                cfg.AddSupportedCultures("az", "en", "ru");
                 cfg.RequestCultureProviders.Clear();
                 cfg.RequestCultureProviders.Add(new CultureProvider());
             });

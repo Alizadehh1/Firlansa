@@ -106,6 +106,7 @@ namespace Firlansa.WebUI.Controllers
             model.ProductSpecifications = db.ProductSpecifications
                 .Where(ps => ps.DeletedById == null && ps.ProductId == id)
                 .Include(ps => ps.Size)
+                .Include(ps=>ps.Color)
                 .Distinct()
                 .ToList();
             model.Products = await db.Products
@@ -205,18 +206,18 @@ namespace Firlansa.WebUI.Controllers
                     .Where(p => p.DeletedById == null)
                     .ToList();
 
-                var data = db.Adresses
+                var data = await db.Adresses
                  .Where(c => c.DeletedById == null)
-                 .Select(c => new
+                 .Select(c => new SelectListItem
                  {
-                     Id = c.Id,
-                     Name = c.ParentId == null ? c.Name : $"- {c.Name}"
+                     Value = c.Id.ToString(),
+                     Text = c.ParentId == null ? c.Name : $"- {c.Name}",
+                     Disabled = c.ParentId == null
                  })
-                 .ToList();
-                var addresses = new SelectList(data, "Id", "Name");
-                var districts = db.Adresses
+                 .ToArrayAsync();
+                var districts = await db.Adresses
                     .Where(a => a.DeletedById == null)
-                    .ToList();
+                    .ToListAsync();
 
 
                 List<Product> products = new List<Product>();
@@ -238,11 +239,11 @@ namespace Firlansa.WebUI.Controllers
                 ViewBag.SecretKey = "894D14D6CBE44397AC28DFF6C5BE2A43";
                 ViewBag.Merchant = "ES1091685";
 
-                var productss = Tuple.Create(products, colorsFromCookie, sizesFromCookie, quantitiesFromCookie, addresses, districts);
+                var productss = Tuple.Create(products, colorsFromCookie, sizesFromCookie, quantitiesFromCookie, data, districts);
 
                 return View(productss);
             }
-            return View(new Tuple<List<Product>, int[], int[], int[], SelectList, Order>(null, null, null, null, null, null));
+            return View(new Tuple<List<Product>, int[], int[], int[], SelectListItem[], Order>(null, null, null, null, null, null));
 
         }
         [HttpPost]
@@ -317,12 +318,14 @@ namespace Firlansa.WebUI.Controllers
             return View(statusOrder);
         }
         [Authorize]
-        public async Task<IActionResult> PlaceOrder(string productIds, string quantities, string colorIds, string sizeIds, string location, string phoneNumber, int addressId,string postCode)
+        public async Task<IActionResult> PlaceOrder(string productIds, string quantities, string colorIds, string sizeIds, string location, string phoneNumber, int addressId, string postCode)
         {
-            if (location ==null || phoneNumber==null || addressId==0 || postCode == null)
+            if (location == null || phoneNumber == null || addressId == 0 || postCode == null)
             {
                 return Json(new CommandJsonResponse(true, "Zəhmət olmasa çatdırılma məlumatlarını düzgün daxil edin"));
             }
+          
+
             int[] productId = productIds.Split(",").Where(CheckIsNumber)
                         .Select(item => int.Parse(item))
                         .ToArray();
@@ -344,14 +347,18 @@ namespace Firlansa.WebUI.Controllers
             newOrder.AdressId = addressId;
             newOrder.OrderStatus = "CREATED";
             newOrder.PostCode = postCode;
-            double totalPrice = 0;
+            double? totalPrice = 0;
             if (productId != null)
             {
                 newOrder.OrderItems = new List<OrderItem>();
                 int i = 0;
                 foreach (var prid in productId)
                 {
-                    if (db.ProductSpecifications.FirstOrDefault(ps=>ps.ColorId== colorId[i] && ps.SizeId == sizeId[i] && ps.ProductId==prid).Quantity < quantity[i])
+                    if (quantity[i]<=0)
+                    {
+                        return Json(new CommandJsonResponse(true, $"Məhsulun sayını düzgün daxil edin!"));
+                    }
+                    if (db.ProductSpecifications.FirstOrDefault(ps => ps.ColorId == colorId[i] && ps.SizeId == sizeId[i] && ps.ProductId == prid).Quantity < quantity[i])
                     {
                         return Json(new CommandJsonResponse(true, $"Almaq istədiyiniz məhsul təəssüf ki stoklarımızda {db.ProductSpecifications.FirstOrDefault(ps => ps.ColorId == colorId[i] && ps.SizeId == sizeId[i] && ps.ProductId == prid).Quantity} ədəd qalıb"));
                     }
@@ -373,7 +380,7 @@ namespace Firlansa.WebUI.Controllers
             await db.SaveChangesAsync();
 
             string routeUrl = $"{Url.Action("CompleteOrder")}/{newOrder.Id}";
-            string approveUrl = $"https://localhost:44379/shop/completeOrder{routeUrl}";
+            string approveUrl = $"https://localhost:44379/{routeUrl}";
 
 
             var client = new RestClient("https://api.payriff.com/api/v2/createOrder");
@@ -387,7 +394,7 @@ namespace Firlansa.WebUI.Controllers
             @"        ""description"": ""Example""," + "\n" +
             @"        ""language"": ""AZ""," + "\n" +
             @$"        ""approveURL"": ""{approveUrl}""," + "\n" +
-            @"        ""cancelURL"": ""https://localhost:44379""," + "\n" +
+            @"        ""cancelURL"": ""https://localhost:44379/shop/basket""," + "\n" +
             @"        ""declineURL"": ""https://decline,com""" + "\n" +
             @"    }," + "\n" +
             @"    ""merchant"": ""ES1091628""" + "\n" +

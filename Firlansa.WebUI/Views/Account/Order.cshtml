@@ -4,7 +4,7 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li><a asp-action="index" asp-controller="home"><i class="d-icon-home"></i></a></li>
-                <li>Sifariş-#@Model.Order.Id</li>
+                <li>@AccountPage.Order-#@Model.Order.Id</li>
             </ul>
         </div>
     </nav>
@@ -13,14 +13,14 @@
             <table class="shop-table wishlist-table mt-2 mb-4">
                 <thead>
                     <tr>
-                        <th class="product-name text-center"><span>Məhsul</span></th>
-                        <th class='text-center'>Adı</th>
-                        <th class="product-stock-status text-center"><span>Rəng</span></th>
-                        <th class="product-stock-status text-center"><span>Ölçü</span></th>
-                        <th class="product-price text-center"><span>Qiymət</span></th>
+                        <th class="product-name text-center"><span>@AccountPage.Product</span></th>
+                        <th class='text-center'>@AccountPage.Name</th>
+                        <th class="product-stock-status text-center"><span>@AccountPage.Color</span></th>
+                        <th class="product-stock-status text-center"><span>@AccountPage.Size</span></th>
+                        <th class="product-price text-center"><span>@AccountPage.Price</span></th>
                         <th></th>
-                        <th class="product-price text-center"><span>Ədəd</span></th>
-                        <th class="product-price text-center"><span>Yekun</span></th>
+                        <th class="product-price text-center"><span>@AccountPage.Number</span></th>
+                        <th class="product-price text-center"><span>@AccountPage.Total</span></th>
                         <th class="product-add-to-cart"></th>
                     </tr>
                 </thead>
@@ -57,13 +57,13 @@
                                         x
                                     </td>
                                     <td style="width:52px;" class="product-name text-center">
-                                        <a>@item.Quantity əd</a>
+                                        <a>@item.Quantity @AccountPage.Num</a>
                                     </td>
                                     <td class="product-price text-center">
                                         <span style="font-weight:bolder" class="amount">@(product.Price * item.Quantity) ₼</span>
                                     </td>
                                     <td class="product-add-to-cart">
-                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id" class="btn-product btn-primary"><span>Detallı</span></a>
+                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id" class="btn-product btn-primary"><span>@AccountPage.Details</span></a>
                                     </td>
                                 </tr>
                             }
@@ -73,17 +73,17 @@
                 <tfoot>
                     <tr>
                         <td>
-                            <span>Məhsulların məbləği: @ViewBag.TotalAmount₼</span>
+                            <span>@AccountPage.Amount_of_products: @ViewBag.TotalAmount₼</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span>Çatdırılma məbləği: @Model.Order.Adress.ShippingPrice₼</span>
+                            <span>@AccountPage.Delivery_amount: @Model.Order.Adress.ShippingPrice₼</span>
                         </td>
                     </tr>
                     <tr>
                         <td class="product-price">
-                            <span>Sifarişin çatdırılma ilə ümumi məbləği: @(ViewBag.TotalAmount+Model.Order.Adress.ShippingPrice)₼</span>
+                            <span>@AccountPage.The_total_amount_of_the_order_with_delivery: @(ViewBag.TotalAmount+Model.Order.Adress.ShippingPrice)₼</span>
                         </td>
                     </tr>
                 </tfoot>

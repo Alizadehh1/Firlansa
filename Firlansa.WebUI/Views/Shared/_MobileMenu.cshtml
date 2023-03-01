@@ -2,27 +2,27 @@
 <div class="sticky-footer sticky-content fix-bottom">
     <a asp-action="index" asp-controller="home" class="sticky-link active">
         <i class="d-icon-home"></i>
-        <span>Ana səhifə</span>
+        <span>@Navbar.Home</span>
     </a>
     <a asp-controller="shop" asp-action="index" class="sticky-link">
         <i class="d-icon-volume"></i>
-        <span>Məhsullar</span>
+        <span>@Navbar.Shop</span>
     </a>
     <a href="wishlist.html" class="sticky-link">
         <i class="d-icon-heart"></i>
-        <span>Wishlist</span>
+        <span>@Navbar.Wishlist</span>
     </a>
     <a href="account.html" class="sticky-link">
         <i class="d-icon-user"></i>
-        <span>Account</span>
+        <span>@Navbar.Account</span>
     </a>
     <div class="header-search hs-toggle dir-up">
         <a href="#" class="search-toggle sticky-link">
             <i class="d-icon-search"></i>
-            <span>Search</span>
+            <span>@Navbar.Search</span>
         </a>
         <form method="get" asp-controller="Shop" asp-action="Search" class="input-wrapper">
-            <input type="text" class="form-control" name="query" placeholder="Axtar..." autocomplete="off"
+            <input type="text" class="form-control" name="query" placeholder="@Navbar.Search..." autocomplete="off"
                    required />
             <button class="btn btn-search" type="submit">
                 <i class="d-icon-search"></i>
@@ -42,7 +42,7 @@
     <!-- End of CloseButton -->
     <div class="mobile-menu-container scrollable">
         <form method="get" asp-controller="Shop" asp-action="Search" class="input-wrapper">
-            <input type="text" class="form-control" name="query" placeholder="Axtar..." autocomplete="off"
+            <input type="text" class="form-control" name="query" placeholder="@Navbar.Search..." autocomplete="off"
                    required />
             <button class="btn btn-search" type="submit">
                 <i class="d-icon-search"></i>
@@ -51,13 +51,13 @@
         <!-- End of Search Form -->
         <ul class="mobile-menu mmenu-anim">
             <li>
-                <a asp-action="index" asp-controller="home">Ana səhifə</a>
+                <a asp-action="index" asp-controller="home">@Navbar.Home</a>
             </li>
             <li>
-                <a asp-controller="Shop" asp-action="index">Məhsullar</a>
+                <a asp-controller="Shop" asp-action="index">@Navbar.Shop</a>
             </li>
             <li>
-                <a asp-action="about" asp-controller="home">Haqqımızda</a>
+                <a asp-action="about" asp-controller="home">@Navbar.About_us</a>
             </li>
         </ul>
         <!-- End of MobileMenu -->
