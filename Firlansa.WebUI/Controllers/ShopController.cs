@@ -28,7 +28,7 @@ namespace Firlansa.WebUI.Controllers
             this.db = db;
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageIndex = 1, int pageSize = 12)
         {
             var model = new ShopViewModel();
             model.Categories = await db.Categories
@@ -41,11 +41,11 @@ namespace Firlansa.WebUI.Controllers
             model.Sizes = await db.Sizes
                 .Where(s => s.DeletedById == null)
                 .ToListAsync();
-            model.Products = await db.Products
+            var query = db.Products
                 .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
                 .Include(p => p.Category)
-                .Where(p => p.DeletedById == null)
-                .ToListAsync();
+                .Where(p => p.DeletedById == null);
+            model.PagedViewModel = new PagedViewModel<Product>(query, pageIndex, pageSize);
             return View(model);
         }
         [HttpPost]

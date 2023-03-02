@@ -14,5 +14,6 @@ namespace Firlansa.WebUI.Models.ViewModels
         public List<Product> Products { get; set; }
         public List<ProductSpecification> ProductSpecifications { get; set; }
         public Product Product { get; set; }
+        public PagedViewModel<Product> PagedViewModel { get; set; }
     }
 }
