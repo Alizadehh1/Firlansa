@@ -9,7 +9,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a asp-controller="home" asp-action="index"><i class="d-icon-home"></i></a></li>
-            <li>Məhsullar</li>
+            <li>@ShopPage.Products</li>
         </ul>
     </div>
 </nav>
@@ -23,11 +23,11 @@
                 <div class="sidebar-content">
                     <div class="sticky-sidebar">
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Kateqoriyalar</h3>
+                            <h3 class="widget-title">@ShopPage.Categories</h3>
                             @Extension.GetCategoriesRaw(Model.Categories)
                         </div>
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Ölçü</h3>
+                            <h3 class="widget-title">@ShopPage.Size</h3>
                             <ul class="widget-body filter-items" data-entity-name="sizes">
                                 @foreach (var size in Model.Sizes)
                                 {
@@ -38,7 +38,7 @@
                             </ul>
                         </div>
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Rəng</h3>
+                            <h3 class="widget-title">@ShopPage.Color</h3>
                             <ul class="widget-body filter-items" data-entity-name="colors">
                                 @foreach (var color in Model.Colors)
                                 {
@@ -56,12 +56,11 @@
                      style="background-image: url('/assets/images/shop/banner.jpg'); background-color: #4e6582;">
                     <div class="banner-content">
                         <h4 class="banner-subtitle font-weight-bold ls-normal text-uppercase text-white">
-                            Firlansa Shop
+                            Firlansa
                         </h4>
-                        <h1 class="banner-title font-weight-bold text-white">Banner with Sidebar</h1>
+                        <h1 class="banner-title font-weight-bold text-white">@AboutPage.Online_Clothing_Store</h1>
                         <a href="#" class="btn btn-white btn-outline btn-icon-right btn-rounded text-normal">
-                            Discover
-                            now<i class="d-icon-arrow-right"></i>
+                            @ShopPage.Discover_now<i class="d-icon-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -91,7 +90,7 @@
                         </div>*@
                         
                         <div class="toolbox-item toolbox-layout">
-                            <label>Sıralama :</label>
+                            <label>@ShopPage.Layout :</label>
                             <a href="#product-list" data-container-class="products-wrapper product-lists" class="d-icon-mode-list btn-layout"></a>
                             <a href="#product-wrap" data-container-class="products-wrapper" class="d-icon-mode-grid btn-layout active"></a>
                         </div>
@@ -106,7 +105,7 @@
                 <nav class="toolbox toolbox-pagination mb-0 pb-0">
                     @if (@Model.PagedViewModel.Items.Count() == 0)
                     {
-                        <p class="show-info">Məhsul yoxdur</p>
+                        <p class="show-info">@ShopPage.There_is_no_product</p>
                     }
                     else
                     {

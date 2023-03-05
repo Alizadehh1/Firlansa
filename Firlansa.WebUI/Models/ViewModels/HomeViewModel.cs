@@ -10,5 +10,6 @@ namespace Firlansa.WebUI.Models.ViewModels
     {
         public List<Product> LastestProducts { get; set; }
         public List<Product> SaleProducts { get; set; }
+        public List<Slider> Sliders { get; set; }
     }
 }

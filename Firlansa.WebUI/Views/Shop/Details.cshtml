@@ -49,14 +49,14 @@
                     <div class="product-navigation">
                         <ul class="breadcrumb breadcrumb-lg">
                             <li><a asp-controller="Home" asp-action="index"><i class="d-icon-home"></i></a></li>
-                            <li><a asp-controller="Shop" asp-action="index" class="active">Məhsullar</a></li>
+                            <li><a asp-controller="Shop" asp-action="index" class="active">@ShopPage.Products</a></li>
                             <li>@Model.Product.Name</li>
                         </ul>
                     </div>
 
                     <h1 class="product-name">@Model.Product.Name</h1>
                     <div class="product-meta">
-                        Kateqoriya: <span class="product-brand">@Model.Product.Category.Name</span>
+                        @ShopPage.Category: <span class="product-brand">@Model.Product.Category.Name</span>
                     </div>
                     <div class="product-price">
                         <ins class="new-price">@Model.Product.Price&#8380;</ins><del class="old-price">@(Model.Product.OldPrice != null ? Model.Product.OldPrice + "₼" : null)</del>
@@ -65,7 +65,7 @@
                         @Model.Product.ShortDescription
                     </p>
                     <div class="product-form product-color">
-                        <label>Rəng:</label>
+                        <label>@ShopPage.Color:</label>
                         <div class="product-variations">
                             @foreach (var color in Model.Colors)
                             {
@@ -78,7 +78,7 @@
                     @foreach (var color in Model.Colors)
                     {
                         <div data-entity-id="@color.Id" style="display:none;" class="product-form product-size">
-                            <label>Size:</label>
+                            <label>@ShopPage.Size:</label>
                             <div class="product-form-group">
                                 <div class="product-variations">
                                     @foreach (var size in Model.ProductSpecifications.Where(ps => ps.ColorId == color.Id))
@@ -94,7 +94,7 @@
                                     }
                                 </div>
                                 <a href="#collapse1-3" class="size-guide">
-                                    <i class="d-icon-th-list"></i>Ölçü
+                                    <i class="d-icon-th-list"></i>@ShopPage.Size
                                 </a>
                             </div>
                         </div>
@@ -109,10 +109,10 @@
                                 <button class="quantity-plus d-icon-plus"></button>
                             </div>
                             <button id="btnCart" data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
-                                <i class="d-icon-bag"></i>Səbətə əlavə et
+                                <i class="d-icon-bag"></i>@ShopPage.Add_to_Basket
                             </button>
                             <button style="background-color: #F27A1A;color:white;display:none;" id="btnNotify" data-item-id="@Model.Product.Id" onclick="addToNotify(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
-                                <i class="fa-solid fa-bell"></i>Gələndə xəbər et
+                                <i class="fa-solid fa-bell"></i>@ShopPage.Add_to_Notification
                             </button>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                         <span class="divider d-lg-show"></span>
                         <div class="product-action">
                             <a style="cursor:pointer;" onclick="addToWishlist(event,@Model.Product.Id)" class="btn-product btn-wishlist mr-6">
-                                <i class="d-icon-heart"></i>Seçilmişlərə əlavə et
+                                <i class="d-icon-heart"></i>@ShopPage.Add_to_Wishlist
                             </a>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                         {
                             <div class="card border-no card-description">
                                 <div class="card-header">
-                                    <a href="#collapse1-1" class="collapse">Detallı</a>
+                                    <a href="#collapse1-1" class="collapse">@AccountPage.Details</a>
                                 </div>
                                 <div id="collapse1-1" class="card-body expanded">
                                     <div class="row">
@@ -150,16 +150,16 @@
                         }
                         <div class="card card-additional">
                             <div class="card-header">
-                                <a href="#collapse1-2" class="expand">Əlavə məlumat</a>
+                                <a href="#collapse1-2" class="expand">@ShopPage.Additional_Information</a>
                             </div>
                             <div class="card-body collapsed" id="collapse1-2">
                                 <ul class="list-none">
                                     <li>
-                                        <label>Kateqoriya:</label>
+                                        <label>@ShopPage.Category:</label>
                                         <p>@Model.Product.Category.Name</p>
                                     </li>
                                     <li>
-                                        <label>Rəng:</label>
+                                        <label>@ShopPage.Color:</label>
                                         <p>
                                             @foreach (var productSpecification in Model.ProductSpecifications.Where(ps => ps.ProductId == Model.Product.Id))
                                             {
@@ -168,7 +168,7 @@
                                         </p>
                                     </li>
                                     <li>
-                                        <label>Ölçü:</label>
+                                        <label>@ShopPage.Size:</label>
                                         <p>
                                             @foreach (var productSpecification in Model.ProductSpecifications.Where(ps => ps.ProductId == Model.Product.Id))
                                             {
@@ -181,7 +181,7 @@
                         </div>
                         <div class="card card-sizeguide">
                             <div class="card-header">
-                                <a href="#collapse1-3" class="expand">Ölçü</a>
+                                <a href="#collapse1-3" class="expand">@ShopPage.Size</a>
                             </div>
                             <div class="card-body collapsed" id="collapse1-3">
                                 <figure class="size-image mt-4 mb-4">
@@ -400,7 +400,7 @@
                     count++;
                 }
             }
-            <h2 class="title justify-content-center">@(count != Model.Products.Count ? "Oxşar məhsullar" : "Oxşar məhsul yoxdur")</h2>
+            <h2 class="title justify-content-center">@(count != Model.Products.Count ? $"{ShopPage.Similar_Products}" : $"{ShopPage.There_is_no_Similar_Product}")</h2>
 
             <div class="owl-carousel owl-theme owl-nav-full row cols-2 cols-md-3 cols-lg-4"
                  data-owl-options="{

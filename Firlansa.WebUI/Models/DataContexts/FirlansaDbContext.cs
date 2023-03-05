@@ -25,6 +25,7 @@ namespace Firlansa.WebUI.Models.DataContexts
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Subscribe> Subscribes { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -104,6 +104,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Sliders\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Sliders\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Sliders\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Sliders\Index.cshtml" />
     <None Include="wwwroot\admin\files\bower_components\autosize\dist\autosize.min.js" />
     <None Include="wwwroot\admin\files\bower_components\bootstrap-datepicker\dist\js\bootstrap-datepicker.min.js" />
     <None Include="wwwroot\admin\files\bower_components\bootstrap-datepicker\js\bootstrap-datepicker.js" />
@@ -245,6 +249,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ContactForm.resx</DependentUpon>
     </Compile>
+    <Compile Update="AppCode\Resources\UserUI\HomePage\HomePage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HomePage.resx</DependentUpon>
+    </Compile>
     <Compile Update="AppCode\Resources\UserUI\LayoutRes\LayoutRes.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -254,6 +263,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Navbar.resx</DependentUpon>
+    </Compile>
+    <Compile Update="AppCode\Resources\UserUI\ShopPage\ShopPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShopPage.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -279,6 +293,11 @@
     <EmbeddedResource Update="AppCode\Resources\UserUI\ContactForm\ContactForm.ru.resx">
       <CustomToolNamespace>Recources</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\HomePage\HomePage.resx">
+      <CustomToolNamespace>Recources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="AppCode\Resources\UserUI\LayoutRes\LayoutRes.en.resx">
       <Generator></Generator>
     </EmbeddedResource>
@@ -291,6 +310,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Navbar.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Recources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\UserUI\ShopPage\ShopPage.resx">
+      <CustomToolNamespace>Recources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShopPage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

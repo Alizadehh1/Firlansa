@@ -7,7 +7,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a asp-action="index" asp-controller="home"><i class="d-icon-home"></i></a></li>
-            <li>Seçilmişlər</li>
+            <li>@Navbar.Wishlist</li>
         </ul>
     </div>
 </nav>
@@ -21,10 +21,10 @@
             <table class="shop-table wishlist-table mt-2 mb-4">
                 <thead>
                     <tr>
-                        <th class="product-name"><span>Məhsul</span></th>
-                        <th class="product-name">Ad</th>
-                        <th class="product-price"><span>Kateqoriya</span></th>
-                        <th class="product-price"><span>Qiymət</span></th>
+                        <th class="product-name"><span>@AccountPage.Product</span></th>
+                        <th class="product-name">@AccountPage.Name</th>
+                        <th class="product-price"><span>@ShopPage.Category></th>
+                        <th class="product-price"><span>@AccountPage.Price</span></th>
                         @*<th class="product-stock-status"><span>Stok vəziyyəti</span></th>*@
                         <th class="product-add-to-cart"></th>
                         <th class="product-remove"></th>
@@ -52,18 +52,8 @@
                             <td class="product-price">
                                 <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>
                             </td>
-                            @*<td class="product-stock-status">
-                                    @if (product.Quantity > 0)
-                                    {
-                                        <span class="wishlist-in-stock">Anbarda</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="wishlist-out-stock">Anbarda yoxdur</span>
-                                    }
-                                </td>*@
                             <td class="product-add-to-cart">
-                                <a asp-action="details" asp-route-id="@product.Id" class="btn-product btn-primary"><span>Seçim edin</span></a>
+                                <a asp-action="details" asp-route-id="@product.Id" class="btn-product btn-primary"><span>@ShopPage.Choose</span></a>
                             </td>
                             <td class="product-remove">
                                 <div>
@@ -81,7 +71,7 @@
         {
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <i class="emptyWishlist fa-solid fa-heart-crack"></i>
-                <h1 class="emptyBasketText">Seçilmişlər siyahısı boşdur</h1>
+                <h1 class="emptyBasketText">@ShopPage.Wishlist_is_empty</h1>
             </div>
         }
     </div>
@@ -96,7 +86,7 @@
             var iTag = $('<i>', {
                 class: 'emptyWishlist fa-solid fa-heart-crack'
             });
-            var h1Tag = $('<h1>').text("Seçilmişlər siyahısı boşdur").addClass("emptyBasketText");
+            var h1Tag = $('<h1>').text("@ShopPage.Wishlist_is_empty").addClass("emptyBasketText");
             let divTag = $('div.emptyWishlistContainer');
             if (items.length <= 1) {
                 $('table.wishlist-table').remove();

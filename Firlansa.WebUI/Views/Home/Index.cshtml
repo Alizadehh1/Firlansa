@@ -1,8 +1,15 @@
 ﻿@model HomeViewModel
+@{ 
+    int? userId = Convert.ToInt32(User.GetUserId());
+    if (userId == null)
+        userId = 0;
+}
 <div class="page-content">
-    <section class="intro-section">
-        <div class="owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 gutter-no"
-             data-owl-options="{
+    @if (Model.Sliders.Count > 0)
+    {
+        <section class="intro-section">
+            <div class="owl-carousel owl-theme row owl-dot-inner owl-dot-white intro-slider animation-slider cols-1 gutter-no"
+                 data-owl-options="{
                         'nav': false,
                         'dots': true,
                         'loop': false,
@@ -10,247 +17,43 @@
                         'autoplay': false,
                         'autoplayTimeout': 8000
                     }">
-            <div class="banner banner-fixed intro-slide1" style="background-color: #46b2e8;">
-                <figure>
-                    <img src="~/assets/images/demos/demo1/slides/slide1.jpg" alt="intro-banner" width="1903"
-                         height="630" style="background-color: #34ace5;" />
-                </figure>
-                <div class="container">
-                    <div class="banner-content y-50">
-                        <h4 class="banner-subtitle font-weight-bold ls-l">
-                            <span class="d-inline-block slide-animate"
-                                  data-animation-options="{'name': 'fadeInRightShorter', 'duration': '1s', 'delay': '.2s'}">
-                                Buy
-                                2 Get
-                            </span>
-                            <span class="d-inline-block label-star bg-white text-primary slide-animate"
-                                  data-animation-options="{'name': 'fadeInRightShorter', 'duration': '1s', 'delay': '.4s'}">
-                                1
-                                Free
-                            </span>
-                        </h4>
-                        <h2 class="banner-title font-weight-bold text-white lh-1 ls-md slide-animate"
-                            data-animation-options="{'name': 'fadeInUpShorter', 'duration': '1.2s', 'delay': '1s'}">
-                            Fashionable
-                        </h2>
-                        <h3 class="font-weight-normal lh-1 ls-l text-white slide-animate"
-                            data-animation-options="{'name': 'fadeInUpShorter', 'duration': '1.2s', 'delay': '1s'}">
-                            Collection
-                        </h3>
-                        <p class="slide-animate text-white ls-s mb-7"
-                           data-animation-options="{'name': 'fadeInUpShorter', 'duration': '1.2s', 'delay': '1s'}">
-                            Get Free Shipping on all orders over $99.00
-                        </p>
-                        <a href="shop.html" class="btn btn-dark btn-rounded slide-animate"
-                           data-animation-options="{'name': 'fadeInUpShorter', 'duration': '1s', 'delay': '1.8s'}">
-                            Shop
-                            Now<i class="d-icon-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="banner banner-fixed intro-slide2" style="background-color: #dddee0;">
-                <figure>
-                    <img src="~/assets/images/demos/demo1/slides/slide2.jpg" alt="intro-banner" width="1903"
-                         height="630" style="background-color: #d8d9d9;" />
-                </figure>
-                <div class="container">
-                    <div class="banner-content y-50 ml-auto text-right">
-                        <h4 class="banner-subtitle ls-s mb-1 slide-animate"
-                            data-animation-options="{'name': 'fadeInUp', 'duration': '.7s'}">
-                            <span class="d-block text-uppercase mb-2">Coming soon</span><strong class="font-weight-semi-bold ls-m">Firlansa Birthday</strong>
-                        </h4>
-                        <h2 class="banner-title mb-2 d-inline-block font-weight-bold text-primary slide-animate"
-                            data-animation-options="{'name': 'fadeInRight', 'duration': '1.2s', 'delay': '.5s'}">
-                            Sale
-                        </h2>
-                        <p class="slide-animate font-primary ls-s text-dark mb-4"
-                           data-animation-options="{'name': 'fadeInUp', 'duration': '1s', 'delay': '1.2s'}">
-                            Up to 70% off on all products <br />online &amp; Free Shipping over $90
-                        </p>
-                        <a href="shop.html" class="btn btn-dark btn-rounded slide-animate"
-                           data-animation-options="{'name': 'fadeInUp', 'duration': '1s', 'delay': '1.4s'}">
-                            Shop
-                            Now<i class="d-icon-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="banner banner-fixed video-banner intro-slide3" style="background-color: #dddee0;">
-                <figure>
-                    <video src="~/assets/video/memory-of-a-woman.mp4" width="1903" height="630"></video>
-                </figure>
-                <div class="container">
-                    <div class="banner-content x-50 y-50 text-center">
-                        <h4 class="banner-subtitle text-white text-uppercase mb-3 ls-normal slide-animate"
-                            data-animation-options="{'name': 'fadeIn', 'duration': '.7s'}">
-                            Check out our
-                        </h4>
-                        <h2 class="banner-title mb-3 text-white font-weight-bold text-uppercase ls-m slide-animate"
-                            data-animation-options="{'name': 'fadeInUp', 'duration': '.7s', 'delay': '.5s'}">
-                            Summer Season's
-                        </h2>
-                        <p class="slide-animate mb-7 text-white ls-s font-primary "
-                           data-animation-options="{'name': 'fadeInUp', 'duration': '1s', 'delay': '.8s'}">
-                            Up to 50% Off this Season’s &amp; Get free shipping<br />on all orders over
-                            $199.00
-                        </p>
-                        <a href="shop.html" class="btn btn-dark btn-rounded slide-animate mb-1"
-                           data-animation-options="{'name': 'fadeInLeft', 'duration': '1s', 'delay': '1.5s'}">
-                            Shop
-                            Now<i class="d-icon-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container mt-6 appear-animate">
-            <div class="service-list">
-                <div class="owl-carousel owl-theme row cols-lg-3 cols-sm-2 cols-1" data-owl-options="{
-                                    'items': 3,
-                                    'nav': false,
-                                    'dots': false,
-                                    'loop': true,
-                                    'autoplay': false,
-                                    'autoplayTimeout': 5000,
-                                    'responsive': {
-                                        '0': {
-                                            'items': 1
-                                        },
-                                        '576': {
-                                            'items': 2
-                                        },
-                                        '768': {
-                                            'items': 3,
-                                            'loop': false
-                                        }
-                                    }
-                                }">
-                    <div class="icon-box icon-box-side icon-box1 appear-animate" data-animation-options="{
-                                        'name': 'fadeInRightShorter',
-                                        'delay': '.3s'
-                                    }">
-                        <i class="icon-box-icon d-icon-truck"></i>
-                        <div class="icon-box-content">
-                            <h4 class="icon-box-title text-capitalize ls-normal lh-1">
-                                Free Shipping &amp;
-                                Return
-                            </h4>
-                            <p class="ls-s lh-1">Free shipping on orders over $99</p>
-                        </div>
-                    </div>
-
-                    <div class="icon-box icon-box-side icon-box2 appear-animate" data-animation-options="{
-                                        'name': 'fadeInRightShorter',
-                                        'delay': '.4s'
-                                    }">
-                        <i class="icon-box-icon d-icon-service"></i>
-                        <div class="icon-box-content">
-                            <h4 class="icon-box-title text-capitalize ls-normal lh-1">
-                                Customer Support 24/7
-                            </h4>
-                            <p class="ls-s lh-1">Instant access to perfect support</p>
-                        </div>
-                    </div>
-
-                    <div class="icon-box icon-box-side icon-box3 appear-animate" data-animation-options="{
-                                        'name': 'fadeInRightShorter',
-                                        'delay': '.5s'
-                                    }">
-                        <i class="icon-box-icon d-icon-secure"></i>
-                        <div class="icon-box-content">
-                            <h4 class="icon-box-title text-capitalize ls-normal lh-1">
-                                100% Secure Payment
-                            </h4>
-                            <p class="ls-s lh-1">We ensure secure payment!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pt-10 mt-7 appear-animate" data-animation-options="{
-                        'delay': '.3s'
-                    }">
-            <div class="container">
-                <h2 class="title title-center mb-5">Our Categories</h2>
-                <div class="row">
-                    <div class="col-xs-6 col-lg-3 mb-4">
-                        <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-                            <a href="shop.html">
-                                <figure class="category-media">
-                                    <img src="~/assets/images/categories/category1.jpg" alt="category" width="280"
-                                         height="280" style="background-color: #8c8c8d;" />
-                                </figure>
-                            </a>
-                            <div class="category-content">
-                                <h4 class="category-name font-weight-bold ls-l">
-                                    <a href="shop.html">
-                                        For
-                                        Men's
+                @foreach (var item in Model.Sliders)
+                {
+                    <div class="banner banner-fixed intro-slide" style="background-color: #dddee0;">
+                        <figure>
+                            <img src="~/uploads/images/@item.ImagePath" alt="intro-banner" width="1903"
+                                 height="630" style="background-color: #d8d9d9;" />
+                        </figure>
+                        @*<div class="container">
+                                <div class="banner-content y-50 ml-auto text-right">
+                                    <h4 class="banner-subtitle ls-s mb-1 slide-animate"
+                                        data-animation-options="{'name': 'fadeInUp', 'duration': '.7s'}">
+                                        <span class="d-block text-uppercase mb-2">Coming soon</span><strong class="font-weight-semi-bold ls-m">Firlansa Birthday</strong>
+                                    </h4>
+                                    <h2 class="banner-title mb-2 d-inline-block font-weight-bold text-primary slide-animate"
+                                        data-animation-options="{'name': 'fadeInRight', 'duration': '1.2s', 'delay': '.5s'}">
+                                        Sale
+                                    </h2>
+                                    <p class="slide-animate font-primary ls-s text-dark mb-4"
+                                       data-animation-options="{'name': 'fadeInUp', 'duration': '1s', 'delay': '1.2s'}">
+                                        Up to 70% off on all products <br />online &amp; Free Shipping over $90
+                                    </p>
+                                    <a href="shop.html" class="btn btn-dark btn-rounded slide-animate"
+                                       data-animation-options="{'name': 'fadeInUp', 'duration': '1s', 'delay': '1.4s'}">
+                                        Shop
+                                        Now<i class="d-icon-arrow-right"></i>
                                     </a>
-                                </h4>
-                            </div>
-                        </div>
+                                </div>
+                            </div>*@
                     </div>
-                    <div class="col-xs-6 col-lg-3 mb-4">
-                        <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-                            <a href="shop.html">
-                                <figure class="category-media">
-                                    <img src="~/assets/images/categories/category2.jpg" alt="category" width="280"
-                                         height="280" style="background-color: #bcbdb7;" />
-                                </figure>
-                            </a>
-                            <div class="category-content">
-                                <h4 class="category-name font-weight-bold ls-l">
-                                    <a href="shop.html">Accessories</a>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-lg-3 mb-4">
-                        <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-                            <a href="shop.html">
-                                <figure class="category-media">
-                                    <img src="~/assets/images/categories/category3.jpg" alt="category" width="280"
-                                         height="280" style="background-color: #ececef;" />
-                                </figure>
-                            </a>
-                            <div class="category-content">
-                                <h4 class="category-name font-weight-bold ls-l">
-                                    <a href="shop.html">
-                                        Fashionable
-                                        Women's
-                                    </a>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-lg-3 mb-4">
-                        <div class="category category-default1 category-absolute banner-radius overlay-zoom">
-                            <a href="shop.html">
-                                <figure class="category-media">
-                                    <img src="~/assets/images/categories/category4.jpg" alt="category" width="280"
-                                         height="280" style="background-color: #e8eded;" />
-                                </figure>
-                            </a>
-                            <div class="category-content font-weight-bold">
-                                <h4 class="category-name font-weight-bold ls-l">
-                                    <a href="shop.html">Cosmetic</a>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </section>
-
+    }
     <section class="product-wrapper container appear-animate mt-6 mt-md-10 pt-4 pb-8" data-animation-options="{
                     'delay': '.3s'
                 }">
-        <h2 class="title title-center mb-5">Endirimdə olan məhsullar</h2>
+        <h2 class="title title-center mb-5">@HomePage.Products_on_sale</h2>
         <div class="owl-carousel owl-theme row owl-nav-full cols-2 cols-md-3 cols-lg-4" data-owl-options="{
                         'items': @Model.SaleProducts.Count,
                         'nav': false,
@@ -281,7 +84,7 @@
                                  width="280" height="315" style="background-color: #f2f3f5;" />
                         </a>
                         <div class="product-label-group">
-                            <span class="product-label label-sale">@(Convert.ToInt32(100 - (saleProduct.Price * 100 / saleProduct.OldPrice)))% endirim</span>
+                            <span class="product-label label-sale">@(Convert.ToInt32(100 - (saleProduct.Price * 100 / saleProduct.OldPrice)))% @HomePage.discount</span>
                         </div>
                         <div class="product-action-vertical">
                             <button style="cursor:pointer;" onclick="addToWishlist(event,@saleProduct.Id)" class="btn-product-icon btn-wishlist" title="Add to wishlist">
@@ -289,7 +92,7 @@
                             </button>
                         </div>
                         <div class="product-action">
-                            <a asp-controller="shop" asp-action="quickview" asp-route-id="@saleProduct.Id" class="btn-product btn-quickview" title="Quick View">Ətraflı Baxış</a>
+                            <a asp-controller="shop" asp-action="quickview" asp-route-id="@saleProduct.Id" class="btn-product btn-quickview" title="Quick View">@ShopPage.Quickview</a>
                         </div>
                     </figure>
                     <div class="product-details">
@@ -308,79 +111,10 @@
         </div>
     </section>
 
-    <section class="banner-group mt-4">
-            <div class="container">
-                <h2 class="title d-none">Banner Group</h2>
-
-                <div class="row justify-content-center">
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="banner banner-3 banner-fixed banner-radius content-middle appear-animate"
-                             data-animation-options="{'name': 'fadeInLeftShorter', 'duration': '1s', 'delay': '.2s'}">
-                            <figure>
-                                <img src="~/assets/images/demos/demo1/banners/banner1.jpg" alt="banner" width="380"
-                                     height="207" style="background-color: #836648;" />
-                            </figure>
-                            <div class="banner-content">
-                                <h3 class="banner-title text-white mb-1">For Men's</h3>
-                                <h4 class="banner-subtitle text-uppercase font-weight-normal text-white">
-                                    Starting at $29
-                                </h4>
-                                <hr class="banner-divider">
-                                <a href="shop.html" class="btn btn-white btn-link btn-underline">
-                                    Shop Now<i class="d-icon-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4 order-lg-auto order-sm-last">
-                        <div class="banner banner-4 banner-fixed banner-radius content-middle content-center appear-animate"
-                             data-animation-options="{'name': 'fadeIn', 'duration': '1s', 'delay': '.2s'}">
-                            <figure>
-                                <img src="~/assets/images/demos/demo1/banners/banner2.jpg" alt="banner" width="350"
-                                     height="177" style="background-color: #1e1e1e;" />
-                            </figure>
-                            <div class="banner-content d-flex align-items-center w-100 text-left">
-                                <div class="mr-auto mb-4 mb-md-0">
-                                    <h4 class="banner-subtitle text-white">
-                                        Up to 20% Off<br><span class="ls-l">Black Friday</span>
-                                    </h4>
-                                    <h3 class="banner-title text-primary font-weight-bold lh-1 mb-0">Sale</h3>
-                                </div>
-                                <a href="shop.html"
-                                   class="btn btn-primary btn-outline btn-rounded font-weight-bold text-white">
-                                    Shop
-                                    Now<i class="d-icon-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="banner banner-5 banner-fixed banner-radius content-middle appear-animate"
-                             data-animation-options="{'name': 'fadeInRightShorter', 'duration': '1s', 'delay': '.2s'}">
-                            <figure>
-                                <img src="~/assets/images/demos/demo1/banners/banner3.jpg" alt="banner" width="380"
-                                     height="207" style="background-color: #97928b;" />
-                            </figure>
-                            <div class="banner-content">
-                                <h3 class="banner-title text-white mb-1">Fashions</h3>
-                                <h4 class="banner-subtitle text-uppercase font-weight-normal text-white">
-                                    30% Off
-                                </h4>
-                                <hr class="banner-divider">
-                                <a href="shop.html" class="btn btn-white btn-link btn-underline">
-                                    Shop Now<i class="d-icon-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     <section class="product-wrapper mt-6 mt-md-10 pt-4 mb-10 pb-2 container appear-animate" data-animation-options="{
                     'delay': '.6s'
                 }">
-        <h2 class="title title-center">Son məhsullar</h2>
+        <h2 class="title title-center">@HomePage.New_products</h2>
         <div class="owl-carousel owl-theme row cols-2 cols-md-3 cols-lg-4 cols-xl-5" data-owl-options="{
                         'items': @Model.LastestProducts.Count,
                         'nav': false,
@@ -414,7 +148,7 @@
                                  width="220" height="245" style="background-color: #f2f3f5;" />
                         </a>
                         <div class="product-label-group">
-                            <label class="product-label label-new">Yeni</label>
+                            <label class="product-label label-new">@HomePage.New</label>
                         </div>
                         <div class="product-action-vertical">
                             <button style="cursor:pointer;" onclick="addToWishlist(event,@product.Id)" class="btn-product-icon btn-wishlist" title="Add to wishlist">
@@ -422,7 +156,7 @@
                             </button>
                         </div>
                         <div class="product-action">
-                            <a asp-controller="shop" asp-action="quickview" asp-route-id="@product.Id" class="btn-product btn-quickview" title="Quick View">Ətraflı Baxış</a>
+                            <a asp-controller="shop" asp-action="quickview" asp-route-id="@product.Id" class="btn-product btn-quickview" title="Quick View">@ShopPage.Quickview</a>
                         </div>
                     </figure>
                     <div class="product-details">
@@ -439,241 +173,327 @@
                 </div>
             }
         </div>
-    </section>
+        <div class="container mt-6 appear-animate">
+            <div class="service-list">
+                <div class="owl-carousel owl-theme row cols-lg-3 cols-sm-2 cols-1" data-owl-options="{
+                                    'items': 3,
+                                    'nav': false,
+                                    'dots': false,
+                                    'loop': true,
+                                    'autoplay': false,
+                                    'autoplayTimeout': 5000,
+                                    'responsive': {
+                                        '0': {
+                                            'items': 1
+                                        },
+                                        '576': {
+                                            'items': 2
+                                        },
+                                        '768': {
+                                            'items': 3,
+                                            'loop': false
+                                        }
+                                    }
+                                }">
+                    <div class="icon-box icon-box-side icon-box1 appear-animate" data-animation-options="{
+                                        'name': 'fadeInRightShorter',
+                                        'delay': '.3s'
+                                    }">
+                        <i class="icon-box-icon d-icon-truck"></i>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title text-capitalize ls-normal lh-1">
+                                @ShopPage.Local_delivery_available_
+                            </h4>
+                        </div>
+                    </div>
 
-    <section class="banner banner-background parallax text-center" data-option="{'offset': -60}"
-             data-image-src="./assets/images/demos/demo1/parallax.jpg" style="background-color: #2d2f33;">
-        <div class="container">
-            <div class="banner-content appear-animate"
-                 data-animation-options="{'name': 'blurIn', 'duration': '1s', 'delay': '.2s'}">
-                <h4 class="banner-subtitle text-white font-weight-bold ls-l">
-                    Extra<span class="d-inline-block label-star bg-dark text-primary ml-4 mr-2">
-                        30%
-                        Off
-                    </span>Online
-                </h4>
-                <h3 class="banner-title font-weight-bold text-white">Summer Season Sale</h3>
-                <p class="text-white ls-s">Free shipping on orders over $99</p>
-                <a href="shop.html" class="btn btn-primary btn-rounded btn-icon-right">
-                    Shop Now<i class="d-icon-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+                    <div class="icon-box icon-box-side icon-box2 appear-animate" data-animation-options="{
+                                        'name': 'fadeInRightShorter',
+                                        'delay': '.4s'
+                                    }">
+                        <i class="icon-box-icon d-icon-service"></i>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title text-capitalize ls-normal lh-1">
+                                @HomePage.Customer_Support_24_7
+                            </h4>
+                        </div>
+                    </div>
 
-    <section class="mt-2 pb-6 pt-10 pb-md-10 appear-animate" data-animation-options="{
-                    'delay': '.3s'
-                }">
-        <h2 class="title d-none">Our Brand</h2>
-        <div class="container">
-            <div class="owl-carousel owl-theme row brand-carousel cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2"
-                 data-owl-options="{
-                            'nav': false,
-                            'dots': false,
-                            'autoplay': true,
-                            'margin': 20,
-                            'loop': true,
-                            'responsive': {
-                                '0': {
-                                    'items': 2
-                                },
-                                '576': {
-                                    'items': 3
-                                },
-                                '768': {
-                                    'items': 4
-                                },
-                                '992': {
-                                    'items': 5
-                                },
-                                '1200': {
-                                    'items': 6
-                                }
-                            }
-                        }">
-                <figure>
-                    <img src="~/assets/images/brands/1.png" alt="brand" width="180" height="100" />
-                </figure>
-                <figure>
-                    <img src="~/assets/images/brands/2.png" alt="brand" width="180" height="100" />
-                </figure>
-                <figure>
-                    <img src="~/assets/images/brands/3.png" alt="brand" width="180" height="100" />
-                </figure>
-                <figure>
-                    <img src="~/assets/images/brands/4.png" alt="brand" width="180" height="100" />
-                </figure>
-                <figure>
-                    <img src="~/assets/images/brands/5.png" alt="brand" width="180" height="100" />
-                </figure>
-                <figure>
-                    <img src="~/assets/images/brands/6.png" alt="brand" width="180" height="100" />
-                </figure>
+                    <div class="icon-box icon-box-side icon-box3 appear-animate" data-animation-options="{
+                                        'name': 'fadeInRightShorter',
+                                        'delay': '.5s'
+                                    }">
+                        <i class="icon-box-icon d-icon-secure"></i>
+                        <div class="icon-box-content">
+                            <h4 class="icon-box-title text-capitalize ls-normal lh-1">
+                                @HomePage._100__Secure_Payment
+                            </h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </div>
-@section js{ 
-<script>
-    function specificationsDetermine(e) {
-        console.log("salam")
-        $('.product-size').css('display', 'none');
-        $('.product-size .product-variations a.active').removeClass('active');
-        if (!$(e.currentTarget).hasClass('active')) {
+@section js{
+    <script>
+        function determineAddOrNotify(item) {
+            $('.product-size').css('display', 'none');
+            $('.product-size .product-variations a.active').removeClass('active');
+            if (!$(item.currentTarget).hasClass('active')) {
+                let colorId = $(item.currentTarget).data("color-id");
+                $('.product-size').each(function (index, item) {
+                    if ($(item).data('entity-id') == colorId)
+                        $(item).css('display', 'flex');
+                    let size = $('.product-size .product-variations a.size');
 
-            let colorId = $(e.currentTarget).data("color-id");
-            $('.product-size').each(function (index, item) {
-                if ($(item).data('entity-id') == colorId)
-                    $(item).css('display', 'flex');
-                let size = $('.product-size .product-variations a.size');
-                console.log('sakanaaaa')
-                console.log(size)
-                size.click(function (item) {
-                    if ($(item.currentTarget).hasClass('active')) {
-                        $('#btnCart').removeAttr('disabled');
+                    size.click(function (item) {
+                        if ($(item.currentTarget).hasClass('active')) {
+                            if ($(item.currentTarget).hasClass('soldOut')) {
+                                $('#btnCart').css("display", "none");
+                                $('#btnNotify').css("display", "flex");
+                                $('#btnNotify').removeAttr('disabled');
+                            }
+                            else {
+                                $('#btnNotify').css("display", "none");
+                                $('#btnCart').css("display", "flex");
+                                $('#btnCart').removeAttr('disabled');
+                            }
+                        }
+                    })
+                });
+            }
+            else {
+                $('.product-size').css('display', 'none');
+            }
+        }
+        function addToNotify(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            let data = $(ev.currentTarget).data();
+            let colors = document.querySelectorAll('.color');
+            let color;
+            let size;
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].getAttribute('class') == 'color active') {
+                    color = $(colors[i]).data();
+                }
+            }
+            let sizes = document.querySelectorAll('.size');
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].getAttribute('class') == 'size soldOut active') {
+                    size = $(sizes[i]).data();
+                }
+            }
+            let activeSpecs = $('.product-variations a.active');
+            if (color == undefined) {
+                toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (size == undefined) {
+                toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (activeSpecs.length != 2) {
+                toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            addToNotification(data.itemId, color.colorId, size.sizeId);
+        }
+        function addToNotification(cardId, cardColor, cardSize) {
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            else {
+                let items = [];
+                items.push(cardId, cardColor, cardSize,@User.GetUserId());
+                console.log(items);
+                $.ajax({
+                    url: `@Url.Action("Notification","Shop")`,
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(items),
+                    success: function (response) {
+                        if (response.error == true) {
+                            toastr.error(response.message, "Uğursuz!");
+                            return;
+                        }
+                        toastr.success("Bildirişlərə uğurla əlavə edildi", response.message)
+                    },
+                    error: function (response) {
+                        toastr["error"]("Uğursuz!", response.message)
                     }
                 })
-            });
+            }
         }
-        else {
+
+        function specificationsDetermine(e) {
+            console.log("salam")
             $('.product-size').css('display', 'none');
-        }
-    }
+            $('.product-size .product-variations a.active').removeClass('active');
+            if (!$(e.currentTarget).hasClass('active')) {
 
-    function addToWishlist(ev, productId) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        addToCookie(productId);
-
-        console.log(readFromCookie())
-    }
-    function readFromCookie() {
-        return ($.cookie('cardsForWishlist') || '').split(',');
-    }
-    function addToCookie(cardId) {
-        let items = readFromCookie();
-        let length = items.filter(item => item == cardId).length;
-        if (length > 0) {
-            toastr.warning("Bu məhsulu artıq seçilmişlərə əlavə etmisiniz!", "Uğursuz");
-            return;
+                let colorId = $(e.currentTarget).data("color-id");
+                $('.product-size').each(function (index, item) {
+                    if ($(item).data('entity-id') == colorId)
+                        $(item).css('display', 'flex');
+                    let size = $('.product-size .product-variations a.size');
+                    console.log('sakanaaaa')
+                    console.log(size)
+                    size.click(function (item) {
+                        if ($(item.currentTarget).hasClass('active')) {
+                            $('#btnCart').removeAttr('disabled');
+                        }
+                    })
+                });
+            }
+            else {
+                $('.product-size').css('display', 'none');
+            }
+            determineAddOrNotify(e);
         }
-        items.push(cardId);
-        $.cookie('cardsForWishlist', items.toString(), { expires: 7, path: '/' });
-        $.ajax({
-            success: function (response) {
-                if (response.error == true) {
-                    toastr.error(response.message, "Error!");
-                    return;
+
+        function addToWishlist(ev, productId) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            addToCookie(productId);
+
+            console.log(readFromCookie())
+        }
+        function readFromCookie() {
+            return ($.cookie('cardsForWishlist') || '').split(',');
+        }
+        function addToCookie(cardId) {
+            let items = readFromCookie();
+            let length = items.filter(item => item == cardId).length;
+            if (length > 0) {
+                toastr.warning("Bu məhsulu artıq seçilmişlərə əlavə etmisiniz!", "Uğursuz");
+                return;
+            }
+            items.push(cardId);
+            $.cookie('cardsForWishlist', items.toString(), { expires: 7, path: '/' });
+            $.ajax({
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    toastr.success("Uğurla seçilmişlərə əlavə edildi", response.message)
+                },
+                error: function (response) {
+                    toastr["error"]("Uğursuz", "Əlavə edilmədi")
                 }
-                toastr.success("Uğurla seçilmişlərə əlavə edildi", response.message)
-            },
-            error: function (response) {
-                toastr["error"]("Uğursuz", "Əlavə edilmədi")
+            })
+        }
+
+
+        function addToCart(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            let data = $(ev.currentTarget).data();
+            let qty = $(ev.currentTarget).prev().find('#qty').val();
+            let colors = document.querySelectorAll('.color');
+            let color;
+            let size;
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].getAttribute('class') == 'color active') {
+                    color = $(colors[i]).data();
+                }
             }
-        })
-    }
-
-
-    function addToCart(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        let data = $(ev.currentTarget).data();
-        let qty = $(ev.currentTarget).prev().find('#qty').val();
-        let colors = document.querySelectorAll('.color');
-        let color;
-        let size;
-        for (var i = 0; i < colors.length; i++) {
-            if (colors[i].getAttribute('class') == 'color active') {
-                color = $(colors[i]).data();
+            let sizes = document.querySelectorAll('.size');
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].getAttribute('class') == 'size active') {
+                    size = $(sizes[i]).data();
+                }
             }
-        }
-        let sizes = document.querySelectorAll('.size');
-        for (var i = 0; i < sizes.length; i++) {
-            if (sizes[i].getAttribute('class') == 'size active') {
-                size = $(sizes[i]).data();
+            let activeSpecs = $('.product-variations a.active');
+            if (qty <= 0) {
+                toastr.warning("Miqdarı düzgün qeyd edin!", "Uğursuz");
+                return;
             }
-        }
-        let activeSpecs = $('.product-variations a.active');
-        if (qty <= 0) {
-            toastr.warning("Miqdarı düzgün qeyd edin!", "Uğursuz");
-            return;
-        }
-        else if (color == undefined) {
-            toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
-            return;
-        }
-        else if (size == undefined) {
-            toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
-            return;
-        }
-        else if (activeSpecs.length != 2) {
-            toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
-            return;
-        }
-        console.log(data.itemId);
-        console.log(qty);
-        console.log(color.colorId);
-        console.log(size.sizeId);
-        addToBasket(data.itemId, color.colorId, size.sizeId, qty, ev);
-    }
-
-    function addToBasket(cardId, cardColor, cardSize, cardQty, ev) {
-        let colorAndSize = `${cardId}-${cardColor}-${cardSize}`;
-        console.log(colorAndSize);
-        let items = readFromBasket();
-        let colors = readFromBasketColor();
-        let sizes = readFromBasketSize();
-        let qtys = readFromBasketQty();
-        let colorsAndSizes = readFromBasketColorAndSize();
-        let length = colorsAndSizes.filter(item => item == colorAndSize).length;
-
-        if (length > 0) {
-            toastr.warning("Bu məhsulu artıq əlavə etmisiniz!", "Uğursuz");
-            return;
-        }
-        items.push(cardId);
-        colors.push(cardColor);
-        sizes.push(cardSize);
-        qtys.push(cardQty);
-        colorsAndSizes.push(colorAndSize);
-        $.cookie('cards', items.toString(), { expires: 7, path: '/' });
-        $.cookie('colors', colors.toString(), { expires: 7, path: '/' });
-        $.cookie('sizes', sizes.toString(), { expires: 7, path: '/' });
-        $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
-        $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
-        ev.preventDefault();
-        var t = $(ev.currentTarget).closest(".product");
-        let name = t.find(".product-name").text();
-        let link = `/shop/details/${cardId}`;
-        let imageSrc = t.find("figure.main img").attr("src");
-        let price = t.find("div.product-price").html();
-        let count = t.find(".quantity").length > 0 ? t.find(".quantity").val() : 1;
-        let miniBasket = $('#basketProducts');
-        let cartActionContainer = $('div.cart-action');
-        let cartTotalContainer = $('div.cart-total');
-        let totalPrice = 0;
-        let subTotalPrice = $('div.cart-total span.price');
-        if (subTotalPrice.length == 0) {
-            let productsCart = $('div#basketProducts div.product-cart');
-            if (productsCart.length == 0) {
-                totalPrice = parseFloat(price) * count;
+            else if (color == undefined) {
+                toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
+                return;
             }
+            else if (size == undefined) {
+                toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (activeSpecs.length != 2) {
+                toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            console.log(data.itemId);
+            console.log(qty);
+            console.log(color.colorId);
+            console.log(size.sizeId);
+            addToBasket(data.itemId, color.colorId, size.sizeId, qty, ev);
         }
-        else {
-            let previousTotalPrice = subTotalPrice.text();
-            totalPrice = parseFloat(previousTotalPrice) + (parseFloat(price) * count);
-            subTotalPrice.text(totalPrice);
-        }
-        console.log(totalPrice);
-        //let prices = $('div.cart-total span.price');
-        //let subTotalPriceExistThisProduct = 0;
-        //for (var i = 0; i < prices.length; i++) {
-        //    subTotalPriceExistThisProduct += prices[i];
-        //}
-        //let subTotalPrice = subTotalPriceExistThisProduct + price * count;
 
-        /**/
-        let productContainer = `<div data-specification="${cardId}-${cardColor}-${cardSize}" class="product product-cart">
+        function addToBasket(cardId, cardColor, cardSize, cardQty, ev) {
+            let colorAndSize = `${cardId}-${cardColor}-${cardSize}`;
+            console.log(colorAndSize);
+            let items = readFromBasket();
+            let colors = readFromBasketColor();
+            let sizes = readFromBasketSize();
+            let qtys = readFromBasketQty();
+            let colorsAndSizes = readFromBasketColorAndSize();
+            let length = colorsAndSizes.filter(item => item == colorAndSize).length;
+
+            if (length > 0) {
+                toastr.warning("Bu məhsulu artıq əlavə etmisiniz!", "Uğursuz");
+                return;
+            }
+            items.push(cardId);
+            colors.push(cardColor);
+            sizes.push(cardSize);
+            qtys.push(cardQty);
+            colorsAndSizes.push(colorAndSize);
+            $.cookie('cards', items.toString(), { expires: 7, path: '/' });
+            $.cookie('colors', colors.toString(), { expires: 7, path: '/' });
+            $.cookie('sizes', sizes.toString(), { expires: 7, path: '/' });
+            $.cookie('qtys', qtys.toString(), { expires: 7, path: '/' });
+            $.cookie('colorAndSizes', colorsAndSizes.toString(), { expires: 7, path: '/' });
+            ev.preventDefault();
+            var t = $(ev.currentTarget).closest(".product");
+            let name = t.find(".product-name").text();
+            let link = `/shop/details/${cardId}`;
+            let imageSrc = t.find("figure.main img").attr("src");
+            let price = parseFloat(t.find("div.product-price ins.new-price").html());
+            let count = t.find(".quantity").length > 0 ? t.find(".quantity").val() : 1;
+            let miniBasket = $('#basketProducts');
+            let cartActionContainer = $('div.cart-action');
+            let cartTotalContainer = $('div.cart-total');
+            let totalPrice = 0;
+            let subTotalPrice = $('div.cart-total span.price');
+            if (subTotalPrice.length == 0) {
+                let productsCart = $('div#basketProducts div.product-cart');
+                if (productsCart.length == 0) {
+                    totalPrice = price * count;
+                }
+            }
+            else {
+                let previousTotalPrice = parseFloat(subTotalPrice.text());
+                totalPrice = previousTotalPrice + (price * count);
+                subTotalPrice.text(totalPrice.toFixed(2));
+            }
+
+            totalPrice = totalPrice.toFixed(2);
+            console.log(totalPrice);
+            //let prices = $('div.cart-total span.price');
+            //let subTotalPriceExistThisProduct = 0;
+            //for (var i = 0; i < prices.length; i++) {
+            //    subTotalPriceExistThisProduct += prices[i];
+            //}
+            //let subTotalPrice = subTotalPriceExistThisProduct + price * count;
+
+            /**/
+            let productContainer = `<div data-specification="${cardId}-${cardColor}-${cardSize}" class="product product-cart">
                                             <figure class="product-media1">
                                                 <a href="${link}">
                                                             <img src="${imageSrc}" alt="${name}" width="80"
@@ -693,33 +513,33 @@
                                         </div>
 `
 
-        let cartTotal = `<label>Cəmi:</label>
+            let cartTotal = `<label>Cəmi:</label>
                                 <span class="price">${totalPrice}</span><span>&#8380;</span>`
-        let cartAction = `<a href="/shop/basket" class="btn btn-dark btn-link">Səbətə bax</a>
+            let cartAction = `<a href="/shop/basket" class="btn btn-dark btn-link">Səbətə bax</a>
                                 <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>`
 
-        $.ajax({
+            $.ajax({
 
-            success: function (response) {
-                if (response.error == true) {
-                    toastr.error(response.message, "Error!");
-                    return;
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    if (readFromBasket().length <= 2) {
+                        cartActionContainer.append(cartAction);
+                        cartTotalContainer.append(cartTotal);
+                        $("div.dropdown-box div.d-flex").remove();
+                    }
+                    toastr.success("Səbətə uğurla əlavə edildi", response.message)
+                    showCardCount();
+                    miniBasket.append(productContainer);
+
+
+                },
+                error: function (response) {
+                    toastr["error"]("Uğursuz", "Əlavə edilmədi")
                 }
-                if (readFromBasket().length <= 2) {
-                    cartActionContainer.append(cartAction);
-                    cartTotalContainer.append(cartTotal);
-                    $("div.dropdown-box div.d-flex").remove();
-                }
-                toastr.success("Səbətə uğurla əlavə edildi", response.message)
-                showCardCount();
-                miniBasket.append(productContainer);
-
-
-            },
-            error: function (response) {
-                toastr["error"]("Uğursuz", "Əlavə edilmədi")
-            }
-        })
-    }
-</script>
+            })
+        }
+    </script>
 }

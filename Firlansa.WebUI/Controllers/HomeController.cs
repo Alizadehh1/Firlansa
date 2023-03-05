@@ -39,6 +39,10 @@ namespace Firlansa.WebUI.Controllers
                 .Include(p => p.Images.Where(i => i.IsMain == true))
                 .Include(p => p.Category)
                 .ToList();
+            model.Sliders = await db.Sliders
+                .Where(s => s.DeletedById == null)
+                .OrderByDescending(s=>s.CreatedDated)
+                .ToListAsync();
             return View(model);
         }
         public IActionResult About()

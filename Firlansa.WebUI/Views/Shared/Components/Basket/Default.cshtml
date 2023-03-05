@@ -3,7 +3,7 @@
     <div class="cart-header">
         <h4 class="cart-title">Səbət</h4>
         <a href="#" class="btn btn-dark btn-link btn-icon-right btn-close">
-            bağla<i class="d-icon-arrow-right"></i><span class="sr-only">Cart</span>
+            @ShopPage.Close.ToLower()<i class="d-icon-arrow-right"></i><span class="sr-only">@ShopPage.Cart</span>
         </a>
     </div>
 
@@ -13,14 +13,14 @@
         if (ViewBag.Colors.Length == 0)
         {
             <div class="d-flex justify-content-center align-items-center">
-                <h2 style="margin-top:20px;">Səbət boşdur</h2>
+                <h2 style="margin-top:20px;">@ShopPage.Your_cart_is_empty</h2>
             </div>
         }
     }
     @if (ViewBag.Colors == null)
     {
         <div class="d-flex justify-content-center align-items-center">
-            <h2 style="margin-top:20px;">Səbət boşdur</h2>
+            <h2 style="margin-top:20px;">@ShopPage.Your_cart_is_empty</h2>
         </div>
     }
     <div id="basketProducts" class="products scrollable">
@@ -41,7 +41,7 @@
                             }
                         </a>
                         <button onclick="removeEntity1(@ViewBag.Products[i].Id,@ViewBag.Colors[i],@ViewBag.Sizes[i],@ViewBag.Quantities[i],event)" class="btn btn-link btn-close">
-                            <i class="fas fa-times"></i><span class="sr-only">Bağla</span>
+                            <i class="fas fa-times"></i><span class="sr-only">@ShopPage.Close</span>
                         </button>
                     </figure>
                     <div class="product-detail">
@@ -62,7 +62,7 @@
         {
             if (ViewBag.Colors.Length != 0)
             {
-                <label>Cəmi:</label>
+                <label>@AccountPage.Total:</label>
                 <span class="price">@ViewBag.SubTotal.ToString("0.00")</span><span>&#8380;</span>
             }
         }
@@ -74,8 +74,7 @@
         {
             if (ViewBag.Colors.Length != 0)
             {
-                <a asp-action="basket" asp-controller="shop" class="btn btn-dark btn-link">Səbətə bax</a>
-                <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>
+                <a asp-action="basket" asp-controller="shop" class="btn btn-dark btn-link">@ShopPage.Go_to_Basket</a>
             }
         }
     </div>

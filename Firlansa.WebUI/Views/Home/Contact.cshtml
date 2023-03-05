@@ -1,6 +1,7 @@
 ﻿@model Contact
 @{
     ViewData["Title"] = "Contact";
+    var linkTiktok = "https://www.tiktok.com/@firlansa.baku1";
 }
 
 <nav class="breadcrumb-nav">
@@ -32,8 +33,7 @@
                             <h4 class="mb-2 text-capitalize">@Recources.ContactForm.Support</h4>
                             <p class="mb-4">
                                 <a href="#">support@your-domain.com</a><br>
-                                <a href="#">help@your-domain.com</a><br>
-                                <a href="#">Sale</a>
+                                <a href="#">help@your-domain.com</a>
                             </p>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                     <div class="w-100">
                         <form class="pl-lg-2" id="contactForm" method="post">
-                            @*<h4 class="ls-m font-weight-bold">@Recources.ContactForm.</h4>*@
+                            <h4 class="ls-m font-weight-bold">@Recources.ContactForm.Contact_Us</h4>
                             <p>
                                 @Recources.ContactForm.Your_email_address_will_not_be_published__Required_fields_are_marked__
                             </p>
@@ -78,11 +78,10 @@
                         <h4 class="overlay-visible">@Recources.ContactForm.Baku</h4>
                         <div class="overlay overlay-transparent">
                             <a class="mt-8" href="mail:#">mail@firlansastore.com</a>
-                            <a href="tel:#">@Recources.ContactForm.Phone: (123) 456-7890</a>
+                            <a href="tel:#">@Recources.ContactForm.Phone: (051)623-91-07</a>
                             <div class="social-links mt-1">
-                                <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
-                                <a href="#" class="social-link social-twitter fab fa-twitter"></a>
-                                <a href="#" class="social-link social-linkedin fab fa-linkedin-in"></a>
+                                <a href="https://www.instagram.com/firlansa.baku/" class="fa-brands fa-instagram social-link social-instagram"></a>
+                                <a href="@linkTiktok" class="social-link social-tiktok fa-brands fa-tiktok"></a>
                             </div>
                         </div>
                     </figure>

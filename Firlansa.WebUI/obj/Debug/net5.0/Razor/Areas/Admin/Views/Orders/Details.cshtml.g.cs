@@ -47,8 +47,15 @@ using System.Globalization;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 7 "C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\Areas\Admin\Views\_ViewImports.cshtml"
+using Firlansa.WebUI.AppCode.Modules.SliderModule;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2b9bb7f9418ac5fa4608ee691d02361dde3692da", @"/Areas/Admin/Views/Orders/Details.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f022b8fc9aefd8bde4a5ffc1b8b53f6ef1c74526", @"/Areas/Admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ec3f3443c11c588e3ab8c7317f68ac5687d1ffad", @"/Areas/Admin/Views/_ViewImports.cshtml")]
     public class Areas_Admin_Views_Orders_Details : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<OrderViewModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "index", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -110,7 +117,7 @@ using System.Globalization;
                 <ul class=""breadcrumb-title"">
                     <li class=""breadcrumb-item"" style=""float: left;"">
                         ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da8465", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da8691", async() => {
                 WriteLiteral(" <i class=\"feather icon-home\"></i> ");
             }
             );
@@ -145,7 +152,7 @@ using System.Globalization;
                 <div class=""col-6 col-lg-4"">
                     <div class=""form-group"">
                         ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da10412", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da10638", async() => {
                 WriteLiteral("Sifariş nömrəsi");
             }
             );
@@ -187,7 +194,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_LabelTagHelper.For = ModelExpressionProvid
 #line hidden
 #nullable disable
             WriteLiteral("                        <div class=\"col-12 col-lg-4\">\r\n                            <div class=\"form-group\">\r\n                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da12905", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da13131", async() => {
                 WriteLiteral("Elektron Poçt");
             }
             );
@@ -228,7 +235,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_LabelTagHelper.For = ModelExpressionProvid
 #line hidden
 #nullable disable
             WriteLiteral("                <div class=\"col-6 col-lg-4\">\r\n                    <div class=\"form-group\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da15277", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da15503", async() => {
                 WriteLiteral("Sifariş vaxtı");
             }
             );
@@ -259,7 +266,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_LabelTagHelper.For = ModelExpressionProvid
 #line hidden
 #nullable disable
             WriteLiteral("</p>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-6 col-lg-4\">\r\n                    <div class=\"form-group\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da17479", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da17705", async() => {
                 WriteLiteral("İnzibati Ərazi");
             }
             );
@@ -290,7 +297,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_LabelTagHelper.For = ModelExpressionProvid
 #line hidden
 #nullable disable
             WriteLiteral("</p>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-6 col-lg-4\">\r\n                    <div class=\"form-group\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da19616", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da19842", async() => {
                 WriteLiteral("Ünvan");
             }
             );
@@ -321,7 +328,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_LabelTagHelper.For = ModelExpressionProvid
 #line hidden
 #nullable disable
             WriteLiteral("</p>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-6 col-lg-4\">\r\n                    <div class=\"form-group\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da21738", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da21964", async() => {
                 WriteLiteral("Əlaqə Nömrəsi");
             }
             );
@@ -352,7 +359,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_LabelTagHelper.For = ModelExpressionProvid
 #line hidden
 #nullable disable
             WriteLiteral("</p>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-6 col-lg-4\">\r\n                    <div class=\"form-group\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da23874", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da24100", async() => {
                 WriteLiteral("Poçt kodu (İndeksi)");
             }
             );
@@ -422,9 +429,9 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_LabelTagHelper.For = ModelExpressionProvid
 #line hidden
 #nullable disable
             WriteLiteral("                                    <tr>\r\n                                        <td class=\"product-thumbnail d-flex justify-content-center\">\r\n                                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da28066", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da28292", async() => {
                 WriteLiteral("\r\n                                                <figure>\r\n                                                    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "2b9bb7f9418ac5fa4608ee691d02361dde3692da28434", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "2b9bb7f9418ac5fa4608ee691d02361dde3692da28660", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -491,7 +498,7 @@ AddHtmlAttributeValue("", 5712, product.Name, 5712, 13, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                        </td>\r\n                                        <td class=\"product-name text-center\">\r\n                                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da33327", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da33553", async() => {
 #nullable restore
 #line 117 "C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\Areas\Admin\Views\Orders\Details.cshtml"
                                                                                                                             Write(product.Name);
@@ -586,7 +593,7 @@ AddHtmlAttributeValue("", 5712, product.Name, 5712, 13, false);
 #line hidden
 #nullable disable
             WriteLiteral(" ₼</span>\r\n                                        </td>\r\n                                        <td class=\"product-add-to-cart\">\r\n                                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da39748", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da39974", async() => {
                 WriteLiteral("<span>Detallı</span>");
             }
             );
@@ -655,7 +662,7 @@ AddHtmlAttributeValue("", 5712, product.Name, 5712, 13, false);
 #line hidden
 #nullable disable
             WriteLiteral("₼</span>\r\n                            </td>\r\n                        </tr>\r\n                    </tfoot>\r\n                </table>\r\n            </div>\r\n\r\n        </div>\r\n        <div class=\"form-group\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da44449", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b9bb7f9418ac5fa4608ee691d02361dde3692da44675", async() => {
                 WriteLiteral("<i class=\"icofont-arrow-left\"></i>");
             }
             );

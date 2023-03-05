@@ -303,3 +303,13 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlans
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.AccountPage.AccountPage.resources
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.AccountPage.AccountPage.en.resources
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.AccountPage.AccountPage.ru.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.ShopPage.ShopPage.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.ShopPage.ShopPage.en.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.ShopPage.ShopPage.ru.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Sliders\Create.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Sliders\Details.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Sliders\Edit.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Razor\Areas\Admin\Views\Sliders\Index.cshtml.g.cs
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.HomePage.HomePage.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.HomePage.HomePage.ru.resources
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Debug\net5.0\Firlansa.WebUI.AppCode.Resources.UserUI.HomePage.HomePage.en.resources

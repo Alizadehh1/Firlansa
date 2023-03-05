@@ -12,9 +12,7 @@
         if (Model.Item2.Length != 0)
         {
             <div class="step-by pr-4 pl-4">
-                <h3 class="title title-simple title-step active"><a href="cart.html">1. Shopping Cart</a></h3>
-                <h3 class="title title-simple title-step"><a href="checkout.html">2. Checkout</a></h3>
-                <h3 class="title title-simple title-step"><a href="order.html">3. Order Complete</a></h3>
+                <h3 class="title title-simple title-step active"><a href="cart.html">@ShopPage.Shopping_Cart</a></h3>
             </div>
         }
     }
@@ -26,7 +24,7 @@
                     {
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <i class="emptyBasket fa-solid fa-cart-shopping"></i>
-                            <h1 class="emptyBasketText">Səbətiniz Boşdur</h1>
+                            <h1 class="emptyBasketText">@ShopPage.Your_cart_is_empty</h1>
                         </div>
                     }
                 </div>
@@ -38,13 +36,13 @@
                         <table class="shop-table cart-table shipping">
                             <thead>
                                 <tr>
-                                    <th><span>Məhsul</span></th>
-                                    <th>Ad</th>
-                                    <th>Rəng</th>
-                                    <th>Ölçü</th>
-                                    <th>Qiymət</th>
-                                    <th style="text-align:center;">Ədəd</th>
-                                    <th>Yekun</th>
+                                    <th><span>@AccountPage.Product</span></th>
+                                    <th>@AccountPage.Name</th>
+                                    <th>@AccountPage.Color</th>
+                                    <th>@AccountPage.Size</th>
+                                    <th>@AccountPage.Price</th>
+                                    <th style="text-align:center;">@AccountPage.Number</th>
+                                    <th>@AccountPage.Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,8 +100,7 @@
                     }
                 }
                 <div class="cart-actions mb-6 pt-4">
-                    <a asp-action="index" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4"><i class="d-icon-arrow-left"></i>Alış-Verİşə davam et</a>
-                    <button type="submit" class="btn btn-outline btn-dark btn-md btn-rounded btn-disabled">Update Cart</button>
+                    <a asp-action="index" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4"><i class="d-icon-arrow-left"></i>@ShopPage.Continue_shopping</a>
                 </div>
             </div>
             @if (Model.Item2 != null)
@@ -114,11 +111,11 @@
                     <aside class="col-lg-4 sticky-sidebar-wrapper">
                         <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
                             <div id="placingOrder" class="summary mb-4">
-                                <h3 class="summary-title text-left">Səbət Ümumi</h3>
+                                <h3 class="summary-title text-left">@AccountPage.Total</h3>
                                 <table class="shipping">
                                     <tr class="summary-subtotal">
                                         <td>
-                                            <h4 class="summary-subtitle">Ümumi qiymət</h4>
+                                            <h4 class="summary-subtitle">@AccountPage.Total</h4>
                                         </td>
                                         <td>
                                             <p class="summary-subtotal-price">0₼</p>
@@ -126,33 +123,33 @@
                                     </tr>
                                     <tr class="sumnary-shipping shipping-row-last">
                                         <td colspan="2">
-                                            <h4 class="summary-subtitle">Çatdırılma hesablanması</h4>
+                                            <h4 class="summary-subtitle">@AccountPage.Delivery_amount</h4>
                                         </td>
                                     </tr>
                                 </table>
                                 <div class="shipping-address">
-                                    <label><strong>Ölkə</strong> daxili çatdırılma mövcuddur.</label>
+                                    <label>@ShopPage.Local_delivery_available_</label>
                                     <div style="margin-bottom:15px;">
                                         <select onchange="setShippingPrice()" name="districts" class="form-control select2" asp-items="Model.Item5">
-                                            <option selected disabled>---İnzibati ərazini seçin---</option>
+                                            <option selected disabled>---@ShopPage.Select_the_administrative_area---</option>
                                         </select>
                                     </div>
-                                    <input id="locationInput" type="text" required class="form-control" name="code" placeholder="Çatdırılma ünvanı*" />
-                                    <input id="mobileInput" type="number" class="form-control" name="code" placeholder="Əlaqə nömrəsi*" />
-                                    <input id="postCodeInput" type="text" class="form-control" name="code" placeholder="Poçt kodu (İndeksi)*" />
-                                    <span>Zəhmət olmasa məlumatları düzgün daxil edin, əks halda çatdırılma baş verməyəcək.</span>
+                                    <input id="locationInput" type="text" required class="form-control" name="code" placeholder="@ShopPage.Delivery_address*" />
+                                    <input id="mobileInput" type="number" class="form-control" name="code" placeholder="@ContactForm.Phone_Number*" />
+                                    <input id="postCodeInput" type="text" class="form-control" name="code" placeholder="@ShopPage.Postal_Code__Index_*" />
+                                    <span>@ShopPage.Please_enter_the_information_correctly__otherwise_the_delivery_will_not_take_place</span>
                                 </div>
                                 <table class="total">
                                     <tr class="summary-subtotal">
                                         <td>
-                                            <h4 class="summary-subtitle">Çatdırılma ilə Cəmi</h4>
+                                            <h4 class="summary-subtitle">@AccountPage.The_total_amount_of_the_order_with_delivery</h4>
                                         </td>
                                         <td>
                                             <p class="summary-total-price ls-s">0</p>
                                         </td>
                                     </tr>
                                 </table>
-                                <button id="placeOrderBtn" onclick="placeOrder()" class="btn btn-dark btn-rounded btn-checkout">Sifarişi tamamla</button>
+                                <button id="placeOrderBtn" onclick="placeOrder()" class="btn btn-dark btn-rounded btn-checkout">@ShopPage.Complete_the_order</button>
                             </div>
                         </div>
                     </aside>
@@ -227,7 +224,7 @@
             var iTag = $('<i>', {
                 class: 'emptyBasket fa-solid fa-cart-shopping'
             });
-            var h1Tag = $('<h1>').text("Səbətiniz Boşdur").addClass("emptyBasketText");
+            var h1Tag = $('<h1>').text("@ShopPage.Your_cart_is_empty").addClass("emptyBasketText");
             let divTag = $('div.emptyBasketContainer');
 
             $('div.step-by').remove();
@@ -426,7 +423,7 @@
                     }
                     toastr.error("Uğursuz", response.message);
                     return;
-                    
+
                 },
                 error: function (response) {
                     $(btn).removeAttr('disable');

@@ -1291,7 +1291,6 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTm
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\admin\files\assets\pages\x-editable\js\tm_validator.js
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\admin\files\assets\pages\x-editable\js\xeditable.js
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\admin\files\assets\scss\partials\menu\_pcmenu.html
-C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\admin\files\bower_components.rar
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\admin\files\extra-pages\404\1\css\bootstrap.min.css
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\admin\files\extra-pages\404\1\css\font-awesome.min.css
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\admin\files\extra-pages\404\1\css\overlays\02.png
@@ -1693,6 +1692,7 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTm
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\instagram\7.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\instagram\8.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\instagram\9.jpg
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\loadingGif.gif
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\logo-footer.png
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\logo.png
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\assets\images\menu\banner-1.jpg
@@ -2278,6 +2278,10 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTm
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-e84a6d43-ab2f-4e65-bfeb-ed762597516e.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-f228b219-59d8-42ce-9325-57938e3d0a3d.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-f9320ec4-a8aa-4e51-a9f9-4de7bfb6d392.jpg
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\slider-a3b643f4-6aba-4b94-8e59-0b8ea5985635.jpg
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\slider-da9b6fba-1a24-4101-b409-48dcca33459b.jpg
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\slider-ddfec072-91d0-4a10-b271-8b8afb716026.jpg
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\slider-f15eaf4c-f6bb-4f70-a4c3-cb9dca74fe26.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\appsettings.Development.json
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\appsettings.json
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\libman.json

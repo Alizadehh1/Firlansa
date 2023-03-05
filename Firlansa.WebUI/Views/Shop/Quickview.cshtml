@@ -1,6 +1,6 @@
 ﻿@model ShopViewModel
 @{
-    var linkTiktok = "https://www.tiktok.com/@firlansa.baku";
+    var linkTiktok = "https://www.tiktok.com/@firlansa.baku1";
     Layout = null;
 }
 <div class="product product-single row product-popup">
@@ -25,7 +25,7 @@
         <div class="product-details scrollable pr-0 pr-md-3">
             <h1 class="product-name mt-0">@Model.Product.Name</h1>
             <div class="product-meta">
-                Kateqoriya: <span class="product-brand">@Model.Product.Category.Name</span>
+                @ShopPage.Category: <span class="product-brand">@Model.Product.Category.Name</span>
             </div>
             <div class="product-price">
                 <ins class="new-price">@Model.Product.Price&#8380;</ins><del class="old-price">@(Model.Product.OldPrice != null ? Model.Product.OldPrice + "₼" : null)</del>
@@ -35,7 +35,7 @@
             </p>
 
             <div class="product-form product-color">
-                <label>Rəng:</label>
+                <label>@ShopPage.Color:</label>
                 <div class="product-variations">
                     @foreach (var color in Model.Colors)
                     {
@@ -47,7 +47,7 @@
             @foreach (var color in Model.Colors)
             {
                 <div data-entity-id="@color.Id" style="display:none;" class="product-form product-size">
-                    <label>Size:</label>
+                    <label>@ShopPage.Size:</label>
                     <div class="product-form-group">
                         <div class="product-variations">
                             @foreach (var size in Model.ProductSpecifications.Where(ps => ps.ColorId == color.Id))
@@ -76,10 +76,10 @@
                         <button class="quantity-plus d-icon-plus"></button>
                     </div>
                     <button id="btnCart" data-item-id="@Model.Product.Id" onclick="addToCart(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
-                        <i class="d-icon-bag"></i>Səbətə əlavə et
+                        <i class="d-icon-bag"></i>@ShopPage.Add_to_Basket
                     </button>
                     <button style="background-color: #F27A1A;color:white;display:none;" id="btnNotify" data-item-id="@Model.Product.Id" onclick="addToNotify(event)" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
-                        <i class="fa-solid fa-bell"></i>Gələndə xəbər et
+                        <i class="fa-solid fa-bell"></i>@ShopPage.Add_to_Notification
                     </button>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                     <a href="@linkTiktok" class="social-link social-tiktok fa-brands fa-tiktok"></a>
                 </div>
                 <a style="cursor:pointer;" onclick="addToWishlist(event,@Model.Product.Id)" class="btn-product btn-wishlist mr-6">
-                    <i class="d-icon-heart"></i>Seçilmişlərə əlavə et
+                    <i class="d-icon-heart"></i>@ShopPage.Add_to_Wishlist
                 </a>
             </div>
         </div>

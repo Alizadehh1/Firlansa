@@ -1,13 +1,15 @@
 ﻿@model ShopViewModel
 @{
-    ViewData["Title"] = "SearchInput";
+    ViewData["Title"] = "Index";
+    int? userId = Convert.ToInt32(User.GetUserId());
+    if (userId == null)
+        userId = 0;
 }
-
 <nav class="breadcrumb-nav">
     <div class="container">
         <ul class="breadcrumb">
             <li><a asp-controller="home" asp-action="index"><i class="d-icon-home"></i></a></li>
-            <li>Məhsullar</li>
+            <li>@ShopPage.Products</li>
         </ul>
     </div>
 </nav>
@@ -21,11 +23,11 @@
                 <div class="sidebar-content">
                     <div class="sticky-sidebar">
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Kateqoriyalar</h3>
+                            <h3 class="widget-title">@ShopPage.Categories</h3>
                             @Extension.GetCategoriesRaw(Model.Categories)
                         </div>
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Ölçü</h3>
+                            <h3 class="widget-title">@ShopPage.Size</h3>
                             <ul class="widget-body filter-items" data-entity-name="sizes">
                                 @foreach (var size in Model.Sizes)
                                 {
@@ -36,7 +38,7 @@
                             </ul>
                         </div>
                         <div class="widget widget-collapsible">
-                            <h3 class="widget-title">Rəng</h3>
+                            <h3 class="widget-title">@ShopPage.Color</h3>
                             <ul class="widget-body filter-items" data-entity-name="colors">
                                 @foreach (var color in Model.Colors)
                                 {
@@ -51,75 +53,42 @@
             </aside>
             <div class="col-lg-9 main-content">
                 <div class="shop-banner-default banner mb-1"
-                     style="background-image: url('./assets/images/shop/banner.jpg'); background-color: #4e6582;">
+                     style="background-image: url('/assets/images/shop/banner.jpg'); background-color: #4e6582;">
                     <div class="banner-content">
                         <h4 class="banner-subtitle font-weight-bold ls-normal text-uppercase text-white">
-                            Firlansa Shop
+                            Firlansa
                         </h4>
-                        <h1 class="banner-title font-weight-bold text-white">Banner with Sidebar</h1>
+                        <h1 class="banner-title font-weight-bold text-white">@AboutPage.Online_Clothing_Store</h1>
                         <a href="#" class="btn btn-white btn-outline btn-icon-right btn-rounded text-normal">
-                            Discover
-                            now<i class="d-icon-arrow-right"></i>
+                            @ShopPage.Discover_now<i class="d-icon-arrow-right"></i>
                         </a>
                     </div>
                 </div>
-                <nav class="toolbox sticky-toolbox sticky-content fix-top">
-                    <div class="toolbox-left">
-                        <div class="toolbox-item toolbox-sort select-box text-dark">
-                            <label>Sort By :</label>
-                            <select name="orderby" class="form-control">
-                                <option value="default">Default</option>
-                                <option value="popularity" selected="selected">Most Popular</option>
-                                <option value="rating">Average rating</option>
-                                <option value="date">Latest</option>
-                                <option value="price-low">Sort forward price low</option>
-                                <option value="price-high">Sort forward price high</option>
-                                <option value="">Clear custom sort</option>
-                            </select>
-                        </div>
-                    </div>
+                <nav class="toolbox sticky-toolbox sticky-content fix-top justify-content-end">
                     <div class="toolbox-right">
-                        <div class="toolbox-item toolbox-show select-box text-dark">
-                            <label>Show :</label>
-                            <select name="count" class="form-control">
-                                <option value="12">12</option>
-                                <option value="24">24</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
                         <div class="toolbox-item toolbox-layout">
+                            <label>@ShopPage.Layout :</label>
                             <a href="#product-list" data-container-class="products-wrapper product-lists" class="d-icon-mode-list btn-layout"></a>
                             <a href="#product-wrap" data-container-class="products-wrapper" class="d-icon-mode-grid btn-layout active"></a>
                         </div>
                     </div>
                 </nav>
                 <div id="productContainer" class="products-wrapper">
-                    <partial name="_ProductContainer" model="@Model.Products">
+                    <partial name="_ProductContainer" model="@Model.PagedViewModel.Items">
                 </div>
                 <div id="loaderImg" class="text-center">
-                    <img src="https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b9523ty8t2fgeq7tx5ii5bkg6zwx9a2w0kwsta3n9vwm&rid=200w.gif&ct=g" alt="loading..." />
+                    <img src="~/assets/images/loadingGif.gif" alt="loading..." />
                 </div>
-                <nav class="toolbox toolbox-pagination">
-                    <p class="show-info">Showing 12 of 56 Products</p>
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1"
-                               aria-disabled="true">
-                                <i class="d-icon-arrow-left"></i>Prev
-                            </a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item page-item-dots"><a class="page-link" href="#">6</a></li>
-                        <li class="page-item">
-                            <a class="page-link page-link-next" href="#" aria-label="Next">
-                                Next<i class="d-icon-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
+                <nav class="toolbox toolbox-pagination mb-0 pb-0">
+                    @if (@Model.PagedViewModel.Items.Count() == 0)
+                    {
+                        <p class="show-info">@ShopPage.There_is_no_product</p>
+                    }
+                    else
+                    {
+                        <p class="show-info">@Model.PagedViewModel.Items.Count() məhsuldan @((Model.PagedViewModel.Items.Count() < 12) ? $"{Model.PagedViewModel.Items.Count()}" : "12") məhsul göstərilir</p>
+                    }
+                    @Model.PagedViewModel.GetPagenation(Url, "Index")
                 </nav>
             </div>
         </div>
@@ -127,7 +96,7 @@
 </div>
 @section css{
     <link rel="stylesheet" type="text/css" href="~/assets/css/style.min.css">
-    <link href="~/assets/css/product-style.css" rel="stylesheet" />
+    <link href="~/assets/css/product-style.css" rel="stylesheet" type="text/css" />
 }
 @section js{
     <script>
@@ -145,28 +114,26 @@
 
                 $(container).attr('class', data.containerClass)
 
-                $(container).find('.product').each(function (index,item) {
+                $(container).find('.product').each(function (index, item) {
                     const actionContainer = $(item).find('.product-action');
                     const verticalAction = $(item).find('.product-action-vertical');
-
+                    const itemId = $(item).find('figure.product-media').data().entityId;
+                    console.log(itemId);
                     if (isListLayout) {
                         verticalAction.removeClass('product-action-vertical').addClass('product-action');
                         verticalAction.append(actionContainer.html())
                         $(item).find('.product-details').append(verticalAction);
-                        $('figure.product-media .product-action').css("display","none");
+                        $('figure.product-media .product-action').css("display", "none");
                     }
                     else {
                         $('.product-details .product-action').css("display", "none");
                         console.log('salam')
                         let verticalActionDiv = $('<div>', {
                             class: 'product-action-vertical',
-                            html: `<a href="#" class="btn-product-icon btn-cart" title="Add to cart">
-                    <i class="d-icon-bag"></i>
-                    <label>Add to cart</label>
-                </a>
-                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist">
+                            html: `
+                <button style="cursor:pointer;" onclick="addToWishlist(event,${itemId})" class="btn-product-icon btn-wishlist" title="Add to wishlist">
                     <i class="d-icon-heart"></i>
-                </a>`
+                </button>`
                         });
                         console.log(verticalActionDiv);
                         $('figure.product-media .product-action').css("display", "flex");
@@ -175,8 +142,106 @@
                 })
 
             })
+        });
 
-        })
+        //let color = $('.product-color .product-variations a.color');
+        //color.click()
+
+        function determineAddOrNotify(item) {
+            $('.product-size').css('display', 'none');
+            $('.product-size .product-variations a.active').removeClass('active');
+            if (!$(item.currentTarget).hasClass('active')) {
+                let colorId = $(item.currentTarget).data("color-id");
+                $('.product-size').each(function (index, item) {
+                    if ($(item).data('entity-id') == colorId)
+                        $(item).css('display', 'flex');
+                    let size = $('.product-size .product-variations a.size');
+
+                    size.click(function (item) {
+                        if ($(item.currentTarget).hasClass('active')) {
+                            if ($(item.currentTarget).hasClass('soldOut')) {
+                                $('#btnCart').css("display", "none");
+                                $('#btnNotify').css("display", "flex");
+                                $('#btnNotify').removeAttr('disabled');
+                            }
+                            else {
+                                $('#btnNotify').css("display", "none");
+                                $('#btnCart').css("display", "flex");
+                                $('#btnCart').removeAttr('disabled');
+                            }
+                        }
+                    })
+                });
+            }
+            else {
+                $('.product-size').css('display', 'none');
+            }
+        }
+
+        function addToNotify(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            let data = $(ev.currentTarget).data();
+            let colors = document.querySelectorAll('.color');
+            let color;
+            let size;
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].getAttribute('class') == 'color active') {
+                    color = $(colors[i]).data();
+                }
+            }
+            let sizes = document.querySelectorAll('.size');
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].getAttribute('class') == 'size soldOut active') {
+                    size = $(sizes[i]).data();
+                }
+            }
+            let activeSpecs = $('.product-variations a.active');
+            if (color == undefined) {
+                toastr.warning("Məhsulun rəngini seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (size == undefined) {
+                toastr.warning("Məhsulun ölçüsünü seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            else if (activeSpecs.length != 2) {
+                toastr.warning("Məhsulun rəngini və ölçüsünü düzgün seçin zəhmət olmasa!", "Uğursuz");
+                return;
+            }
+            addToNotification(data.itemId, color.colorId, size.sizeId);
+        }
+        function addToNotification(cardId, cardColor, cardSize) {
+            if (@userId == 0) {
+                toastr.warning("Bu funksiyadan istifadə etmək üçün zəhmət olmasa giriş edin!", "Uğursuz");
+                return;
+            }
+            else {
+                let items = [];
+                items.push(cardId, cardColor, cardSize,@User.GetUserId());
+                console.log(items);
+                $.ajax({
+                    url: `@Url.Action("Notification")`,
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(items),
+                    success: function (response) {
+                        if (response.error == true) {
+                            toastr.error(response.message, "Uğursuz!");
+                            return;
+                        }
+                        toastr.success("Bildirişlərə uğurla əlavə edildi", response.message)
+                    },
+                    error: function (response) {
+                        toastr["error"]("Uğursuz!", response.message)
+                    }
+                })
+            }
+        }
 
         function specificationsDetermine(e) {
             console.log("salam")
@@ -201,8 +266,40 @@
             else {
                 $('.product-size').css('display', 'none');
             }
+            determineAddOrNotify(e);
         }
+        function addToWishlist(ev,productId) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            addToCookie(productId);
 
+            console.log(readFromCookie())
+        }
+        function readFromCookie() {
+            return ($.cookie('cardsForWishlist') || '').split(',');
+        }
+        function addToCookie(cardId) {
+            let items = readFromCookie();
+            let length = items.filter(item => item == cardId).length;
+            if (length > 0) {
+                toastr.warning("Bu məhsulu artıq seçilmişlərə əlavə etmisiniz!", "Uğursuz");
+                return;
+            }
+            items.push(cardId);
+            $.cookie('cardsForWishlist', items.toString(), { expires: 7, path: '/' });
+            $.ajax({
+                success: function (response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Error!");
+                        return;
+                    }
+                    toastr.success("Uğurla seçilmişlərə əlavə edildi", response.message)
+                },
+                error: function (response) {
+                    toastr["error"]("Uğursuz", "Əlavə edilmədi")
+                }
+            })
+        }
         function addToCart(ev) {
             ev.preventDefault();
             ev.stopPropagation();
@@ -275,7 +372,7 @@
             let name = t.find(".product-name").text();
             let link = `/shop/details/${cardId}`;
             let imageSrc = t.find("figure.main img").attr("src");
-            let price = t.find("div.product-price").html();
+            let price = parseFloat(t.find("div.product-price ins.new-price").html());
             let count = t.find(".quantity").length > 0 ? t.find(".quantity").val() : 1;
             let miniBasket = $('#basketProducts');
             let cartActionContainer = $('div.cart-action');
@@ -285,15 +382,16 @@
             if (subTotalPrice.length == 0) {
                 let productsCart = $('div#basketProducts div.product-cart');
                 if (productsCart.length == 0) {
-                    totalPrice = parseFloat(price) * count;
+                    totalPrice = price * count;
                 }
             }
             else {
-                let previousTotalPrice = subTotalPrice.text();
-                totalPrice =
-                    (previousTotalPrice) + (parseFloat(price) * count);
-                subTotalPrice.text(totalPrice);
+                let previousTotalPrice = parseFloat(subTotalPrice.text());
+                totalPrice = previousTotalPrice + (price * count);
+                subTotalPrice.text(totalPrice.toFixed(2));
             }
+
+            totalPrice = totalPrice.toFixed(2);
             console.log(totalPrice);
             //let prices = $('div.cart-total span.price');
             //let subTotalPriceExistThisProduct = 0;

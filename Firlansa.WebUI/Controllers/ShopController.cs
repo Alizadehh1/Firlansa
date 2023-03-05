@@ -380,7 +380,7 @@ namespace Firlansa.WebUI.Controllers
             await db.SaveChangesAsync();
 
             string routeUrl = $"{Url.Action("CompleteOrder")}/{newOrder.Id}";
-            string approveUrl = $"https://localhost:44379/{routeUrl}";
+            string approveUrl = $"https://firlansa.com/{routeUrl}";
 
 
             var client = new RestClient("https://api.payriff.com/api/v2/createOrder");
@@ -394,7 +394,7 @@ namespace Firlansa.WebUI.Controllers
             @"        ""description"": ""Example""," + "\n" +
             @"        ""language"": ""AZ""," + "\n" +
             @$"        ""approveURL"": ""{approveUrl}""," + "\n" +
-            @"        ""cancelURL"": ""https://localhost:44379/shop/basket""," + "\n" +
+            @"        ""cancelURL"": ""https://firlansa.com/shop/basket""," + "\n" +
             @"        ""declineURL"": ""https://decline,com""" + "\n" +
             @"    }," + "\n" +
             @"    ""merchant"": ""ES1091628""" + "\n" +
@@ -410,7 +410,7 @@ namespace Firlansa.WebUI.Controllers
 
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Search(string query)
+        public async Task<IActionResult> Search(string query, int pageIndex = 1, int pageSize = 12)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -427,15 +427,15 @@ namespace Firlansa.WebUI.Controllers
             model.Sizes = await db.Sizes
                 .Where(s => s.DeletedById == null)
                 .ToListAsync();
-            model.Products = await db.Products
-                .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
-                .Include(p => p.Category)
-                .Where(p => p.DeletedById == null && p.Name.ToLower().Contains(query.ToLower())
-                || p.Description.ToLower().Contains(query.ToLower())
-                || p.ShortDescription.ToLower().Contains(query.ToLower())
-                || p.Price.ToString().ToLower().Contains(query.ToLower())
-                || p.Category.Name.ToLower().Contains(query.ToLower()))
-                .ToListAsync();
+            var data = db.Products
+                 .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
+                 .Include(p => p.Category)
+                 .Where(p => p.DeletedById == null && p.Name.ToLower().Contains(query.ToLower())
+                 || p.Description.ToLower().Contains(query.ToLower())
+                 || p.ShortDescription.ToLower().Contains(query.ToLower())
+                 || p.Price.ToString().ToLower().Contains(query.ToLower())
+                 || p.Category.Name.ToLower().Contains(query.ToLower()));
+            model.PagedViewModel = new PagedViewModel<Product>(data, pageIndex, pageSize);
             return View(model);
         }
 

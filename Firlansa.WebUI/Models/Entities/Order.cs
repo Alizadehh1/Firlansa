@@ -18,7 +18,7 @@ namespace Firlansa.WebUI.Models.Entities
         public string PhoneNumber { get; set; }
         public string PostCode { get; set; }
         public string OrderStatus { get; set; }
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
         public string SessionId { get; set; }
         public virtual List<OrderItem> OrderItems { get; set; }
     }

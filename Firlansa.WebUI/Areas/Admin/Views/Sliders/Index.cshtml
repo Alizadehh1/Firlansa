@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Slider>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>List Of Sliders</h4>
+                    @*<span>
+                            lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit
+                        </span>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index" asp-controller="dashboard"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a href="#!">Sliders</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card">
+        <div class="card-header">
+            <h5>Sliders</h5>
+        </div>
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th class="actionBtns">
+                                <a asp-action="Create"><button class="btn btn-success btn-icon"><i class="icofont-plus"></i></button></a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr data-entity-id="@item.Id">
+                                <td>
+                                    <img class="image" src="~/uploads/images/@item.ImagePath" />
+                                </td>
+                                <td class="actionBtns">
+                                    <a asp-action="Edit" asp-route-id="@item.Id"><button class="btn btn-warning btn-icon"><i class="icofont-pencil-alt-5"></i></button></a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id"><button class="btn btn-info btn-icon"><i class="icofont icofont-eye-alt"></i></button></a> |
+                                    <a onclick="removeEntity(event,@item.Id, '@item.ImagePath')" class="btn btn-danger btn-icon">
+                                        <i class="icofont-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script>
+        function removeEntity(ev, entityId, name) {
+            swal({
+                title: "Are you sure?",
+                text: `${name} will be deleted, Are you sure?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: `@Url.Action("Delete")/${entityId}`,
+                            type: 'post',
+                            success: function (response) {
+                                if (response.error==true) {
+                                    toastr.error(response.message, "Error!");
+                                    return;
+                                }
+                                toastr.success("Successfully", response.message)
+                                $(`tr[data-entity-id=${entityId}]`).remove();
+                            },
+                            error: function (response) {
+                                //toastr["error"]("Unsuccessfully", "Data has not been deleted")
+                            }
+                        })
+                    }
+                });
+        }
+    </script>
+}
