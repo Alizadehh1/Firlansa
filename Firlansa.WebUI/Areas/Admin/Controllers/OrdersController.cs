@@ -28,6 +28,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         {
             var viewModel = new OrderViewModel();
             viewModel.Orders = db.Orders
+                .Where(o => o.OrderStatus == "APPROVED")
                 .Include(o => o.OrderItems)
                 .Include(o => o.Adress)
                 .ToList()
@@ -40,30 +41,30 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         {
             var viewModel = new OrderViewModel();
             viewModel.Order = db.Orders
-                .Include(o=>o.Adress)
+                .Include(o => o.Adress)
                 .Include(o => o.OrderItems)
-                .ThenInclude(oi=>oi.Product)
-                .FirstOrDefault(o => o.Id == id);
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefault(o => o.Id == id && o.OrderStatus == "APPROVED");
             viewModel.Orders = db.Orders
-                .Where(o => o.Id == id)
+                .Where(o => o.Id == id && o.OrderStatus == "APPROVED")
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
                 .ToList()
                 .OrderByDescending(o => o.CreatedDated);
             viewModel.Products = db.Products
                 .Where(p => p.DeletedById == null)
-                .Include(p=>p.Specifications)
-                .ThenInclude(s=>s.Size)
                 .Include(p => p.Specifications)
-                .ThenInclude(s=>s.Color)
-                .Include(p=>p.Images.Where(i=>i.IsMain==true && i.DeletedById==null))
-                .Include(p=>p.Category)
+                .ThenInclude(s => s.Size)
+                .Include(p => p.Specifications)
+                .ThenInclude(s => s.Color)
+                .Include(p => p.Images.Where(i => i.IsMain == true && i.DeletedById == null))
+                .Include(p => p.Category)
                 .ToList();
             viewModel.Users = db.Users.ToList();
             double totalAmount = 0;
             foreach (var orderItem in db.OrderItems)
             {
-                if (orderItem.OrderId==id)
+                if (orderItem.OrderId == id)
                 {
                     totalAmount += orderItem.Product.Price * orderItem.Quantity;
                 }

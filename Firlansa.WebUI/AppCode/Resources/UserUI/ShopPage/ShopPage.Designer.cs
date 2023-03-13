@@ -323,7 +323,7 @@ namespace Recources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Səbətiniz Boşdur.
+        ///   Looks up a localized string similar to Sebetiniz Bosdur.
         /// </summary>
         public static string Your_cart_is_empty {
             get {

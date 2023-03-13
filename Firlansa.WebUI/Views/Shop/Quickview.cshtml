@@ -40,7 +40,7 @@
                     @foreach (var color in Model.Colors)
                     {
                         <a onclick="specificationsDetermine(event)" class="color" data-color-id="@color.Id" data-src="~/assets/images/demos/demo7/products/big1.jpg" href="#"
-                           style="background-color: @color.HexCode">@(color.Name == "Ağ" || color.Name == "Ag" || color.Name == "White" ? color.Name : "")</a>
+                           style="background-color: @color.HexCode">@(color.Name == "Ağ" || color.Name == "Ag" || color.Name == "ag" || color.Name == "White" ? color.Name : "")</a>
                     }
                 </div>
             </div>

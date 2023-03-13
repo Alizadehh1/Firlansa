@@ -30,6 +30,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             this.configuration = configuration;
             this.userManager = userManager;
         }
+        [Authorize(Policy = "admin.productstatuses.index")]
         public async Task<IActionResult> Index()
         {
             var viewModel = new ProductStatusViewModel();

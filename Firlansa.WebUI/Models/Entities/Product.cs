@@ -19,6 +19,7 @@ namespace Firlansa.WebUI.Models.Entities
         public double? OldPrice { get; set; }
         public string Description { get; set; }
         public string ForSearch { get; set; }
+        public string Slug { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
         public virtual ICollection<ProductSpecification> Specifications { get; set; }
         public virtual ICollection<ProductStatus> Statuses { get; set; }

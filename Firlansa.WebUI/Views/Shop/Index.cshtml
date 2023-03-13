@@ -395,7 +395,7 @@
             let name = t.find(".product-name").text();
             let link = `/shop/details/${cardId}`;
             let imageSrc = t.find("figure.main img").attr("src");
-            let price = parseFloat(t.find("div.product-price ins.new-price").html());
+            let price = parseFloat(t.find("div.product-price ins.new-price").html().replace(",", "."));
             let count = t.find(".quantity").length > 0 ? t.find(".quantity").val() : 1;
             let miniBasket = $('#basketProducts');
             let cartActionContainer = $('div.cart-action');
@@ -431,7 +431,7 @@
                                                                  height="88" />
                                                 </a>
                                                 <button onclick="removeEntity1(${cardId},${cardColor},${cardSize},${cardQty},event)" class="btn btn-link btn-close">
-                                                    <i class="fas fa-times"></i><span class="sr-only">Bağla</span>
+                                                    <i class="fas fa-times"></i><span class="sr-only">@ShopPage.Close</span>
                                                 </button>
                                             </figure>
                                             <div class="product-detail">
@@ -444,10 +444,9 @@
                                         </div>
 `
 
-            let cartTotal = `<label>Cəmi:</label>
+            let cartTotal = `<label>@AccountPage.Total:</label>
                                 <span class="price">${totalPrice}</span><span>&#8380;</span>`
-            let cartAction = `<a href="/shop/basket" class="btn btn-dark btn-link">Səbətə bax</a>
-                                <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>`
+            let cartAction = `<a href="/shop/basket" class="btn btn-dark btn-link">@ShopPage.Go_to_Basket</a>`
 
             $.ajax({
 

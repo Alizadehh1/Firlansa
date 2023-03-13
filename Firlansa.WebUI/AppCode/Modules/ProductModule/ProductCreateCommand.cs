@@ -52,7 +52,7 @@ namespace Firlansa.WebUI.AppCode.Modules.ProductModule
                 product.Price = request.Price;
                 product.OldPrice = request.OldPrice;
                 product.ForSearch = request.Name;
-
+                product.Slug = request.Name.ToSlug();
 
                 if (request.Images != null && request.Images.Any(i => i.File != null))
                 {

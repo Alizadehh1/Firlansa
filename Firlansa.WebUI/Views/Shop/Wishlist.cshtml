@@ -36,7 +36,7 @@
                         var imagePath = product.Images.FirstOrDefault().ImagePath;
                         <tr id="entityTr" data-entity-id="@product.Id">
                             <td class="product-thumbnail">
-                                <a asp-action="details" asp-route-id="@product.Id">
+                                <a asp-action="details" asp-route-slug="@product.Slug">
                                     <figure>
                                         <img src="~/uploads/images/@imagePath" width="100" height="100"
                                              alt="@product.Name">
@@ -44,7 +44,7 @@
                                 </a>
                             </td>
                             <td class="product-name">
-                                <a asp-action="details" asp-route-id="@product.Id">@product.Name</a>
+                                <a asp-action="details" asp-route-slug="@product.Slug">@product.Name</a>
                             </td>
                             <td class="product-price">
                                 <span class="amount">@product.Category.Name</span>
@@ -53,7 +53,7 @@
                                 <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>
                             </td>
                             <td class="product-add-to-cart">
-                                <a asp-action="details" asp-route-id="@product.Id" class="btn-product btn-primary"><span>@ShopPage.Choose</span></a>
+                                <a asp-action="details" asp-route-slug="@product.Slug" class="btn-product btn-primary"><span>@ShopPage.Choose</span></a>
                             </td>
                             <td class="product-remove">
                                 <div>

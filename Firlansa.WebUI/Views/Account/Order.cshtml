@@ -34,7 +34,7 @@
                                 var imagePath = product.Images.FirstOrDefault(i => i.IsMain).ImagePath;
                                 <tr>
                                     <td class="product-thumbnail d-flex justify-content-center">
-                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id">
+                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-slug="@product.Slug">
                                             <figure>
                                                 <img src="~/uploads/images/@imagePath" width="100" height="100"
                                                      alt="@product.Name">
@@ -42,7 +42,7 @@
                                         </a>
                                     </td>
                                     <td class="product-name text-center">
-                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id">@product.Name</a>
+                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-slug="@product.Slug">@product.Name</a>
                                     </td>
                                     <td class="product-name text-center">
                                         <a>@Model.Order.OrderItems.FirstOrDefault().Color.Name</a>
@@ -63,7 +63,7 @@
                                         <span style="font-weight:bolder" class="amount">@(product.Price * item.Quantity) ₼</span>
                                     </td>
                                     <td class="product-add-to-cart">
-                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-id="@product.Id" class="btn-product btn-primary"><span>@AccountPage.Details</span></a>
+                                        <a asp-action="details" asp-area="" asp-controller="shop" asp-route-slug="@product.Slug" class="btn-product btn-primary"><span>@AccountPage.Details</span></a>
                                     </td>
                                 </tr>
                             }

@@ -5,7 +5,7 @@
     string imagePath = product.Images.FirstOrDefault().ImagePath;
     <div  class="product">
         <figure data-entity-id="@product.Id" class="product-media">
-            <a asp-action="details" asp-route-id="@product.Id">
+            <a asp-action="details" asp-route-slug="@product.Slug">
                 <img src="~/uploads/images/@imagePath" alt="@product.Name" width="280" height="315">
             </a>
             <div class="product-action-vertical">
@@ -18,7 +18,7 @@
                 </button>
             </div>
             <div style="top:unset;" class="product-action">
-                <a asp-action="quickview" asp-route-id="@product.Id" data-toggle="login-modal" class="btn-quickview" title="Quick View">
+                <a asp-action="quickview" asp-route-slug="@product.Slug" data-toggle="login-modal" class="btn-quickview" title="Quick View">
                     <i class="d-icon-search"></i>
                     <label>@ShopPage.Quickview</label>
                 </a>
@@ -26,10 +26,10 @@
         </figure>
         <div class="product-details">
             <div class="product-cat">
-                <a asp-action="details" asp-route-id="@product.Id">@product.Category.Name</a>
+                <a asp-action="details" asp-route-slug="@product.Slug">@product.Category.Name</a>
             </div>
             <h3 class="product-name">
-                <a asp-action="details" asp-route-id="@product.Id">@product.Name</a>
+                <a asp-action="details" asp-route-slug="@product.Slug">@product.Name</a>
             </h3>
             <div class="product-price">
                 <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>

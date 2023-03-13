@@ -44,7 +44,8 @@ namespace Firlansa.WebUI.Controllers
             var query = db.Products
                 .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
                 .Include(p => p.Category)
-                .Where(p => p.DeletedById == null);
+                .Where(p => p.DeletedById == null)
+                .OrderByDescending(P=>P.CreatedDated);
             model.PagedViewModel = new PagedViewModel<Product>(query, pageIndex, pageSize);
             return View(model);
         }
@@ -82,10 +83,12 @@ namespace Firlansa.WebUI.Controllers
             //});
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id,string slug)
         {
             var model = new ShopViewModel();
-            model.Product = await db.Products
+            if (string.IsNullOrWhiteSpace(slug))
+            {
+                model.Product = await db.Products
                 .Include(p => p.Images.Where(i => i.DeletedById == null))
                 .Include(p => p.Category)
                 .Include(p => p.Specifications.Where(s => s.DeletedById == null))
@@ -93,6 +96,17 @@ namespace Firlansa.WebUI.Controllers
                 .Include(p => p.Specifications.Where(s => s.DeletedById == null))
                 .ThenInclude(s => s.Size)
                 .FirstOrDefaultAsync(p => p.DeletedById == null && p.Id == id);
+            }
+
+            model.Product = await db.Products
+                .Include(p => p.Images.Where(i => i.DeletedById == null))
+                .Include(p => p.Category)
+                .Include(p => p.Specifications.Where(s => s.DeletedById == null))
+                .ThenInclude(s => s.Color)
+                .Include(p => p.Specifications.Where(s => s.DeletedById == null))
+                .ThenInclude(s => s.Size)
+                .FirstOrDefaultAsync(p => p.DeletedById == null && p.Slug.Equals(slug));
+
             model.Colors = db.ProductSpecifications
                 .Where(ps => ps.DeletedById == null && ps.ProductId == id)
                 .Select(ps => ps.Color)
@@ -233,17 +247,22 @@ namespace Firlansa.WebUI.Controllers
 
                     }
                 }
+                double totalPrice = 0.0;
+                for (int i = 0; i < products.Count; i++)
+                {
+                    totalPrice += products[i].Price * quantitiesFromCookie[i];
+                }
 
                 ViewBag.Colors = colorsFromCookie;
                 ViewBag.ProductIds = productIdsFromCookie;
                 ViewBag.SecretKey = "894D14D6CBE44397AC28DFF6C5BE2A43";
                 ViewBag.Merchant = "ES1091685";
 
-                var productss = Tuple.Create(products, colorsFromCookie, sizesFromCookie, quantitiesFromCookie, data, districts);
+                var productss = Tuple.Create(products, colorsFromCookie, sizesFromCookie, quantitiesFromCookie, data, districts, totalPrice);
 
                 return View(productss);
             }
-            return View(new Tuple<List<Product>, int[], int[], int[], SelectListItem[], Order>(null, null, null, null, null, null));
+            return View(new Tuple<List<Product>, int[], int[], int[], SelectListItem[], Order,double>(null, null, null, null, null, null,0));
 
         }
         [HttpPost]
@@ -277,7 +296,7 @@ namespace Firlansa.WebUI.Controllers
                 .Include(o => o.Adress)
                 .Include(o => o.FirlansaUser)
                 .FirstOrDefaultAsync(o => o.Id == id);
-            if (entity == null)
+            if (entity == null && entity.OrderStatus != "CREATED")
             {
                 return NotFound();
             }
@@ -347,7 +366,9 @@ namespace Firlansa.WebUI.Controllers
             newOrder.AdressId = addressId;
             newOrder.OrderStatus = "CREATED";
             newOrder.PostCode = postCode;
-            double? totalPrice = 0;
+            newOrder.OrderId = 0;
+            newOrder.SessionId = "";
+            double totalPrice = 0;
             if (productId != null)
             {
                 newOrder.OrderItems = new List<OrderItem>();
@@ -376,11 +397,12 @@ namespace Firlansa.WebUI.Controllers
             }
 
             totalPrice += db.Adresses.FirstOrDefault(a => a.Id == addressId).ShippingPrice;
+           
             await db.Orders.AddAsync(newOrder);
             await db.SaveChangesAsync();
 
             string routeUrl = $"{Url.Action("CompleteOrder")}/{newOrder.Id}";
-            string approveUrl = $"https://firlansa.com/{routeUrl}";
+            string approveUrl = $"http://firlansa.com/{routeUrl}";
 
 
             var client = new RestClient("https://api.payriff.com/api/v2/createOrder");
@@ -389,13 +411,13 @@ namespace Firlansa.WebUI.Controllers
             request.AddHeader("Authorization", "C7DF29708CC0410192D48AAC06B3A1C0");
             var body = @"{" + "\n" +
             @"    ""body"": {" + "\n" +
-            @$"        ""amount"": {totalPrice}," + "\n" +
+            @$"        ""amount"": {totalPrice.ToString("0.##########").Replace(",", ".")}," + "\n" +
             @"        ""currencyType"": ""AZN""," + "\n" +
             @"        ""description"": ""Example""," + "\n" +
             @"        ""language"": ""AZ""," + "\n" +
             @$"        ""approveURL"": ""{approveUrl}""," + "\n" +
-            @"        ""cancelURL"": ""https://firlansa.com/shop/basket""," + "\n" +
-            @"        ""declineURL"": ""https://decline,com""" + "\n" +
+            @"        ""cancelURL"": ""http://firlansa.com/shop/index""," + "\n" +
+            @"        ""declineURL"": ""http://firlansa.com/shop/index""" + "\n" +
             @"    }," + "\n" +
             @"    ""merchant"": ""ES1091628""" + "\n" +
             @"}";

@@ -456,7 +456,7 @@
                                 @if (User.HasAccess("admin.productstatuses.index"))
                                 {
                                     <li class="">
-                                        <a asp-controller="products" asp-action="index">
+                                        <a asp-controller="productstatuses" asp-action="index">
                                             <span class="pcoded-micon"><i class="fa-solid fa-bell"></i></span>
                                             <span class="pcoded-mtext">Məhsul bildirişləri</span>
                                         </a>
@@ -486,6 +486,15 @@
                                         <a asp-controller="users" asp-action="index">
                                             <span class="pcoded-micon"><i class="icofont-users"></i></span>
                                             <span class="pcoded-mtext">İstifadəçilər</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.HasAccess("admin.sliders.index"))
+                                {
+                                    <li class="">
+                                        <a asp-controller="sliders" asp-action="index">
+                                            <span class="pcoded-micon"><i class="fa-solid fa-s"></i></span>
+                                            <span class="pcoded-mtext">Slaydlar</span>
                                         </a>
                                     </li>
                                 }

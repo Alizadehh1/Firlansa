@@ -71,7 +71,7 @@
                             {
 
                                 <a class="color" data-color-id="@color.Id" data-src="~/assets/images/demos/demo7/products/big1.jpg" href="#"
-                                   style="background-color: @color.HexCode">@(color.Name == "Ağ" || color.Name == "Ag" || color.Name == "White" ? color.Name : "") </a>
+                                   style="background-color: @color.HexCode">@(color.Name == "Ağ" || color.Name == "ag" || color.Name == "Ag" || color.Name == "White" ? color.Name : "") </a>
                             }
                         </div>
                     </div>
@@ -429,7 +429,7 @@
                     {
                         <div class="product shadow-media">
                             <figure class="product-media">
-                                <a asp-route-id="@product.Id">
+                                <a asp-route-slug="@product.Slug">
                                     <img src="~/uploads/images/@product.Images.FirstOrDefault().ImagePath" alt="@product.Name" width="280" height="315">
                                 </a>
                                 <div class="product-action-vertical">
@@ -440,10 +440,10 @@
                             </figure>
                             <div class="product-details">
                                 <div class="product-cat">
-                                    <a asp-route-id="@product.Id">@product.Category.Name</a>
+                                    <a asp-route-slug="@product.Slug">@product.Category.Name</a>
                                 </div>
                                 <h3 class="product-name">
-                                    <a asp-route-id="@product.Id">@product.Name</a>
+                                    <a asp-route-slug="@product.Slug">@product.Name</a>
                                 </h3>
                                 <div class="product-price">
                                     <ins class="new-price">@product.Price&#8380;</ins><del class="old-price">@(product.OldPrice != null ? product.OldPrice + "₼" : null)</del>

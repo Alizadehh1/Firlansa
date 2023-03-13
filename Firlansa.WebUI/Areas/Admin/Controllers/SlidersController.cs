@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Firlansa.WebUI.AppCode.Modules.SliderModule;
 using Firlansa.WebUI.Models.DataContexts;
 using Firlansa.WebUI.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Firlansa.WebUI.Areas.Admin.Controllers
 {
@@ -23,13 +24,13 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             this.db = db;
             this.mediator = mediator;
         }
-
+        [Authorize(Policy = "admin.sliders.index")]
         public async Task<IActionResult> Index(SliderAllQuery query)
         {
             var entity = await mediator.Send(query);
             return View(entity);
         }
-
+        [Authorize(Policy = "admin.sliders.details")]
         public async Task<IActionResult> Details(SliderSingleQuery query)
         {
             var slider = await mediator.Send(query);
@@ -39,7 +40,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             }
             return View(slider);
         }
-
+        [Authorize(Policy = "admin.sliders.create")]
         public IActionResult Create()
         {
             return View();
@@ -48,6 +49,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.sliders.create")]
         public async Task<IActionResult> Create(SliderCreateCommand command)
         {
             var response = await mediator.Send(command);
@@ -57,7 +59,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             }
             return View(command);
         }
-
+        [Authorize(Policy = "admin.sliders.edit")]
         public async Task<IActionResult> Edit(SliderSingleQuery query)
         {
             var slider = await mediator.Send(query);
@@ -73,6 +75,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.sliders.edit")]
         public async Task<IActionResult> Edit([FromRoute] int id, SliderEditCommand command)
         {
             if (id != command.Id)
@@ -83,7 +86,7 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
             await mediator.Send(command);
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Policy = "admin.sliders.delete")]
         public async Task<IActionResult> Delete(SliderRemoveCommand command)
         {
             var response = await mediator.Send(command);

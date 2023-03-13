@@ -30,7 +30,7 @@
             {
                 <div data-specification="@ViewBag.Products[i].Id-@ViewBag.Colors[i]-@ViewBag.Sizes[i]" class="product product-cart">
                     <figure class="product-media1">
-                        <a asp-action="details" asp-controller="shop" asp-route-id="@ViewBag.Products[i].Id">
+                        <a asp-action="details" asp-controller="shop" asp-route-slug="@ViewBag.Products[i].Slug">
                             @foreach (var images in ViewBag.Products[i].Images)
                             {
                                 if (images.IsMain)
@@ -45,7 +45,7 @@
                         </button>
                     </figure>
                     <div class="product-detail">
-                        <a asp-action="details" asp-controller="shop" asp-route-id="@ViewBag.Products[i].Id" class="product-name">@ViewBag.Products[i].Name</a>
+                        <a asp-action="details" asp-controller="shop" asp-route-slug="@ViewBag.Products[i].Slug" class="product-name">@ViewBag.Products[i].Name</a>
                         <div class="price-box">
                             <span class="product-quantity">@ViewBag.Quantities[i]</span>
                             <span class="product-price">@ViewBag.Products[i].Price</span>
