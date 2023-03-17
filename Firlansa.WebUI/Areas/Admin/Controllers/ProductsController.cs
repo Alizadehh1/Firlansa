@@ -62,6 +62,8 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Create(ProductCreateCommand command)
         {
             var product = await mediator.Send(command);
+            product.Slug += product.Id;
+            await db.SaveChangesAsync();
 
             if (ModelState.IsValid)
             {
@@ -98,9 +100,10 @@ namespace Firlansa.WebUI.Areas.Admin.Controllers
         [Authorize(Policy = "admin.products.edit")]
         public async Task<IActionResult> Edit(ProductEditCommand model)
         {
-
+            
             var product = await mediator.Send(model);
-
+            product.Product.Slug += product.Product.Id;
+            await db.SaveChangesAsync();
             if (product == null)
             {
                 return NotFound();

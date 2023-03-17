@@ -2239,6 +2239,7 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTm
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-57890196-eab4-49e6-bd9c-5b4e54fd2f25.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-5a6786b4-7613-45d9-b864-0bf0d04dbbcb.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-5acf4084-40f0-494a-9143-357eb08ca122.jpg
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-5cd4e7ef-c0b1-4ab7-a130-2e251e7d88c4.png
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-5fb2fc0a-6074-426e-b1dd-c5f47fbccdaf.png
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-60f5ca2b-5cb5-4c72-be3c-e1df9e0b242b.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-64e24fad-997b-4c1b-b709-5f044ca9fd65.png
@@ -2260,6 +2261,7 @@ C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTm
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-a00a61e6-25fe-482f-ad77-f7074c2a1288.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-a0227507-02ac-4161-973f-eb5f23b53b69.jpeg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-a122b3e5-253e-4997-840e-e2c4d3a5a12a.jpg
+C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-a2b3e473-d68c-4f47-b627-17f6de4ce459.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-acc339b9-741d-45ef-a003-421934c3e6e8.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-afc46a08-058b-4771-aa65-125ce83aca56.jpg
 C:\Users\alide\OneDrive\Desktop\Firlansa\Firlansa.WebUI\obj\Release\net5.0\PubTmp\Out\wwwroot\uploads\images\product-b0f5d2e5-d4da-43a6-84d1-8334106c11ce.jpg

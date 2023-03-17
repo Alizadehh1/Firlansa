@@ -120,6 +120,9 @@
                                                 <input type="number" class="form-control" asp-for="@item.Quantity" />
                                             </td>
                                             <td class="table-operations">
+                                                <a onclick="removeSpecification(event)" class="btn btn-danger btn-icon">
+                                                    <i class="icofont-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     }
@@ -320,6 +323,11 @@
                             <td>${(selectColors.replace('#s1#',  newid()))}</td>
                             <td>${(selectSizes.replace('#s2#', newid()))}</td>
                             <td><input class="form-control" type="number"/></td>
+                            <td class="table-operations">
+                                <a onclick="removeSpecification(event)" class="btn btn-danger btn-icon">
+                                    <i class="icofont-trash"></i>
+                                </a>
+                            </td>
                             </tr>`);
 
 
@@ -332,9 +340,11 @@
 
         }
 
-        function removePricing(e) {
-            if ($(e.currentTarget).closest('tbody').find('tr').length == 1)
+        function removeSpecification(e) {
+            if ($(e.currentTarget).closest('tbody').find('tr').length == 1) {
+                toastr.warning("Uğurlu deyil!", "Ən azı bir ədəd rəng-ölçü qalmalıdı");
                 return;
+            }
 
             $(e.currentTarget).closest('tr').remove();
         }

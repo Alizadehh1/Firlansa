@@ -83,19 +83,12 @@ namespace Firlansa.WebUI.Controllers
             //});
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int id,string slug)
+        public async Task<IActionResult> Details(string slug)
         {
             var model = new ShopViewModel();
             if (string.IsNullOrWhiteSpace(slug))
             {
-                model.Product = await db.Products
-                .Include(p => p.Images.Where(i => i.DeletedById == null))
-                .Include(p => p.Category)
-                .Include(p => p.Specifications.Where(s => s.DeletedById == null))
-                .ThenInclude(s => s.Color)
-                .Include(p => p.Specifications.Where(s => s.DeletedById == null))
-                .ThenInclude(s => s.Size)
-                .FirstOrDefaultAsync(p => p.DeletedById == null && p.Id == id);
+                return NotFound();
             }
 
             model.Product = await db.Products
@@ -108,17 +101,17 @@ namespace Firlansa.WebUI.Controllers
                 .FirstOrDefaultAsync(p => p.DeletedById == null && p.Slug.Equals(slug));
 
             model.Colors = db.ProductSpecifications
-                .Where(ps => ps.DeletedById == null && ps.ProductId == id)
+                .Where(ps => ps.DeletedById == null && ps.ProductId == model.Product.Id)
                 .Select(ps => ps.Color)
                 .Distinct()
                 .ToList();
             model.Sizes = db.ProductSpecifications
-                .Where(ps => ps.DeletedById == null && ps.ProductId == id)
+                .Where(ps => ps.DeletedById == null && ps.ProductId == model.Product.Id)
                 .Select(ps => ps.Size)
                 .Distinct()
                 .ToList();
             model.ProductSpecifications = db.ProductSpecifications
-                .Where(ps => ps.DeletedById == null && ps.ProductId == id)
+                .Where(ps => ps.DeletedById == null && ps.ProductId == model.Product.Id)
                 .Include(ps => ps.Size)
                 .Include(ps=>ps.Color)
                 .Distinct()
@@ -127,16 +120,20 @@ namespace Firlansa.WebUI.Controllers
                 .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
                 .Where(p => p.DeletedById == null)
                 .ToListAsync();
-            if (model.Product == null || id == null)
+            if (model.Product == null || model.Product.Id == null)
             {
                 return NotFound();
             }
             return View(model);
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Quickview(int id)
+        public async Task<IActionResult> Quickview(string slug)
         {
             var model = new ShopViewModel();
+            if (string.IsNullOrWhiteSpace(slug))
+            {
+                return NotFound();
+            }
             model.Product = await db.Products
                 .Include(p => p.Images.Where(i => i.DeletedById == null))
                 .Include(p => p.Category)
@@ -144,19 +141,19 @@ namespace Firlansa.WebUI.Controllers
                 .ThenInclude(s => s.Color)
                 .Include(p => p.Specifications.Where(s => s.DeletedById == null))
                 .ThenInclude(s => s.Size)
-                .FirstOrDefaultAsync(p => p.DeletedById == null && p.Id == id);
+                .FirstOrDefaultAsync(p => p.DeletedById == null && p.Slug.Equals(slug));
             model.Colors = db.ProductSpecifications
-                .Where(ps => ps.DeletedById == null && ps.ProductId == id)
+                .Where(ps => ps.DeletedById == null && ps.ProductId == model.Product.Id)
                 .Select(ps => ps.Color)
                 .Distinct()
                 .ToList();
             model.Sizes = db.ProductSpecifications
-                .Where(ps => ps.DeletedById == null && ps.ProductId == id)
+                .Where(ps => ps.DeletedById == null && ps.ProductId == model.Product.Id)
                 .Select(ps => ps.Size)
                 .Distinct()
                 .ToList();
             model.ProductSpecifications = db.ProductSpecifications
-                .Where(ps => ps.DeletedById == null && ps.ProductId == id)
+                .Where(ps => ps.DeletedById == null && ps.ProductId == model.Product.Id)
                 .Include(ps => ps.Size)
                 .Distinct()
                 .ToList();
@@ -164,7 +161,7 @@ namespace Firlansa.WebUI.Controllers
                 .Include(p => p.Images.Where(i => i.DeletedById == null && i.IsMain == true))
                 .Where(p => p.DeletedById == null)
                 .ToListAsync();
-            if (model.Product == null || id == null)
+            if (model.Product == null || model.Product.Id == null)
             {
                 return NotFound();
             }
